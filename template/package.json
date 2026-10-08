@@ -1,0 +1,24 @@
+{
+  "name": "__NAME__",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts MyVideo out/video.mp4",
+    "render:4k": "remotion render src/index.ts MyVideo out/video-4k.mp4 --scale=2"
+  },
+  "dependencies": {
+    "@agent-qofeno/demotion": "^__DEMOTION_VERSION__",
+    "@remotion/cli": "__REMOTION_VERSION__",
+    "@remotion/fonts": "__REMOTION_VERSION__",
+    "@remotion/noise": "__REMOTION_VERSION__",
+    "@remotion/transitions": "__REMOTION_VERSION__",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "remotion": "__REMOTION_VERSION__"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}

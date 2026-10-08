@@ -1,0 +1,44 @@
+{
+  "fps": 60,
+  "bpm": 120,
+  "scenes": [
+    { "id": "motion", "beats": 1, "in": "hit", "chapter": "KineticType", "hud": "light", "events": [
+      { "name": "letters", "beat": 0, "dur": 0.5, "sfx": "tileRun", "steps": 6 } ] },
+    { "id": "code", "beats": 1, "in": "hit", "chapter": "StackType", "hud": "dark", "events": [
+      { "name": "rows", "beat": 0, "dur": 0.5, "sfx": "tileRun", "steps": 4 } ] },
+    { "id": "serif", "beats": 1, "in": "hit", "chapter": "SerifReveal", "hud": "dark", "events": [
+      { "name": "draw", "beat": 0, "dur": 0.5, "sfx": "swoosh" } ] },
+    { "id": "number", "beats": 1, "in": "flashHit", "chapter": "NumberRoll", "hud": "light", "events": [
+      { "name": "roll", "beat": 0, "dur": 0.5, "sfx": "countRun", "steps": 8 } ] },
+    { "id": "halftone", "beats": 2, "in": "whoosh", "chapter": "Halftone", "hud": "light", "events": [
+      { "name": "build", "beat": 0, "dur": 2.0, "sfx": "rise" } ] },
+    { "id": "ticks", "beats": 2, "in": "hit", "chapter": "RadialTicks", "hud": "dark", "events": [
+      { "name": "tick", "beat": 0, "dur": 1.0, "sfx": "tick" } ] },
+    { "id": "terrain", "beats": 3, "in": "whoosh", "chapter": "WireTerrain", "hud": "light", "events": [
+      { "name": "flow", "beat": 0, "dur": 2.4, "sfx": "swell" } ] },
+    { "id": "tunnel", "beats": 3, "in": "hit", "chapter": "RectTunnel", "hud": "dark", "events": [
+      { "name": "zoom", "beat": 0, "dur": 3.0, "sfx": "rise" } ] },
+    { "id": "cube", "beats": 2, "in": "hit", "chapter": "RubiksCube", "hud": "dark", "events": [
+      { "name": "t1", "beat": 0.333, "sfx": "click" },
+      { "name": "t2", "beat": 1.067, "sfx": "click" },
+      { "name": "t3", "beat": 1.8, "sfx": "click" } ] },
+    { "id": "marquee", "beats": 2, "in": "whoosh", "chapter": "MarqueeBands", "hud": "light", "events": [
+      { "name": "bands", "beat": 0, "dur": 0.6, "sfx": "tileRun", "steps": 4 },
+      { "name": "sweep", "beat": 0.3, "dur": 1.2, "sfx": "swoosh" } ] },
+    { "id": "easing", "beats": 2, "in": "hit", "chapter": "EasingGraph", "hud": "dark", "events": [
+      { "name": "draw", "beat": 0.1, "sfx": "pop" },
+      { "name": "land", "beat": 1.0, "sfx": "count" } ] },
+    { "id": "morph", "beats": 2, "in": "hit", "chapter": "ShapeMorph", "hud": "dark", "events": [
+      { "name": "m1", "beat": 0.667, "sfx": "pop" },
+      { "name": "m2", "beat": 1.333, "sfx": "pop" } ] },
+    { "id": "sphere", "beats": 4, "in": "whoosh", "chapter": "ParticleSphere", "hud": "light", "events": [
+      { "name": "form", "beat": 0.3, "dur": 3.0, "sfx": "shimmer" },
+      { "name": "build", "beat": 2.0, "dur": 2.0, "sfx": "rise" } ] },
+    { "id": "burst", "beats": 1, "in": "flashHit", "chapter": "Starburst", "hud": "light", "events": [] },
+    { "id": "ptext", "beats": 1, "in": "hit", "chapter": "ParticleText", "hud": "light", "events": [
+      { "name": "form", "beat": 0, "dur": 0.5, "sfx": "tick" } ] },
+    { "id": "final", "beats": 2, "in": "whoosh", "chapter": "demotion", "hud": "light", "events": [
+      { "name": "land", "beat": 0.0, "sfx": "chime" },
+      { "name": "sparkle", "beat": 0.2, "dur": 1.6, "sfx": "shimmer" } ] }
+  ]
+}
