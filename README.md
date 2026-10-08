@@ -37,7 +37,7 @@ Demotion is built and maintained by one person. If it saves you time, please sup
 
 ## Contributing
 
-Bug reports and ideas are very welcome in [Issues](https://github.com/sohailkhan0525/demotion/issues). I'm not accepting code pull requests yet, because contributions to a dual-licensed project need a contributor agreement that isn't set up.
+Bug reports and ideas are very welcome in [Issues](https://github.com/SohailKhan0525/demotion/issues). I'm not accepting code pull requests yet, because contributions to a dual-licensed project need a contributor agreement that isn't set up.
 
 ## Development
 

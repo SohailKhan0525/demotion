@@ -13,6 +13,6 @@ Edit `src/MyVideo.tsx`. Everything renders on your own computer.
 
 ## License
 
-[demotion](https://github.com/sohailkhan0525/demotion) is free for personal and non-commercial use. Using it for business, client or product work needs a commercial license — https://ko-fi.com/qofenoai
+[demotion](https://github.com/SohailKhan0525/demotion) is free for personal and non-commercial use. Using it for business, client or product work needs a commercial license — https://ko-fi.com/qofenoai
 
 Demotion is built on Remotion, which has its own license: https://www.remotion.dev/docs/terms

@@ -6,11 +6,11 @@
   "author": "Qofeno Labs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sohailkhan0525/demotion.git"
+    "url": "git+https://github.com/SohailKhan0525/demotion.git"
   },
-  "homepage": "https://github.com/sohailkhan0525/demotion#readme",
+  "homepage": "https://github.com/SohailKhan0525/demotion#readme",
   "bugs": {
-    "url": "https://github.com/sohailkhan0525/demotion/issues"
+    "url": "https://github.com/SohailKhan0525/demotion/issues"
   },
   "type": "module",
   "main": "./dist/index.js",
