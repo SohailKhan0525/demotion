@@ -25,8 +25,8 @@ test("published files exist", () => {
 
 test("every bundled font has its license text", () => {
   const fonts = fs.readdirSync("public/fonts").filter((f) => f.endsWith(".woff2"));
-  assert.ok(fonts.length >= 3);
-  assert.ok(fs.readdirSync("public/fonts/licenses").length >= 3);
+  assert.ok(fonts.length >= 5);
+  assert.ok(fs.readdirSync("public/fonts/licenses").length >= 4);
 });
 
 test("CLI prints version and mentions the license", () => {

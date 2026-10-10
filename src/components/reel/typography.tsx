@@ -112,7 +112,7 @@ export const SerifReveal: React.FC<{
     y: 700,
     textAnchor: "middle" as const,
     fontFamily: SERIF_FAMILY,
-    fontWeight: 900,
+    fontWeight: 400,
     fontSize,
   };
   return (

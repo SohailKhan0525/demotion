@@ -71,10 +71,7 @@ Demotion is built on Remotion, which has its own license: https://www.remotion.d
     __DEMOTION_VERSION__: pkg.version,
     __REMOTION_VERSION__: pkg.config.remotionVersion,
   });
-  fs.mkdirSync(path.join(target, "public", "fonts"), { recursive: true });
-  for (const f of fs.readdirSync(path.join(pkgRoot, "public", "fonts"))) {
-    fs.copyFileSync(path.join(pkgRoot, "public", "fonts", f), path.join(target, "public", "fonts", f));
-  }
+  fs.cpSync(path.join(pkgRoot, "public", "fonts"), path.join(target, "public", "fonts"), { recursive: true });
   console.log(`✔ Created ${arg}/`);
   console.log("✔ Copied fonts to public/fonts");
   console.log(`Next: cd ${arg} && npm install && npm start`);

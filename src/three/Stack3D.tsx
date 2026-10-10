@@ -161,7 +161,7 @@ export const Stack3D: React.FC<Stack3DProps> = ({
   const [fontsReady, setFontsReady] = useState(false);
   useEffect(() => {
     Promise.all([
-      document.fonts.load('700 40px "Inter Variable"'),
+      document.fonts.load('700 40px "Archivo"'),
       document.fonts.load('400 30px "JetBrains Mono Variable"'),
     ])
       .catch(() => undefined)

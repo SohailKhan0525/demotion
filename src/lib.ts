@@ -28,3 +28,4 @@ export * from "./components/reel/palette";
 export * from "./components/reel/typography";
 export * from "./components/reel/geometry";
 export * from "./components/reel/motion";
+export * from "./core";

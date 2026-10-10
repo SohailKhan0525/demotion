@@ -94,11 +94,14 @@
     "three": "^0.160.1",
     "typescript": "^5.5.0"
   },
-  "dependencies": {
-    "@fontsource-variable/playfair-display": "^5.3.0"
-  },
   "funding": {
     "type": "individual",
     "url": "https://ko-fi.com/qofenoai"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/abril-fatface": "^5.3.0",
+    "@fontsource/barlow-semi-condensed": "^5.3.0",
+    "@remotion/motion-blur": "^4.0.528"
   }
 }

@@ -25,7 +25,7 @@ const Flow: React.FC = () => {
         <div
           style={{
             fontFamily: SERIF_FAMILY,
-            fontWeight: 900,
+            fontWeight: 400,
             fontSize: 380,
             color: REEL.pink,
             letterSpacing: -8,

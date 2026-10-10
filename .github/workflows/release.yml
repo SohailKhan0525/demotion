@@ -10,6 +10,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,7 +26,9 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm test
-      - run: npx semantic-release
+      - name: Release (runs only once the NPM_TOKEN secret has been added)
+        if: env.HAS_NPM_TOKEN == 'true'
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
