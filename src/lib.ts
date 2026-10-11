@@ -29,3 +29,5 @@ export * from "./components/reel/typography";
 export * from "./components/reel/geometry";
 export * from "./components/reel/motion";
 export * from "./core";
+export * from "./engine";
+export * from "./type";
