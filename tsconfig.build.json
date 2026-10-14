@@ -7,5 +7,9 @@
     "outDir": "dist/types",
     "rootDir": "src"
   },
-  "include": ["src/lib.ts", "src/lib-three.ts"]
+  "include": [
+    "src/lib.ts",
+    "src/lib-three.ts",
+    "src/lib-audio.ts"
+  ]
 }

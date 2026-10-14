@@ -14,6 +14,8 @@ Motion graphics, written in code.
 Usage:
   npx demotion init <folder>    create a new video project in <folder>
   npx demotion --help           show this help
+  npx demotion audio <cues.json> [out.wav]
+                                render a beat-synced soundtrack (music + sound effects)
   npx demotion license          explain the license (free vs commercial)
   npx demotion --version        print the version
 
@@ -46,6 +48,20 @@ if (!cmd || cmd === "--help" || cmd === "-h") {
   console.log(HELP);
 } else if (cmd === "--version" || cmd === "-v") {
   console.log(pkg.version);
+} else if (cmd === "audio") {
+  const specPath = arg;
+  const outPath = process.argv[4] || "public/soundtrack.wav";
+  if (!specPath || !fs.existsSync(specPath)) {
+    console.error("Usage: npx demotion audio <cues.json> [out.wav]");
+    process.exit(1);
+  }
+  const { renderSoundtrack, encodeWav } = await import("../dist/audio.js");
+  const spec = JSON.parse(fs.readFileSync(specPath, "utf8"));
+  const t0 = Date.now();
+  const s = renderSoundtrack(spec);
+  fs.mkdirSync(path.dirname(path.resolve(outPath)), { recursive: true });
+  fs.writeFileSync(outPath, encodeWav(s));
+  console.log(`✔ ${outPath}  ${s.seconds.toFixed(1)}s  ${s.lufs.toFixed(1)} LUFS  peak ${(20 * Math.log10(s.peak)).toFixed(1)} dBFS  (${((Date.now() - t0) / 1000).toFixed(1)}s)`);
 } else if (cmd === "license") {
   console.log(`Demotion is licensed under the PolyForm Noncommercial License 1.0.0.
 

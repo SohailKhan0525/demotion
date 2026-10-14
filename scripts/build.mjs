@@ -24,5 +24,11 @@ await build({
   outfile: "dist/three.js",
   external: ["react", "react-dom", "react/jsx-runtime", "remotion", "@remotion/*", "three", "@react-three/*", "postprocessing"],
 });
+await build({
+  ...common,
+  platform: "node",
+  entryPoints: ["src/lib-audio.ts"],
+  outfile: "dist/audio.js",
+});
 execSync("npx tsc -p tsconfig.build.json", { stdio: "inherit" });
-console.log("built dist/index.js, dist/three.js and dist/types/");
+console.log("built dist/index.js, dist/three.js, dist/audio.js and dist/types/");
