@@ -11,6 +11,8 @@
     "@agent-qofeno/demotion": "^__DEMOTION_VERSION__",
     "@remotion/cli": "__REMOTION_VERSION__",
     "@remotion/fonts": "__REMOTION_VERSION__",
+    "@remotion/layout-utils": "__REMOTION_VERSION__",
+    "@remotion/motion-blur": "__REMOTION_VERSION__",
     "@remotion/noise": "__REMOTION_VERSION__",
     "@remotion/transitions": "__REMOTION_VERSION__",
     "react": "^18.3.0",
