@@ -10,7 +10,7 @@ import { EasingGraph, MarqueeBands, ParticleSphere, ShapeMorph } from "../compon
 import { RubiksCube } from "../three/RubiksCube";
 import { ParticleText } from "../components/ParticleText";
 
-export const NPM_PILL = "npm i @agent-qofeno/demotion";
+export const NPM_PILL = "npm i demotion";
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 
@@ -159,7 +159,7 @@ const Hud: React.FC = () => {
   const sec = Math.floor(frame / FPS);
   const tc = `00:${pad(Math.floor(sec / 60))}:${pad(sec % 60)}:${pad(frame % FPS)}`;
   const isComponent = cur.chapter !== "demotion";
-  const chapter = isComponent ? `<${cur.chapter} />` : "@agent-qofeno/demotion";
+  const chapter = isComponent ? `<${cur.chapter} />` : "demotion";
   // progress ticks at every scene boundary
   const marks: number[] = [];
   let a = 0;

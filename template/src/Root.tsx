@@ -1,6 +1,6 @@
 import React from "react";
 import { Composition } from "remotion";
-import { ensureFontsLoaded } from "@agent-qofeno/demotion";
+import { ensureFontsLoaded } from "demotion";
 import { MyVideo } from "./MyVideo";
 
 // Loads Inter + JetBrains Mono from public/fonts (offline, deterministic renders).

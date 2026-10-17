@@ -1,5 +1,5 @@
 {
-  "name": "@agent-qofeno/demotion",
+  "name": "demotion",
   "version": "0.0.0",
   "description": "Motion graphics, written in code. A React toolkit and CLI for making polished videos locally with Remotion: beat-synced motion, camera, type, transitions and sound. Free for personal use; commercial license available.",
   "license": "PolyForm-Noncommercial-1.0.0",
@@ -43,7 +43,8 @@
     "THIRD_PARTY_NOTICES.md"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "config": {
     "remotionVersion": "4.0.528"

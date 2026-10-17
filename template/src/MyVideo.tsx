@@ -1,5 +1,5 @@
 import { Series } from "remotion";
-import { TitleCard, highlight } from "@agent-qofeno/demotion";
+import { TitleCard, highlight } from "demotion";
 
 export const MyVideo = () => (
   <Series>
