@@ -3,7 +3,7 @@ import { Composition } from "remotion";
 import { ensureFontsLoaded } from "demotion";
 import { MyVideo } from "./MyVideo";
 
-// Loads Inter + JetBrains Mono from public/fonts (offline, deterministic renders).
+// Loads Archivo, Abril Fatface, Barlow Semi Condensed and JetBrains Mono from public/fonts (offline, deterministic renders).
 ensureFontsLoaded();
 
 export const RemotionRoot: React.FC = () => (
