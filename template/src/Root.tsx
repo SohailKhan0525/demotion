@@ -1,6 +1,6 @@
 import React from "react";
 import { Composition } from "remotion";
-import { ensureFontsLoaded } from "demotion";
+import { ensureFontsLoaded } from "@demotion/cli";
 import { MyVideo } from "./MyVideo";
 
 // Loads Archivo, Abril Fatface, Barlow Semi Condensed and JetBrains Mono from public/fonts (offline, deterministic renders).

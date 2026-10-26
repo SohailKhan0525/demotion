@@ -1,5 +1,5 @@
 import { Series } from "remotion";
-import { TitleCard, highlight } from "demotion";
+import { TitleCard, highlight } from "@demotion/cli";
 
 export const MyVideo = () => (
   <Series>

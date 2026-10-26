@@ -1,10 +1,10 @@
 # X launch: free-plan copy and posting sequence
 
-Use this only after the manual npm publish and registry-backed install/render
+Use this only after the npm publication and registry-backed install/render
 checks succeed. Attach the existing 26-second MP4 directly to the main post.
 The demo was recorded before publication; the second reply makes that explicit.
 
-## Main post — 242 weighted characters
+## Main post — 247 weighted characters
 
 ```text
 This video is React code.
@@ -13,17 +13,17 @@ No screen recording. Every frame is generated locally with demotion, my new tool
 
 Beat-synced type, 3D, motion blur + generated sound.
 
-npx demotion init my-video
+npx @demotion/cli init my-video
 
 What would you build with it?
 ```
 
-## First self-reply — 180 weighted characters
+## First self-reply — 185 weighted characters
 
 ```text
 Try it:
 
-npx demotion init my-video
+npx @demotion/cli init my-video
 cd my-video
 npm install
 npm start
@@ -31,7 +31,7 @@ npm start
 Edit src/MyVideo.tsx, then npm run render.
 
 Code + docs: https://github.com/SohailKhan0525/demotion
-npm: https://www.npmjs.com/package/demotion
+npm: https://www.npmjs.com/package/@demotion/cli
 ```
 
 ## Second self-reply — 222 weighted characters
@@ -76,7 +76,7 @@ verified here. The supplied file is 26 seconds / 26 MB, H.264 + AAC in MP4.
 
 ## Publish it
 
-- Upload media/demotion-launch.mp4 directly to X; do not use the GitHub video URL
+- Upload your downloaded launch MP4 directly to X; do not use the GitHub video URL
   as a substitute for the native upload. Keep its composed opening frame.
 - Paste the main post and play the uploaded preview before publishing.
 - Add the two self-replies with the install instructions, links and license context.

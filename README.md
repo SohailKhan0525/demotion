@@ -1,102 +1,150 @@
 # demotion
 
-**Motion graphics, written in code.** A React toolkit and CLI for making polished videos on your own computer — beat-synced motion, camera, type, transitions and sound — rendered locally with [Remotion](https://www.remotion.dev). No screen recordings. No screenshots. Every frame is code.
+**Motion graphics, written in code.** Create videos with React and render them on your own computer using [Remotion](https://www.remotion.dev).
 
-> **Status: unpublished.** npm has blocked the requested unscoped name `demotion` as too similar to existing packages. The source works, but `npx demotion` is not yet available. See [publishing steps](https://github.com/SohailKhan0525/demotion/blob/main/docs/PUBLISHING.md).
+[![CI](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml)
+[Package](https://www.npmjs.com/package/@demotion/cli) · [Examples](#edit-your-video) · [UI reference](docs/ui.md) · [Issues](https://github.com/SohailKhan0525/demotion/issues)
 
-[Download the 1080p launch video (MP4, 26 MB)](https://github.com/SohailKhan0525/demotion/raw/refs/heads/main/media/demotion-launch.mp4) · [Rendered QA](https://github.com/SohailKhan0525/demotion/blob/main/docs/qa/launch.md)
+`@demotion/cli` includes the `demotion` command, React components, beat-based timing,
+procedural audio, bundled fonts, and optional 3D panels. Videos render locally;
+there is no hosted rendering service to configure.
 
-## Run from source (pre-release)
+## Quick start
 
-Node 22.14 or newer a Chromium browser, and FFmpeg (including ffprobe) are required. The package has not been
-released to npm; use the checkout today:
-
-```bash
-git clone https://github.com/SohailKhan0525/demotion.git
-cd demotion
-npm ci
-npm run dev          # builds the toolkit, generates audio, opens Studio
-```
-
-Select **Launch** for the original 26-second, 1080p60 product film, **Lab** for
-motion/type studies, or **UI** for the terminal and code-panel study.
+Use **Node.js 22.14+** and npm. Node 22 and 24 are tested in CI. Rendering needs a
+Chromium browser; Remotion can download a supported browser on first use. Package
+installation and that browser download require Internet access. Fonts are bundled.
 
 ```bash
-npm run lint && npm run build && npm test
-npm run render       # out/demotion-launch.mp4, H.264 / CRF 18
-npm run render:4k    # out/demotion-launch-4k.mp4 (expensive)
-npm run qa:launch    # shot, cut and transition stills in out/launch-qa/
-```
-
-In a container, use the supported browser and concurrency overrides:
-
-```bash
-DEMOTION_BROWSER=/usr/bin/chromium DEMOTION_CONCURRENCY=2 npm run dev
-DEMOTION_BROWSER=/usr/bin/chromium DEMOTION_CONCURRENCY=2 npm run render
-```
-
-`npm run render` regenerates the soundtrack before rendering and remuxes the
-original WAV afterward to preserve cue synchronization. The three.js shot
-uses real depth of field and can be slow on software graphics. No recording or
-remote rendering service is required. The 3D preview and progress panels are
-labeled workflow illustrations; the code and scaffold output come from this repo.
-
-To try the actual starter before the npm release, build a local package and
-install that tarball into the generated project:
-
-```bash
-npm run build
-npm pack --pack-destination out
-node bin/demotion.js init out/my-video
-cd out/my-video
-npm install ../demotion-0.1.0.tgz
+npx --yes @demotion/cli@latest init my-video
+cd my-video
+npm install
 npm start
-npm run render:4k
 ```
 
-The tarball filename follows the package version. Once the owner publishes the
-first release, the registry-based `npx demotion init my-video` flow will become
-available. A local tarball smoke check does not establish registry availability.
+Remotion Studio opens a preview. Edit `src/MyVideo.tsx`, then render:
 
-## Components
+```bash
+npm run render       # out/video.mp4 — 1920×1080
+npm run render:4k    # out/video-4k.mp4 — 3840×2160
+```
 
-- `createBeatClock`, `spring`, `outExpo`: shared timing and motion vocabulary.
-- `MotionProject`, `Shot`: beat-sized scenes with camera, wipes, grain and real
-  render-time motion blur. Author animations with `useShot()`.
-- `KineticHeadline`, `WideStack`: letter springs and variable-width Archivo type.
-- `Terminal`, `CodePanel`: timed typing and staggered source-code reveals.
-  See [UI panel props](https://github.com/SohailKhan0525/demotion/blob/main/docs/ui.md).
-- `Stack3D` from `demotion/three`: textured panels and genuine lens blur. Requires
-  `three`, `@remotion/three`, `@react-three/fiber` (React 18: v8),
-  `@react-three/postprocessing` (v2), and `postprocessing` in the consuming project;
-  those are already installed in this checkout.
+The starter contains two scenes totaling **150 frames at 30 fps: five seconds**.
+These are starter settings, not a limit on your own video's duration.
 
-For the tested React 18 / Remotion 4.0.528 starter, enable the optional 3D entry with:
+## Edit your video
+
+This is the actual starter source in `src/MyVideo.tsx`:
+
+<!-- starter-example -->
+```tsx
+import { Series } from "remotion";
+import { TitleCard, highlight } from "@demotion/cli";
+
+export const MyVideo = () => (
+  <Series>
+    <Series.Sequence durationInFrames={60}>
+      <TitleCard text={[highlight("Hello, ", "#14121f"),
+        highlight("demotion", "#a21caf")]} />
+    </Series.Sequence>
+    <Series.Sequence durationInFrames={90}>
+      <TitleCard text="Every frame is code." />
+    </Series.Sequence>
+  </Series>
+);
+```
+<!-- /starter-example -->
+
+![A frame rendered from the starter example](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/starter-preview.png)
+
+A frame rendered from the starter above.
+
+Change the text and colors here. Change the composition settings in
+`src/Root.tsx` for a different duration, frame rate or canvas size. Keep the scene
+lengths and composition duration consistent. `ensureFontsLoaded()` is already
+called by the starter, using files copied into `public/fonts`.
+
+## Components and timing
+
+For an existing Remotion project:
+
+```bash
+npm install @demotion/cli
+```
+
+Import from `@demotion/cli`:
+
+| Export | Use |
+| --- | --- |
+| `TitleCard`, `highlight` | Starter titles and highlighted text |
+| `createBeatClock`, `spring`, `outExpo` | Beat timing and easing |
+| `MotionProject`, `Shot`, `useShot` | Scenes with camera motion, wipes, grain and render-time motion blur |
+| `KineticHeadline`, `WideStack` | Animated letters and variable-width type |
+| `Terminal`, `CodePanel` | Timed typing and source-code reveals |
+
+`Terminal` and `CodePanel` use the clock and theme of their containing `Shot`.
+See [their props and examples](docs/ui.md). The toolkit also retains its earlier
+UI components; their styling varies. The newer scene engine is the recommended
+starting point for beat-driven work.
+
+The starter pins all Remotion packages to `4.0.528`. Keep Remotion and its
+`@remotion/*` packages on matching versions when extending the project.
+
+## Generate a soundtrack
+
+Save this as `cues.json`:
+
+```json
+{
+  "bpm": 120,
+  "beats": 8,
+  "music": { "kick": [[0, 8]], "arp": [[0, 8]], "bass": [[0, 8]] },
+  "cues": [
+    { "at": 0, "kind": "hit" },
+    { "at": 4, "kind": "whoosh" },
+    { "at": 4, "kind": "hit" },
+    { "at": 6, "kind": "chime" }
+  ]
+}
+```
+
+```bash
+npx @demotion/cli audio cues.json out/soundtrack.wav
+```
+
+Times and durations in the cue file are beats. The generated WAV includes a
+reverb tail. The engine targets −14 LUFS by default; measure the finished video
+for delivery. To use the file, copy it into your project's `public` directory and
+add Remotion's `<Audio src={staticFile("soundtrack.wav")} />` to your composition.
+The audio API is also available from `@demotion/cli/audio`.
+
+## Optional 3D
+
+`Stack3D` and related exports live at `@demotion/cli/three`. For the **React 18 /
+Remotion 4.0.528 starter**, install the tested optional dependencies:
 
 ```bash
 npm install three@0.160.1 postprocessing@6.36.4 @react-three/fiber@8.17.10 @react-three/postprocessing@2.16.3 @remotion/three@4.0.528
 ```
 
-Keep all Remotion packages on the same version. The basic starter does not need
-these optional peers.
-
-The older exported UI components remain available for compatibility. Their
-palette/timing audit is recorded in [the QA notes](https://github.com/SohailKhan0525/demotion/blob/main/docs/qa/continuation.md); they
-are not a claim that every historical component meets the new launch quality bar.
-
-## Soundtracks
-
-Generate original music and cues locally, or use your own audio in Remotion.
-
-```bash
-npm run build
-node bin/demotion.js audio examples/cues.json out/example.wav
+```tsx
+import { Stack3D } from "@demotion/cli/three";
 ```
 
-The cue file declares BPM, duration in beats, music ranges, and events such as
-`hit`, `whoosh`, `typing`, or `chime`. The engine targets −14 LUFS by default;
-measure the delivered media for integrated loudness and true peak. The launch
-picture and audio use the same timeline in `src/launch/timeline.ts`.
+The basic starter does not need these peers. Real depth of field can be expensive
+on software graphics, so use a small test render before rendering a long scene.
+
+## Troubleshooting
+
+- **Browser download unavailable:** install Chromium and pass
+  `--browser-executable=/path/to/chromium` to the generated project's Remotion
+  command, for example `npm run render -- --browser-executable=/usr/bin/chromium`.
+- **Remotion version mismatch:** align `remotion` and all installed `@remotion/*`
+  versions. Avoid forcing an incompatible dependency tree.
+- **Slow rendering:** reduce Remotion's concurrency on a small machine, for example
+  `npm run render -- --concurrency=2`. 4K and 3D need more time and memory.
+- **Blank text or missing fonts:** keep `public/fonts` and the starter's font-loading
+  call. The CLI copies the font license files with the fonts.
 
 ## License — free for personal use, paid for business
 
@@ -122,13 +170,23 @@ Bug reports and ideas are very welcome in [Issues](https://github.com/SohailKhan
 
 ## Development
 
-See [the handoff](https://github.com/SohailKhan0525/demotion/blob/main/docs/HANDOFF.md) and [continuation notes](https://github.com/SohailKhan0525/demotion/blob/main/docs/qa/continuation.md)
-for the remaining work and validation evidence. Use `npm ci` with the committed
-lockfile, then `npm run lint && npm run build && npm test`.
+```bash
+git clone https://github.com/SohailKhan0525/demotion.git
+cd demotion
+npm ci
+npm run dev
+```
 
-Releases use semantic-release. Conventional Commits: `feat:` for a minor version,
-`fix:` for a patch; documentation and test commits do not release. The owner has authorized the first `0.1.0` publication through GitHub Actions using [the release guide](https://github.com/SohailKhan0525/demotion/blob/main/docs/PUBLISHING.md),
-with `NPM_SECRET` for the individual npm account `qofeno-labs`, without provenance.
-After that baseline is tagged, future releases can use
-the manually dispatched **Release** workflow. Ordinary pushes run CI and do not
-publish. Keep provenance disabled in both paths.
+Select **Launch**, **Lab**, or **UI** in Studio. Generated media stays in ignored
+`out/`; the launch MP4 is intentionally not checked in. The source remains available
+to regenerate it.
+
+```bash
+npm run lint
+npm run build
+npm test
+```
+
+See [development notes](docs/DEVELOPMENT.md) for source rendering and verification,
+and [release instructions](docs/PUBLISHING.md) for publishing. npm releases are
+public, use the organization package `@demotion/cli`, and have provenance disabled.

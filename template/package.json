@@ -8,7 +8,6 @@
     "render:4k": "remotion render src/index.ts MyVideo out/video-4k.mp4 --scale=2"
   },
   "dependencies": {
-    "demotion": "^__DEMOTION_VERSION__",
     "@remotion/cli": "__REMOTION_VERSION__",
     "@remotion/fonts": "__REMOTION_VERSION__",
     "@remotion/layout-utils": "__REMOTION_VERSION__",
@@ -17,7 +16,8 @@
     "@remotion/transitions": "__REMOTION_VERSION__",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "remotion": "__REMOTION_VERSION__"
+    "remotion": "__REMOTION_VERSION__",
+    "@demotion/cli": "^__DEMOTION_VERSION__"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
