@@ -4,7 +4,7 @@ Use this only after the manual npm publish and registry-backed install/render
 checks succeed. Attach the existing 26-second MP4 directly to the main post.
 The demo was recorded before publication; the second reply makes that explicit.
 
-## Main post — 242 weighted characters
+## Main post — 255 weighted characters
 
 ```text
 This video is React code.
@@ -13,17 +13,17 @@ No screen recording. Every frame is generated locally with demotion, my new tool
 
 Beat-synced type, 3D, motion blur + generated sound.
 
-npx demotion init my-video
+npx @qofeno-labs/demotion init my-video
 
 What would you build with it?
 ```
 
-## First self-reply — 180 weighted characters
+## First self-reply — 193 weighted characters
 
 ```text
 Try it:
 
-npx demotion init my-video
+npx @qofeno-labs/demotion init my-video
 cd my-video
 npm install
 npm start
@@ -31,7 +31,7 @@ npm start
 Edit src/MyVideo.tsx, then npm run render.
 
 Code + docs: https://github.com/SohailKhan0525/demotion
-npm: https://www.npmjs.com/package/demotion
+npm: https://www.npmjs.com/package/@qofeno-labs/demotion
 ```
 
 ## Second self-reply — 222 weighted characters

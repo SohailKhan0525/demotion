@@ -30,3 +30,15 @@ Prepared release notes and X copy: [release notes](../launch/release-notes-0.1.0
 [X launch](../launch/x-launch.md). The social copy is conditional on successful
 publication and was checked against the official standard text-length rules.
 Existing LICENSE and COMMERCIAL-LICENSE.md are unchanged.
+
+
+## Personal scope after npm's name rejection
+
+The authorized unscoped publication authenticated correctly as qofeno-labs but
+npm refused the name with E403: too similar to existing emotion/motion packages.
+The package now uses npm's recommended personal scope @qofeno-labs/demotion;
+this is not an npm organization. The CLI remains demotion. The starter's demotion
+dependency is an npm alias to the scoped package, preserving the real source
+shown in the video and the import paths in generated projects. CI tests assert
+that the scaffold points to the correct package/version. No unscoped version was
+published or version number consumed by the rejected attempts.

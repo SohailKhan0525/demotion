@@ -49,14 +49,22 @@ npm run build
 npm pack --pack-destination out
 node bin/demotion.js init out/my-video
 cd out/my-video
-npm install ../demotion-0.1.0.tgz
+npm install ../qofeno-labs-demotion-0.1.0.tgz
 npm start
 npm run render:4k
 ```
 
 The tarball filename follows the package version. Once the owner publishes the
-first release, the registry-based `npx demotion init my-video` flow will become
+first release, the registry-based `npx @qofeno-labs/demotion init my-video` flow will become
 available. A local tarball smoke check does not establish registry availability.
+
+The npm package is `@qofeno-labs/demotion`, published by the individual
+`qofeno-labs` account; this is not an npm organization. npm rejected the unscoped
+name `demotion` as too similar to existing packages. The CLI binary remains
+`demotion`. The starter uses an npm dependency alias so its existing
+`import ... from "demotion"` code, including the code shown in the launch film,
+continues to work. In other React projects, install `@qofeno-labs/demotion` and
+import from `@qofeno-labs/demotion` (or its `/audio` and `/three` entries).
 
 ## Components
 

@@ -1,8 +1,17 @@
+# Registry naming decision
+
+npm rejected the unscoped name demotion with E403 because it is too similar to
+emotion and motion. The package is now **@qofeno-labs/demotion**, under the
+individual account qofeno-labs. This personal scope does not require an npm
+organization. The executable/brand remains demotion; generated projects use an
+npm dependency alias so their imports and the source shown in the video stay valid.
+The release workflow checks this exact scoped name before publishing.
+
 # Current publishing authorization
 
 The owner has now authorized the agent to publish the first release using the
 GitHub Actions repository secret `NPM_SECRET`. The **First npm release** workflow
-checks `npm whoami` is `qofeno-labs`, publishes the unscoped `demotion@0.1.0` with
+checks `npm whoami` is `qofeno-labs`, publishes the personal-account-scoped `@qofeno-labs/demotion@0.1.0` with
 provenance disabled, verifies registry metadata, and records the v0.1.0 source tag.
 Its push trigger is limited to changes to that first-release workflow; reruns
 check for an existing matching version instead of republishing it. Later releases
@@ -13,7 +22,7 @@ publication to perform after the workflow succeeds. Do not republish 0.1.0.
 
 # First npm release: owner publishes 0.1.0 manually
 
-This checkout prepares `demotion@0.1.0`. Preparation and a successful dry run are
+This checkout prepares `@qofeno-labs/demotion@0.1.0`. Preparation and a successful dry run are
 not publication. The owner performs the actual publish on their own computer.
 Provenance is explicitly disabled in package.json and the release workflow.
 No token needs to be pasted into chat or committed.
@@ -63,15 +72,15 @@ manual browser-authenticated publishing is the owner's chosen first-release path
 ## 3. Verify the registry and a clean consumer
 
 ```bash
-npm view demotion@0.1.0 version --registry=https://registry.npmjs.org/
-npm view demotion dist-tags --registry=https://registry.npmjs.org/
+npm view @qofeno-labs/demotion@0.1.0 version --registry=https://registry.npmjs.org/
+npm view @qofeno-labs/demotion dist-tags --registry=https://registry.npmjs.org/
 ```
 
 Expected: version `0.1.0`, with `latest` pointing to `0.1.0`. Registry availability
 is established only after these succeed. In a fresh folder outside the repo:
 
 ```bash
-npx --yes demotion@0.1.0 init first-demotion-video
+npx --yes @qofeno-labs/demotion@0.1.0 init first-demotion-video
 cd first-demotion-video
 npm install
 npm start
@@ -124,7 +133,7 @@ post the launch copy in [launch/x-launch.md](launch/x-launch.md). That copy assu
 - `E403`: check the active account, package-name ownership/permissions and the
   exact npm error. A pre-publish 404 does not guarantee the name is available to
   that account. Do not repeatedly bump versions to work around an authorization error.
-- Existing-version conflict: inspect `npm view demotion@0.1.0 version` before
+- Existing-version conflict: inspect `npm view @qofeno-labs/demotion@0.1.0 version` before
   retrying. A published name/version cannot be reused, even if later unpublished.
 - Consumer dependency failures: retain the exact error and npm/Node versions.
   Do not use `--force` or `--legacy-peer-deps` as the default starter workflow.
