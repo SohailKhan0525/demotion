@@ -19,3 +19,10 @@ Read README.md for supported user commands, docs/DEVELOPMENT.md for verification
 and docs/PUBLISHING.md for the release workflow. Preserve the license files and
 terms. Older exported components remain for compatibility; future styling work
 should be deliberate and tested, not implemented by deleting the public API.
+
+
+Release status: @demotion/cli@0.1.0 is publicly available with latest=0.1.0,
+publisher qofeno-labs and no provenance. Registry installation, types, Studio,
+1080p rendering and the audio CLI were verified. The candidate also passed full
+4K rendering and an optional 3D still. v0.1.0 matches npm's published gitHead.
+The first-release bootstrap workflow is removed; only CI and manual Release remain.

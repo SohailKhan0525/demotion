@@ -9,29 +9,27 @@ Publishing is public and provenance is disabled in package.json, CLI flags and
 workflow environment. No OIDC provenance permission is requested. The package
 name must remain @demotion/cli; the executable name is demotion.
 
-## First release
+## Published baseline
 
-The temporary First npm release workflow prepares and checks the exact 0.1.0
-package, authenticates the requested user, and publishes it using NPM_SECRET.
-Its push bootstrap is authorized for this organization's first release. It is
-idempotent: a matching existing version is verified, not published again.
+`@demotion/cli@0.1.0` is published, with `latest` pointing to 0.1.0. The public
+registry identifies qofeno-labs as its publisher and has no provenance attestation.
+The source tag v0.1.0 identifies npm's gitHead. The temporary first-publication
+workflow has been retired; ordinary pushes run CI and cannot publish packages.
 
-Verification reads the registry's version endpoint, checks the publisher and
-absence of provenance, and tags the published gitHead as v0.1.0. A command returning
-success is not sufficient evidence of a usable release. Test a registry consumer:
+The registry-backed consumer check used the documented npx command outside the
+source checkout, installed from registry.npmjs.org, passed TypeScript checking,
+started Studio and rendered a 150-frame 1080p video. The README audio example also
+ran through the installed registry CLI. Verification details are in DEVELOPMENT.md.
 
 ```bash
-npx --yes @demotion/cli@0.1.0 init my-video
+npx --yes @demotion/cli@latest init my-video
 cd my-video
 npm install
-npm run render
+npm start
 ```
 
-Run this outside the source checkout. Check installed types and exports, generated
-fonts, video dimensions/frame count and the audio CLI. Keep the README's commands
-aligned with the actual release. Do not announce availability until these succeed.
-The temporary workflow can be removed once publication, source tag and consumer
-checks have completed.
+Use another terminal in my-video for npm run render. Do not republish 0.1.0;
+published name/version pairs are immutable.
 
 ## Later releases
 

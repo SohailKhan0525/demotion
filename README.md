@@ -22,7 +22,8 @@ npm install
 npm start
 ```
 
-Remotion Studio opens a preview. Edit `src/MyVideo.tsx`, then render:
+Remotion Studio opens a preview. Edit `src/MyVideo.tsx`. Open a second terminal
+in `my-video` (or stop Studio with Ctrl+C), then render:
 
 ```bash
 npm run render       # out/video.mp4 — 1920×1080
