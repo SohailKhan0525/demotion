@@ -19,7 +19,8 @@ demotion. The first-release workflow no longer runs on pushes; it requires manua
 dispatch and an explicit publish checkbox. The future Release workflow also
 checks that its baseline tag belongs to demotion, not the unintended scoped
 package. Provenance remains disabled. Tests and workflow lint pass after restoring
-the name. An unpublish decision for the scoped package was requested separately;
-no deletion is assumed authorized merely from the naming correction.
+the name. The owner reported deleting the scoped package. Its public 0.1.0 version
+endpoint was then checked and returned HTTP 404. No further scoped publication
+or recreation is authorized.
 
 See [the current blocker and support-request draft](../PUBLISHING.md).

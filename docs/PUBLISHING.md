@@ -7,7 +7,8 @@ resolve this registry naming restriction. The owner needs npm Support to approve
 or release the unscoped name; no alternative package name is authorized.
 
 A scoped publication was mistakenly made as @qofeno-labs/demotion@0.1.0. That is
-not the requested package. It is not a substitute for publishing demotion.
+not the requested package. The owner has deleted it, and its version endpoint
+now returns 404. Do not recreate it. It is not a substitute for publishing demotion.
 The repository and starter have been restored to the unscoped name. The first
 release workflow is now manual-only, with a required publish checkbox, so code
 pushes cannot launch another publication. No new publish attempt should be made
