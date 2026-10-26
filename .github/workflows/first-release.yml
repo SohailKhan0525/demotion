@@ -62,24 +62,22 @@ jobs:
           echo "Verified npm account: qofeno-labs"
       - name: Check whether the version already exists
         id: registry
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
         run: |
           node - <<'JS'
-          const {spawnSync} = require('node:child_process');
           const fs = require('node:fs');
-          const r = spawnSync('npm', ['view', '@qofeno-labs/demotion@0.1.0', '--json', '--prefer-online', '--registry=https://registry.npmjs.org/'], {encoding: 'utf8'});
-          const data = JSON.parse(r.stdout || '{}');
-          if (r.status === 0) {
+          (async () => {
+            const r = await fetch('https://registry.npmjs.org/@qofeno-labs%2Fdemotion/0.1.0', {cache: 'no-store'});
+            if (r.status === 404) {
+              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'exists=false\n');
+              return;
+            }
+            if (!r.ok) throw new Error(`Registry preflight HTTP ${r.status}`);
+            const data = await r.json();
             if (data.name !== '@qofeno-labs/demotion' || data.version !== '0.1.0' || data._npmUser?.name !== 'qofeno-labs') {
-              throw new Error('The existing name/version is not the expected qofeno-labs publication');
+              throw new Error('Existing publication does not match the expected personal account');
             }
             fs.appendFileSync(process.env.GITHUB_OUTPUT, 'exists=true\n');
-          } else if (data.error?.code === 'E404') {
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'exists=false\n');
-          } else {
-            throw new Error(`Registry preflight failed (${data.error?.code || r.status}); not attempting publication`);
-          }
+          })().catch((e) => { console.error(`::error::${e.message}`); process.exit(1); });
           JS
       - name: Publish demotion 0.1.0 without provenance
         if: steps.registry.outputs.exists == 'false'
@@ -105,26 +103,40 @@ jobs:
           console.log('npm publish completed successfully');
           JS
       - name: Verify registry version, publisher and provenance policy
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
+        id: published
         run: |
           node - <<'JS'
-          const {execFileSync} = require('node:child_process');
           const assert = require('node:assert/strict');
-          const pkg = JSON.parse(execFileSync('npm', ['view', '@qofeno-labs/demotion@0.1.0', '--json', '--prefer-online', '--registry=https://registry.npmjs.org/'], {encoding: 'utf8'}));
-          assert.equal(pkg.name, '@qofeno-labs/demotion');
-          assert.equal(pkg.version, '0.1.0');
-          assert.equal(pkg._npmUser.name, 'qofeno-labs');
-          assert.ok(!pkg.dist?.attestations?.provenance, 'Unexpected provenance attestation');
-          console.log('Verified public @qofeno-labs/demotion@0.1.0, publisher qofeno-labs, no provenance attestation');
+          const fs = require('node:fs');
+          (async () => {
+            let pkg;
+            for (let attempt = 0; attempt < 12; attempt++) {
+              const r = await fetch('https://registry.npmjs.org/@qofeno-labs%2Fdemotion/0.1.0', {cache: 'no-store'});
+              if (r.ok) { pkg = await r.json(); break; }
+              if (r.status !== 404) throw new Error(`Registry verification HTTP ${r.status}`);
+              await new Promise((resolve) => setTimeout(resolve, 5000));
+            }
+            assert.ok(pkg, 'Published version is not yet visible');
+            assert.equal(pkg.name, '@qofeno-labs/demotion');
+            assert.equal(pkg.version, '0.1.0');
+            assert.equal(pkg._npmUser.name, 'qofeno-labs');
+            assert.ok(!pkg.dist?.attestations?.provenance, 'Unexpected provenance attestation');
+            assert.match(pkg.gitHead, /^[a-f0-9]{40}$/);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `git_head=${pkg.gitHead}\n`);
+            console.log('Verified @qofeno-labs/demotion@0.1.0, publisher qofeno-labs, no provenance');
+          })().catch((e) => { console.error(`::error::${e.message}`); process.exit(1); });
           JS
-      - name: Record the first release source tag
+      - name: Record the actual published source tag
+        env:
+          PUBLISHED_COMMIT: ${{ steps.published.outputs.git_head }}
         run: |
+          git cat-file -e "$PUBLISHED_COMMIT^{commit}"
           if git rev-parse --verify --quiet refs/tags/v0.1.0 > /dev/null; then
-            echo "v0.1.0 already exists; preserving the existing tag."
+            test "$(git rev-parse 'refs/tags/v0.1.0^{commit}')" = "$PUBLISHED_COMMIT"
+            echo "v0.1.0 already identifies the actual published source."
           else
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git tag -a v0.1.0 -m 'demotion 0.1.0'
+            git tag -a v0.1.0 "$PUBLISHED_COMMIT" -m 'demotion 0.1.0'
             git push origin refs/tags/v0.1.0
           fi
