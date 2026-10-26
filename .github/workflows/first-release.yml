@@ -143,17 +143,27 @@ jobs:
             console.log('Verified @demotion/cli@0.1.0, publisher qofeno-labs, no provenance');
           })().catch((e) => { console.error(`::error::${e.message}`); process.exit(1); });
           JS
-      - name: Record the actual published source tag
-        env:
-          PUBLISHED_COMMIT: ${{ steps.published.outputs.git_head }}
+      - name: Verify the recorded release source tag
         run: |
-          git cat-file -e "$PUBLISHED_COMMIT^{commit}"
-          if git rev-parse --verify --quiet refs/tags/v0.1.0 > /dev/null; then
-            test "$(git rev-parse 'refs/tags/v0.1.0^{commit}')" = "$PUBLISHED_COMMIT"
-            echo "v0.1.0 already identifies the actual published source."
+          git fetch origin tag v0.1.0
+          node - <<'JS'
+          const {execFileSync} = require('node:child_process');
+          const assert = require('node:assert/strict');
+          (async () => {
+            const r = await fetch('https://registry.npmjs.org/@demotion%2Fcli/0.1.0', {cache: 'no-store'});
+            if (!r.ok) throw new Error(`Registry HTTP ${r.status}`);
+            const pkg = await r.json();
+            const tag = execFileSync('git', ['rev-parse', 'refs/tags/v0.1.0^{commit}'], {encoding: 'utf8'}).trim();
+            assert.equal(tag, pkg.gitHead, 'Tag must identify the actual published source');
+            console.log('Verified v0.1.0 source against npm gitHead');
+          })().catch((e) => { console.error(`::error::${e.message}`); process.exit(1); });
+          JS
+      - name: Create the GitHub release for the verified tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v0.1.0 > /dev/null 2>&1; then
+            echo "GitHub release already exists."
           else
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git tag -a v0.1.0 "$PUBLISHED_COMMIT" -m 'demotion 0.1.0'
-            git push origin refs/tags/v0.1.0
+            gh release create v0.1.0 --verify-tag --title '@demotion/cli 0.1.0' --notes-file CHANGELOG.md
           fi

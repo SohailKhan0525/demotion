@@ -69,3 +69,14 @@ Tarball names follow the package version. After publishing, verify the documente
 npx command and npm install in a fresh directory outside the source checkout.
 Check types, a complete starter video, audio output and optional 3D dependency
 installation. Never substitute a source-tree import for a registry consumer test.
+
+
+## Verified 0.1.0 checks
+
+The public registry identifies @demotion/cli@0.1.0 with latest=0.1.0, publisher
+qofeno-labs and no provenance attestation. Its v0.1.0 source tag matches npm's
+gitHead. A clean project outside the checkout used the normal npx command,
+installed from registry.npmjs.org, passed TypeScript checking and rendered a
+1920×1080 video: 150 frames at 30fps, 5 seconds. The same release candidate also
+completed the full 3840×2160 starter render and an optional 3D still. The README's
+cue example generated a valid 5.5-second WAV. CI checks 30 tests on Node 22/24.
