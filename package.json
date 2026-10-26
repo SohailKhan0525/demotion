@@ -1,6 +1,6 @@
 {
   "name": "demotion",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Motion graphics, written in code. A React toolkit and CLI for making polished videos locally with Remotion: beat-synced motion, camera, type, transitions and sound. Free for personal use; commercial license available.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "author": "Qofeno Labs",
@@ -40,11 +40,13 @@
     "README.md",
     "LICENSE",
     "COMMERCIAL-LICENSE.md",
-    "THIRD_PARTY_NOTICES.md"
+    "THIRD_PARTY_NOTICES.md",
+    "docs/ui.md"
   ],
   "publishConfig": {
     "access": "public",
-    "provenance": true
+    "provenance": false,
+    "registry": "https://registry.npmjs.org/"
   },
   "config": {
     "remotionVersion": "4.0.528"
@@ -82,7 +84,12 @@
     "@remotion/transitions": "^4.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "remotion": "^4.0.0"
+    "remotion": "^4.0.0",
+    "@remotion/three": "4.0.528",
+    "@react-three/fiber": "8.17.10",
+    "@react-three/postprocessing": "2.16.3",
+    "three": "0.160.1",
+    "postprocessing": "6.36.4"
   },
   "devDependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
@@ -115,5 +122,25 @@
   "funding": {
     "type": "individual",
     "url": "https://ko-fi.com/qofenoai"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "peerDependenciesMeta": {
+    "@remotion/three": {
+      "optional": true
+    },
+    "@react-three/fiber": {
+      "optional": true
+    },
+    "@react-three/postprocessing": {
+      "optional": true
+    },
+    "three": {
+      "optional": true
+    },
+    "postprocessing": {
+      "optional": true
+    }
   }
 }

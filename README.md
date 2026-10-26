@@ -2,9 +2,9 @@
 
 **Motion graphics, written in code.** A React toolkit and CLI for making polished videos on your own computer — beat-synced motion, camera, type, transitions and sound — rendered locally with [Remotion](https://www.remotion.dev). No screen recordings. No screenshots. Every frame is code.
 
-> **Status: pre-release (0.x).** Not on npm yet — the first release is cut automatically from the `main` branch.
+> **Status: 0.1.0 release candidate.** Prepared for the owner’s first manual npm publication; registry installation is not yet verified. See [publishing steps](https://github.com/SohailKhan0525/demotion/blob/main/docs/PUBLISHING.md).
 
-[Download the 1080p launch video (MP4, 26 MB)](https://github.com/SohailKhan0525/demotion/raw/refs/heads/main/media/demotion-launch.mp4) · [Rendered QA](docs/qa/launch.md)
+[Download the 1080p launch video (MP4, 26 MB)](https://github.com/SohailKhan0525/demotion/raw/refs/heads/main/media/demotion-launch.mp4) · [Rendered QA](https://github.com/SohailKhan0525/demotion/blob/main/docs/qa/launch.md)
 
 ## Run from source (pre-release)
 
@@ -49,7 +49,7 @@ npm run build
 npm pack --pack-destination out
 node bin/demotion.js init out/my-video
 cd out/my-video
-npm install ../demotion-0.0.0.tgz
+npm install ../demotion-0.1.0.tgz
 npm start
 npm run render:4k
 ```
@@ -65,14 +65,23 @@ available. A local tarball smoke check does not establish registry availability.
   render-time motion blur. Author animations with `useShot()`.
 - `KineticHeadline`, `WideStack`: letter springs and variable-width Archivo type.
 - `Terminal`, `CodePanel`: timed typing and staggered source-code reveals.
-  See [UI panel props](docs/ui.md).
+  See [UI panel props](https://github.com/SohailKhan0525/demotion/blob/main/docs/ui.md).
 - `Stack3D` from `demotion/three`: textured panels and genuine lens blur. Requires
   `three`, `@remotion/three`, `@react-three/fiber` (React 18: v8),
   `@react-three/postprocessing` (v2), and `postprocessing` in the consuming project;
   those are already installed in this checkout.
 
+For the tested React 18 / Remotion 4.0.528 starter, enable the optional 3D entry with:
+
+```bash
+npm install three@0.160.1 postprocessing@6.36.4 @react-three/fiber@8.17.10 @react-three/postprocessing@2.16.3 @remotion/three@4.0.528
+```
+
+Keep all Remotion packages on the same version. The basic starter does not need
+these optional peers.
+
 The older exported UI components remain available for compatibility. Their
-palette/timing audit is recorded in [the QA notes](docs/qa/continuation.md); they
+palette/timing audit is recorded in [the QA notes](https://github.com/SohailKhan0525/demotion/blob/main/docs/qa/continuation.md); they
 are not a claim that every historical component meets the new launch quality bar.
 
 ## Soundtracks
@@ -113,13 +122,12 @@ Bug reports and ideas are very welcome in [Issues](https://github.com/SohailKhan
 
 ## Development
 
-See [the handoff](docs/HANDOFF.md) and [continuation notes](docs/qa/continuation.md)
+See [the handoff](https://github.com/SohailKhan0525/demotion/blob/main/docs/HANDOFF.md) and [continuation notes](https://github.com/SohailKhan0525/demotion/blob/main/docs/qa/continuation.md)
 for the remaining work and validation evidence. Use `npm ci` with the committed
 lockfile, then `npm run lint && npm run build && npm test`.
 
 Releases use semantic-release. Conventional Commits: `feat:` for a minor version,
-`fix:` for a patch; documentation and test commits do not release. The owner
-controls publication: dispatch the **Release** workflow on `main` (or `beta` for
-a prerelease) and explicitly enable its `publish` input after configuring
-`NPM_TOKEN`. Ordinary pushes run CI and do not publish. Do not run `npm publish`
-manually.
+`fix:` for a patch; documentation and test commits do not release. The owner publishes the first `0.1.0` manually using [the release guide](https://github.com/SohailKhan0525/demotion/blob/main/docs/PUBLISHING.md),
+with provenance disabled. After that baseline is tagged, future releases can use
+the manually dispatched **Release** workflow. Ordinary pushes run CI and do not
+publish. Keep provenance disabled in both paths.

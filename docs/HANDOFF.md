@@ -76,6 +76,13 @@ Cue timing per shot is in `timeline.ts` (typing steps = real character counts: 3
 4. When to publish 0.1.0 (see §8). Recommended: after the launch video is done and README polished.
 
 ## 8. Release & publish (owner actions)
+
+**Updated owner decision:** first version is `0.1.0`, published manually by the
+owner, without provenance. Follow [PUBLISHING.md](PUBLISHING.md). The earlier
+token/automatic-first-release instructions below are historical and superseded.
+Future GitHub releases are manually dispatched and also have provenance disabled.
+
+### Historical plan (superseded)
 1. npm: log in as **qofeno-labs**; create a token that can publish a **new unscoped package** (granular token with access to “all packages” read+write, or a classic *Automation* token); 2FA must not block automation.
 2. GitHub → repo Settings → Secrets and variables → Actions → new secret **`NPM_TOKEN`**.
 3. Re-run the latest “Release” workflow (or push a `feat:`/`fix:` commit). semantic-release then tags, writes `CHANGELOG.md`, publishes `demotion@0.1.0` with provenance, creates the GitHub release. `npm i demotion` / `npx demotion init my-video` then work from the registry (**verify from a clean folder**; until then the README says “pre-release”).

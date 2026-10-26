@@ -1,4 +1,5 @@
 import React from "react";
+import packageJson from "../../package.json";
 import { AbsoluteFill } from "remotion";
 import { createBeatClock } from "../core/clock";
 import { MotionProject, Shot } from "../engine/MotionProject";
@@ -13,7 +14,7 @@ export const UI: React.FC = () => <MotionProject clock={uiClock} hud={<div style
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
       <Terminal fontSize={40} title="demotion / local workflow" lines={[
         { at: 0.2, text: "node bin/demotion.js --version", type: 1.3, prompt: true },
-        { at: 1.7, text: "0.0.0", color: T.accent },
+        { at: 1.7, text: packageJson.version, color: T.accent },
         { at: 2.2, text: "npm run build", type: 0.8, prompt: true },
       ]} />
     </AbsoluteFill>

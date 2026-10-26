@@ -21,7 +21,6 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
-      id-token: write
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -31,6 +30,17 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Require the manually published first release
+        run: |
+          if ! git rev-parse --verify --quiet refs/tags/v0.1.0 > /dev/null; then
+            echo "::error::Publish 0.1.0 manually and push its v0.1.0 source tag first. See docs/PUBLISHING.md."
+            exit 1
+          fi
+          published_version="$(npm view demotion@0.1.0 version --registry=https://registry.npmjs.org/)"
+          if [ "$published_version" != "0.1.0" ]; then
+            echo "::error::The manual demotion@0.1.0 publication is not available in the public registry."
+            exit 1
+          fi
       - name: Check publishing credential
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -48,4 +58,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: "true"
+          NPM_CONFIG_PROVENANCE: "false"

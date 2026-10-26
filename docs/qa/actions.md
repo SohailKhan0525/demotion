@@ -30,7 +30,8 @@ is denied by this cloud network policy, so API/log access is not claimed.
   main/beta branch restriction. Ordinary pushes cannot publish npm packages.
   The owner supplies NPM_TOKEN securely in repository settings; missing credentials
   produce a clear failure before release installation. Semantic-release still
-  controls versions, release notes, provenance and GitHub releases.
+  controls versions, release notes and GitHub releases. Provenance was later
+  explicitly disabled at the owner’s request for both manual and workflow publishing.
 - Local install, TypeScript checks, build and all 29 tests passed before commit.
   Package inspection confirmed dist and bundled fonts are included, while the
   26 MB video is excluded from the npm package. Workflow syntax is checked with
