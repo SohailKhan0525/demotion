@@ -1,0 +1,125 @@
+name: First npm release
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/first-release.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: npm-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NPM_CONFIG_PROVENANCE: "false"
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org/
+      - name: Verify the intended public package
+        run: |
+          node - <<'JS'
+          const assert = require('node:assert/strict');
+          const pkg = require('./package.json');
+          assert.equal(pkg.name, 'demotion');
+          assert.equal(pkg.version, '0.1.0');
+          assert.equal(pkg.publishConfig.access, 'public');
+          assert.equal(pkg.publishConfig.provenance, false);
+          JS
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - name: Verify the npm publishing account
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::NPM_SECRET must be configured as a GitHub Actions secret for this repository."
+            exit 1
+          fi
+          if ! publisher="$(npm whoami --registry=https://registry.npmjs.org/)"; then
+            echo "::error::The npm account check failed using NPM_SECRET. Check the token status and registry access."
+            exit 1
+          fi
+          if [ "$publisher" != "qofeno-labs" ]; then
+            echo "::error::NPM_SECRET does not authenticate as the requested qofeno-labs account."
+            exit 1
+          fi
+          echo "Verified npm account: qofeno-labs"
+      - name: Check whether the version already exists
+        id: registry
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
+        run: |
+          node - <<'JS'
+          const {spawnSync} = require('node:child_process');
+          const fs = require('node:fs');
+          const r = spawnSync('npm', ['view', 'demotion@0.1.0', '--json', '--prefer-online', '--registry=https://registry.npmjs.org/'], {encoding: 'utf8'});
+          const data = JSON.parse(r.stdout || '{}');
+          if (r.status === 0) {
+            if (data.name !== 'demotion' || data.version !== '0.1.0' || data._npmUser?.name !== 'qofeno-labs') {
+              throw new Error('The existing name/version is not the expected qofeno-labs publication');
+            }
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'exists=true\n');
+          } else if (data.error?.code === 'E404') {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'exists=false\n');
+          } else {
+            throw new Error(`Registry preflight failed (${data.error?.code || r.status}); not attempting publication`);
+          }
+          JS
+      - name: Publish demotion 0.1.0 without provenance
+        if: steps.registry.outputs.exists == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
+        run: |
+          node - <<'JS'
+          const {spawnSync} = require('node:child_process');
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const r = spawnSync('npm', ['publish', '--access', 'public', '--provenance=false', '--registry=https://registry.npmjs.org/'], {encoding: 'utf8'});
+          fs.writeFileSync(path.join(process.env.RUNNER_TEMP, 'demotion-publish.log'), (r.stdout || '') + (r.stderr || ''));
+          if (r.status !== 0) {
+            const code = (r.stderr || '').match(/npm (?:error|ERR!) code ([A-Z0-9_]+)/)?.[1] || 'UNKNOWN';
+            console.error(`::error::npm publication failed (${code}). Check NPM_SECRET publishing permission and npm account/2FA requirements. No successful publication is claimed.`);
+            process.exit(r.status || 1);
+          }
+          console.log('npm publish completed successfully');
+          JS
+      - name: Verify registry version, publisher and provenance policy
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
+        run: |
+          node - <<'JS'
+          const {execFileSync} = require('node:child_process');
+          const assert = require('node:assert/strict');
+          const pkg = JSON.parse(execFileSync('npm', ['view', 'demotion@0.1.0', '--json', '--prefer-online', '--registry=https://registry.npmjs.org/'], {encoding: 'utf8'}));
+          assert.equal(pkg.name, 'demotion');
+          assert.equal(pkg.version, '0.1.0');
+          assert.equal(pkg._npmUser.name, 'qofeno-labs');
+          assert.ok(!pkg.dist?.attestations?.provenance, 'Unexpected provenance attestation');
+          console.log('Verified public demotion@0.1.0, publisher qofeno-labs, no provenance attestation');
+          JS
+      - name: Record the first release source tag
+        run: |
+          if git rev-parse --verify --quiet refs/tags/v0.1.0 > /dev/null; then
+            echo "v0.1.0 already exists; preserving the existing tag."
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git tag -a v0.1.0 -m 'demotion 0.1.0'
+            git push origin refs/tags/v0.1.0
+          fi

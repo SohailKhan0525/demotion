@@ -9,7 +9,7 @@ on:
         default: false
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: npm-publish-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -43,10 +43,10 @@ jobs:
           fi
       - name: Check publishing credential
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_SECRET || secrets.NPM_TOKEN }}
         run: |
           if [ -z "$NPM_TOKEN" ]; then
-            echo "::error::Add the NPM_TOKEN repository secret before dispatching a release."
+            echo "::error::Add the NPM_SECRET repository secret before dispatching a release."
             exit 1
           fi
       - run: npm ci --no-audit --no-fund
@@ -57,5 +57,5 @@ jobs:
         run: npx --no-install semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_SECRET || secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: "false"

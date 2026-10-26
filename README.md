@@ -127,7 +127,8 @@ for the remaining work and validation evidence. Use `npm ci` with the committed
 lockfile, then `npm run lint && npm run build && npm test`.
 
 Releases use semantic-release. Conventional Commits: `feat:` for a minor version,
-`fix:` for a patch; documentation and test commits do not release. The owner publishes the first `0.1.0` manually using [the release guide](https://github.com/SohailKhan0525/demotion/blob/main/docs/PUBLISHING.md),
-with provenance disabled. After that baseline is tagged, future releases can use
+`fix:` for a patch; documentation and test commits do not release. The owner has authorized the first `0.1.0` publication through GitHub Actions using [the release guide](https://github.com/SohailKhan0525/demotion/blob/main/docs/PUBLISHING.md),
+with `NPM_SECRET` for the individual npm account `qofeno-labs`, without provenance.
+After that baseline is tagged, future releases can use
 the manually dispatched **Release** workflow. Ordinary pushes run CI and do not
 publish. Keep provenance disabled in both paths.

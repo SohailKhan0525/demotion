@@ -1,3 +1,16 @@
+# Current publishing authorization
+
+The owner has now authorized the agent to publish the first release using the
+GitHub Actions repository secret `NPM_SECRET`. The **First npm release** workflow
+checks `npm whoami` is `qofeno-labs`, publishes the unscoped `demotion@0.1.0` with
+provenance disabled, verifies registry metadata, and records the v0.1.0 source tag.
+Its push trigger is limited to changes to that first-release workflow; reruns
+check for an existing matching version instead of republishing it. Later releases
+use the manually dispatched Release workflow, which also accepts NPM_SECRET.
+
+The earlier manual instructions below remain an alternative, not a second
+publication to perform after the workflow succeeds. Do not republish 0.1.0.
+
 # First npm release: owner publishes 0.1.0 manually
 
 This checkout prepares `demotion@0.1.0`. Preparation and a successful dry run are
