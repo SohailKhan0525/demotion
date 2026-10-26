@@ -4,18 +4,90 @@
 
 > **Status: pre-release (0.x).** Not on npm yet — the first release is cut automatically from the `main` branch.
 
-## Quick start
+[Download the 1080p launch video (MP4, 26 MB)](https://github.com/SohailKhan0525/demotion/raw/refs/heads/main/media/demotion-launch.mp4) · [Rendered QA](docs/qa/launch.md)
+
+## Run from source (pre-release)
+
+Node 22.14 or newer a Chromium browser, and FFmpeg (including ffprobe) are required. The package has not been
+released to npm; use the checkout today:
 
 ```bash
-npx demotion init my-video
-cd my-video
-npm install
-npm start            # live preview in your browser
-npm run render       # out/video.mp4      (1920x1080)
-npm run render:4k    # out/video-4k.mp4   (3840x2160)
+git clone https://github.com/SohailKhan0525/demotion.git
+cd demotion
+npm ci
+npm run dev          # builds the toolkit, generates audio, opens Studio
 ```
 
-Edit `src/MyVideo.tsx` — that's the whole video. Everything renders on your computer; nothing is uploaded.
+Select **Launch** for the original 26-second, 1080p60 product film, **Lab** for
+motion/type studies, or **UI** for the terminal and code-panel study.
+
+```bash
+npm run lint && npm run build && npm test
+npm run render       # out/demotion-launch.mp4, H.264 / CRF 18
+npm run render:4k    # out/demotion-launch-4k.mp4 (expensive)
+npm run qa:launch    # shot, cut and transition stills in out/launch-qa/
+```
+
+In a container, use the supported browser and concurrency overrides:
+
+```bash
+DEMOTION_BROWSER=/usr/bin/chromium DEMOTION_CONCURRENCY=2 npm run dev
+DEMOTION_BROWSER=/usr/bin/chromium DEMOTION_CONCURRENCY=2 npm run render
+```
+
+`npm run render` regenerates the soundtrack before rendering and remuxes the
+original WAV afterward to preserve cue synchronization. The three.js shot
+uses real depth of field and can be slow on software graphics. No recording or
+remote rendering service is required. The 3D preview and progress panels are
+labeled workflow illustrations; the code and scaffold output come from this repo.
+
+To try the actual starter before the npm release, build a local package and
+install that tarball into the generated project:
+
+```bash
+npm run build
+npm pack --pack-destination out
+node bin/demotion.js init out/my-video
+cd out/my-video
+npm install ../demotion-0.0.0.tgz
+npm start
+npm run render:4k
+```
+
+The tarball filename follows the package version. Once the owner publishes the
+first release, the registry-based `npx demotion init my-video` flow will become
+available. A local tarball smoke check does not establish registry availability.
+
+## Components
+
+- `createBeatClock`, `spring`, `outExpo`: shared timing and motion vocabulary.
+- `MotionProject`, `Shot`: beat-sized scenes with camera, wipes, grain and real
+  render-time motion blur. Author animations with `useShot()`.
+- `KineticHeadline`, `WideStack`: letter springs and variable-width Archivo type.
+- `Terminal`, `CodePanel`: timed typing and staggered source-code reveals.
+  See [UI panel props](docs/ui.md).
+- `Stack3D` from `demotion/three`: textured panels and genuine lens blur. Requires
+  `three`, `@remotion/three`, `@react-three/fiber` (React 18: v8),
+  `@react-three/postprocessing` (v2), and `postprocessing` in the consuming project;
+  those are already installed in this checkout.
+
+The older exported UI components remain available for compatibility. Their
+palette/timing audit is recorded in [the QA notes](docs/qa/continuation.md); they
+are not a claim that every historical component meets the new launch quality bar.
+
+## Soundtracks
+
+Generate original music and cues locally, or use your own audio in Remotion.
+
+```bash
+npm run build
+node bin/demotion.js audio examples/cues.json out/example.wav
+```
+
+The cue file declares BPM, duration in beats, music ranges, and events such as
+`hit`, `whoosh`, `typing`, or `chime`. The engine targets −14 LUFS by default;
+measure the delivered media for integrated loudness and true peak. The launch
+picture and audio use the same timeline in `src/launch/timeline.ts`.
 
 ## License — free for personal use, paid for business
 
@@ -41,10 +113,13 @@ Bug reports and ideas are very welcome in [Issues](https://github.com/SohailKhan
 
 ## Development
 
-```bash
-npm install
-npm run dev      # preview the showcase video
-npm run lint && npm run build && npm test
-```
+See [the handoff](docs/HANDOFF.md) and [continuation notes](docs/qa/continuation.md)
+for the remaining work and validation evidence. Use `npm ci` with the committed
+lockfile, then `npm run lint && npm run build && npm test`.
 
-Releases are automated with [semantic-release](https://semantic-release.gitbook.io): commits follow [Conventional Commits](https://www.conventionalcommits.org) (`feat:` → minor, `fix:` → patch, `feat!:` → major).
+Releases use semantic-release. Conventional Commits: `feat:` for a minor version,
+`fix:` for a patch; documentation and test commits do not release. The owner
+controls publication: dispatch the **Release** workflow on `main` (or `beta` for
+a prerelease) and explicitly enable its `publish` input after configuring
+`NPM_TOKEN`. Ordinary pushes run CI and do not publish. Do not run `npm publish`
+manually.

@@ -1,5 +1,8 @@
-import React, { useLayoutEffect, useMemo, useRef } from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, random, Easing } from "remotion";
+import React, { useLayoutEffect, useMemo, useRef, useState, useEffect } from "react";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, random, Easing, delayRender, continueRender, cancelRender } from "remotion";
+
+import { ensureFontsLoaded, FONT_FAMILY } from "../font";
+import { demotionTheme } from "../engine/theme";
 
 export type ParticleTextProps = {
   text: string;
@@ -41,7 +44,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
   text,
   fontSize = 120,
   fontWeight = 800,
-  color = "#ffffff",
+  color = demotionTheme.chalk,
   background = "transparent",
   formAt = 0,
   formDuration = 40,
@@ -53,16 +56,23 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
   const { width, height, fps } = useVideoConfig();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const [handle] = useState(() => delayRender("particle-text-fonts"));
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    ensureFontsLoaded().then(() => { setReady(true); continueRender(handle); }).catch(cancelRender);
+  }, [handle]);
+
   // Sample the text mask once per (text, font, size) combination.
   const particles = useMemo<Particle[]>(() => {
+    if (!ready) return [];
     const off = document.createElement("canvas");
     off.width = width;
     off.height = height;
     const octx = off.getContext("2d");
     if (!octx) return [];
     octx.clearRect(0, 0, width, height);
-    octx.fillStyle = "#fff";
-    octx.font = `${fontWeight} ${fontSize}px "Inter Variable", Inter, sans-serif`;
+    octx.fillStyle = demotionTheme.chalk;
+    octx.font = `${fontWeight} ${fontSize}px ${FONT_FAMILY}`;
     octx.textAlign = "center";
     octx.textBaseline = "middle";
     octx.fillText(text, width / 2, height / 2);
@@ -99,7 +109,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text, fontSize, fontWeight, width, height, seed]);
+  }, [ready, text, fontSize, fontWeight, width, height, seed, particleSize]);
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;

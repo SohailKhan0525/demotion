@@ -31,3 +31,5 @@ export * from "./components/reel/motion";
 export * from "./core";
 export * from "./engine";
 export * from "./type";
+export * from "./ui/Terminal";
+export * from "./ui/CodePanel";

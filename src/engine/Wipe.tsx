@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { inQuart, outExpo, prog } from "../core/math";
+import { wipeLayerProgress } from "./wipeTiming";
 
 export type WipeKind = "slide" | "slats" | "iris" | "diagonal";
 export type WipeSpec = { kind: WipeKind; /** color the screen is covered with (use the NEXT shot's background) */ color: string; /** optional leading color layer */ accent?: string; lead?: number; tail?: number };
@@ -15,12 +15,13 @@ export const Wipe: React.FC<{ spec: WipeSpec; frame: number; at: number; width: 
   const tail = spec.tail ?? 16;
   const start = at - lead;
   if (frame < start || frame > at + tail) return null;
-  const cover = (f: number) => inQuart(prog(f, start, lead));
-  const uncover = (f: number) => outExpo(prog(f, at, tail));
+  // Delayed layers share the same cover deadline and uncover deadline.
+  // Otherwise trailing slats expose the new shot on its cut frame, or vanish early.
+  const cover = (delay: number) => wipeLayerProgress(frame, at, lead, tail, delay).cover;
+  const uncover = (delay: number) => wipeLayerProgress(frame, at, lead, tail, delay).uncover;
   const layer = (color: string, delay: number, key: string) => {
-    const f = frame - delay;
-    const c = frame <= at ? cover(f) : 1;
-    const u = frame > at ? uncover(f) : 0;
+    const c = frame <= at ? cover(delay) : 1;
+    const u = frame > at ? uncover(delay) : 0;
     if (spec.kind === "slide") {
       const x = frame <= at ? (-1 + c) * width : u * width;
       return <div key={key} style={{ position: "absolute", left: x, top: 0, width, height, background: color }} />;
@@ -37,8 +38,8 @@ export const Wipe: React.FC<{ spec: WipeSpec; frame: number; at: number; width: 
         <React.Fragment key={key}>
           {new Array(N).fill(0).map((_, i) => {
             const d = i * 1.4;
-            const cc = frame <= at ? inQuart(prog(f - d, start, lead - 6)) : 1;
-            const uu = frame > at ? outExpo(prog(f - d, at, tail - 4)) : 0;
+            const cc = frame <= at ? cover(delay + d) : 1;
+            const uu = frame > at ? uncover(delay + d) : 0;
             // cover grows downward from the top, uncover shrinks upward to the top
             const h = frame <= at ? cc * height : (1 - uu) * height;
             return <div key={i} style={{ position: "absolute", left: i * (width / N), top: 0, width: w, height: h, background: color }} />;

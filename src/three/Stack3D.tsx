@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useMemo, useState, useEffect } from "react";
 import { ThreeCanvas } from "@remotion/three";
-import { continueRender, delayRender, random, useCurrentFrame, useVideoConfig } from "remotion";
+import { continueRender, delayRender, cancelRender, random, useCurrentFrame, useVideoConfig } from "remotion";
+import { demotionTheme as T } from "../engine/theme";
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { Bloom, DepthOfField, EffectComposer } from "@react-three/postprocessing";
@@ -42,7 +43,7 @@ export type Stack3DProps = {
 
 const FACE_W = 1600;
 const FACE_H = 1000;
-const PALETTE = ["#ff4fa3", "#a855f7", "#6366f1", "#f59e0b", "#38bdf8", "#f472b6"];
+const PALETTE = [T.accent, T.field, T.spark, T.chalk];
 
 const CameraRig: React.FC<{ position: [number, number, number]; lookAt: [number, number, number]; fov: number }> = ({
   position,
@@ -92,13 +93,15 @@ const Panel: React.FC<{ spec: StackPanel; faceSize: [number, number]; frame: num
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fontsReady, spec.animate ? Math.min(spec.animate[1] + 1, Math.max(spec.animate[0] - 1, frame)) : 0, canvas, texture]);
 
+  useEffect(() => () => texture.dispose(), [texture]);
+
   const [w, h] = spec.size ?? [4.8, 3.0];
   return (
     <group position={spec.position} rotation={spec.rotation ?? [0, 0, 0]}>
       {/* soft coloured halo behind the panel, gives the glass a glow that separates it from the void */}
       <mesh position={[0, 0, -0.06]}>
         <planeGeometry args={[w * 1.035, h * 1.05]} />
-        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.07} depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color={T.field} transparent opacity={0.07} depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
       </mesh>
       <mesh>
         <planeGeometry args={[w, h]} />
@@ -122,7 +125,8 @@ const BokehLights: React.FC<{ count: number; frame: number }> = ({ count, frame 
       })),
     [count]
   );
-  const t = frame / 30;
+  const { fps } = useVideoConfig();
+  const t = frame / fps;
   return (
     <>
       {items.map((it, i) => (
@@ -150,7 +154,7 @@ export const Stack3D: React.FC<Stack3DProps> = ({
   bokehScale = 9,
   fov = 32,
   bokehLights = 70,
-  backgroundColor = "#07060d",
+  backgroundColor = T.ink,
   faceSize = [FACE_W, FACE_H],
 }) => {
   const frame = useCurrentFrame();
@@ -164,11 +168,10 @@ export const Stack3D: React.FC<Stack3DProps> = ({
       document.fonts.load('700 40px "Archivo"'),
       document.fonts.load('400 30px "JetBrains Mono Variable"'),
     ])
-      .catch(() => undefined)
       .then(() => {
         setFontsReady(true);
         continueRender(handle);
-      });
+      }).catch(cancelRender);
   }, [handle]);
 
   return (

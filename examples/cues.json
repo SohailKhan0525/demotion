@@ -1,0 +1,18 @@
+{
+  "bpm": 120,
+  "beats": 8,
+  "targetLUFS": -14,
+  "tail": 1.5,
+  "music": {
+    "kick": [[0, 8]],
+    "hat": [[4, 8]],
+    "arp": [[0, 8]],
+    "bass": [[0, 8]]
+  },
+  "cues": [
+    { "at": 0, "kind": "hit" },
+    { "at": 4, "kind": "whoosh" },
+    { "at": 4, "kind": "hit" },
+    { "at": 6, "kind": "chime" }
+  ]
+}

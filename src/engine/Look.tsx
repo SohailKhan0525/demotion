@@ -1,10 +1,12 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, random, useCurrentFrame } from "remotion";
 
+import { demotionTheme } from "./theme";
+
 const TILE = 256;
 
 /** Film grain that is different every frame (deterministic) plus a soft vignette. Grain also dithers gradients, so they never band. */
-export const Look: React.FC<{ grain?: number; vignette?: number; vignetteColor?: string }> = ({ grain = 0.14, vignette = 0.32, vignetteColor = "#07080b" }) => {
+export const Look: React.FC<{ grain?: number; vignette?: number; vignetteColor?: string }> = ({ grain = 0.06, vignette = 0.17, vignetteColor = demotionTheme.ink }) => {
   const frame = useCurrentFrame();
   const tile = useMemo(() => {
     const c = document.createElement("canvas");

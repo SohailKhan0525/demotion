@@ -1,3 +1,5 @@
+import { demotionTheme as T } from "../engine/theme";
+import { outExpo, clamp01 } from "../core/math";
 import { FONT_FAMILY, MONO_FAMILY } from "../font";
 
 export const roundRect = (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) => {
@@ -17,12 +19,12 @@ export const drawWindow = (ctx: CanvasRenderingContext2D, w: number, h: number, 
   const dark = (o.theme ?? "dark") === "dark";
   const pad = 6;
   roundRect(ctx, pad, pad, w - pad * 2, h - pad * 2, 44);
-  ctx.fillStyle = dark ? "#100d19" : "#fbfafe";
+  ctx.fillStyle = dark ? T.ink : T.chalk;
   ctx.fill();
   ctx.lineWidth = 3;
   const g = ctx.createLinearGradient(0, 0, w, h);
-  g.addColorStop(0, dark ? "rgba(255,255,255,0.34)" : "rgba(255,255,255,0.9)");
-  g.addColorStop(1, dark ? "rgba(168,85,247,0.55)" : "rgba(168,85,247,0.35)");
+  g.addColorStop(0, dark ? `${T.chalk}57` : `${T.chalk}E6`);
+  g.addColorStop(1, dark ? `${T.field}8C` : `${T.field}59`);
   ctx.strokeStyle = g;
   ctx.stroke();
 
@@ -30,13 +32,13 @@ export const drawWindow = (ctx: CanvasRenderingContext2D, w: number, h: number, 
   ctx.save();
   roundRect(ctx, pad, pad, w - pad * 2, h - pad * 2, 44);
   ctx.clip();
-  ctx.fillStyle = dark ? "#171325" : "#f1eef8";
+  ctx.fillStyle = dark ? T.ink : T.chalk;
   ctx.fillRect(pad, pad, w - pad * 2, barH);
-  ctx.fillStyle = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.07)";
+  ctx.fillStyle = dark ? `${T.chalk}14` : `${T.ink}12`;
   ctx.fillRect(pad, pad + barH, w - pad * 2, 2);
   ctx.restore();
 
-  ["#ff5f57", "#febc2e", "#28c840"].forEach((c, i) => {
+  [T.spark, T.accent, T.field].forEach((c, i) => {
     ctx.beginPath();
     ctx.arc(70 + i * 44, pad + barH / 2, 14, 0, Math.PI * 2);
     ctx.fillStyle = c;
@@ -45,7 +47,7 @@ export const drawWindow = (ctx: CanvasRenderingContext2D, w: number, h: number, 
   ctx.font = `600 32px ${FONT_FAMILY}`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = dark ? "rgba(255,255,255,0.62)" : "rgba(20,16,32,0.6)";
+  ctx.fillStyle = dark ? `${T.chalk}9E` : `${T.ink}99`;
   ctx.fillText(o.title, w / 2, pad + barH / 2 + 1);
   ctx.textAlign = "left";
   return { x: pad + 56, y: pad + barH + 44, w: w - pad * 2 - 112, h: h - pad * 2 - barH - 70 };
@@ -83,7 +85,7 @@ export const drawTerminal = (
     if (frame < ln.at) break;
     let x = r.x;
     if (ln.prompt) {
-      ctx.fillStyle = "#f472b6";
+      ctx.fillStyle = T.accent;
       ctx.fillText("$", x, y);
       x += fs * 1.25;
     }
@@ -94,7 +96,7 @@ export const drawTerminal = (
       shown = ln.text.slice(0, Math.floor(p * ln.text.length + 1e-4));
       typing = p < 1;
     }
-    ctx.fillStyle = ln.color ?? "#ece8f8";
+    ctx.fillStyle = ln.color ?? T.chalk;
     ctx.fillText(shown, x, y);
     if (typing || (ln.prompt && ln === o.lines[o.lines.length - 1])) {
       lastTyping = { x: x + ctx.measureText(shown).width, y };
@@ -102,7 +104,7 @@ export const drawTerminal = (
     y += lh;
   }
   if (lastTyping && caretOn(frame)) {
-    ctx.fillStyle = "#f0abfc";
+    ctx.fillStyle = T.accent;
     ctx.fillRect(lastTyping.x + 4, lastTyping.y + 3, fs * 0.55, fs * 1.1);
   }
   return r;
@@ -112,15 +114,15 @@ export type CodeTok = [string, string?];
 export type CodeLineSpec = { at: number; toks: CodeTok[] };
 
 export const TOK = {
-  kw: "#c792ea",
-  fn: "#82aaff",
-  str: "#c3e88d",
-  tag: "#ff7eb6",
-  attr: "#ffcb6b",
-  num: "#f78c6c",
-  pun: "#9b95b5",
-  txt: "#e9e5f7",
-  cmt: "#6b6488",
+  kw: T.accent,
+  fn: T.chalk,
+  str: T.accent,
+  tag: T.spark,
+  attr: T.accent,
+  num: T.spark,
+  pun: `${T.chalk}99`,
+  txt: T.chalk,
+  cmt: `${T.chalk}80`,
 };
 
 /** Syntax-coloured editor; lines slide/fade in at their `at` frame. */
@@ -137,11 +139,11 @@ export const drawCode = (
   ctx.font = `500 ${fs}px ${MONO_FAMILY}`;
   ctx.textBaseline = "top";
   o.lines.forEach((ln, i) => {
-    const p = Math.min(1, Math.max(0, (frame - ln.at) / 9));
+    const p = outExpo(clamp01((frame - ln.at) / 9));
     if (p <= 0) return;
     const y = r.y + i * lh + (1 - p) * 10;
     if (o.highlightLine === i) {
-      ctx.fillStyle = "rgba(168,85,247,0.16)";
+      ctx.fillStyle = `${T.field}29`;
       ctx.fillRect(r.x - 22, y - 4, r.w + 44, lh);
     }
     ctx.globalAlpha = p;
