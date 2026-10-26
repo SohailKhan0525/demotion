@@ -94,7 +94,12 @@ jobs:
           fs.writeFileSync(path.join(process.env.RUNNER_TEMP, 'demotion-publish.log'), (r.stdout || '') + (r.stderr || ''));
           if (r.status !== 0) {
             const code = (r.stderr || '').match(/npm (?:error|ERR!) code ([A-Z0-9_]+)/)?.[1] || 'UNKNOWN';
-            console.error(`::error::npm publication failed (${code}). Check NPM_SECRET publishing permission and npm account/2FA requirements. No successful publication is claimed.`);
+            let detail = (r.stderr || '').split('\n').filter((line) => /^npm (?:error|ERR!) 403\b/.test(line)).join(' ');
+            const token = process.env.NODE_AUTH_TOKEN;
+            if (token) detail = detail.split(token).join('[redacted]');
+            detail = detail.replace(/https?:\/\/\S+/g, '[registry URL]').replace(/npm_[A-Za-z0-9]+/g, '[redacted]').slice(0, 1600);
+            console.error(`::error::npm publication failed (${code}). No successful publication is claimed.`);
+            if (detail) console.error(`::error::Registry refusal: ${detail}`);
             process.exit(r.status || 1);
           }
           console.log('npm publish completed successfully');
