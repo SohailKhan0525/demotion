@@ -11,7 +11,7 @@ and CLI for making videos locally with Remotion.
 - A CLI starter with bundled, licensed fonts and 1080p/4K render commands.
 
 ```bash
-npx @qofeno-labs/demotion init my-video
+npx demotion init my-video
 cd my-video
 npm install
 npm start

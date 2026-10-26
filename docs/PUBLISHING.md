@@ -1,17 +1,34 @@
-# Registry naming decision
+# Current blocker: unscoped demotion is not published
 
-npm rejected the unscoped name demotion with E403 because it is too similar to
-emotion and motion. The package is now **@qofeno-labs/demotion**, under the
-individual account qofeno-labs. This personal scope does not require an npm
-organization. The executable/brand remains demotion; generated projects use an
-npm dependency alias so their imports and the source shown in the video stay valid.
-The release workflow checks this exact scoped name before publishing.
+The requested npm name is **demotion**, published by the individual account
+**qofeno-labs**. npm rejected that exact name with E403 because it is too similar
+to the existing packages emotion and motion. A token or provenance setting cannot
+resolve this registry naming restriction. The owner needs npm Support to approve
+or release the unscoped name; no alternative package name is authorized.
+
+A scoped publication was mistakenly made as @qofeno-labs/demotion@0.1.0. That is
+not the requested package. It is not a substitute for publishing demotion.
+The repository and starter have been restored to the unscoped name. The first
+release workflow is now manual-only, with a required publish checkbox, so code
+pushes cannot launch another publication. No new publish attempt should be made
+until npm has resolved the name restriction. Provenance remains disabled.
+
+Contact npm Support at https://www.npmjs.com/support and provide:
+
+> I own the npm account qofeno-labs and want to publish the public unscoped package
+> demotion. Publishing returns E403: "Package name too similar to existing packages
+> emotion,motion". This is an independently developed React/Remotion video toolkit:
+> https://github.com/SohailKhan0525/demotion. Please review whether the unscoped name
+> demotion can be approved. I do not want to use an organization or scoped name.
+
+The remaining instructions below are the prepared procedure **after npm approves
+that name**, not a claim that demotion is currently available on the registry.
 
 # Current publishing authorization
 
 The owner has now authorized the agent to publish the first release using the
 GitHub Actions repository secret `NPM_SECRET`. The **First npm release** workflow
-checks `npm whoami` is `qofeno-labs`, publishes the personal-account-scoped `@qofeno-labs/demotion@0.1.0` with
+checks `npm whoami` is `qofeno-labs`, publishes the unscoped `demotion@0.1.0` with
 provenance disabled, verifies registry metadata, and records the v0.1.0 source tag.
 Its push trigger is limited to changes to that first-release workflow; reruns
 check for an existing matching version instead of republishing it. Later releases
@@ -22,7 +39,7 @@ publication to perform after the workflow succeeds. Do not republish 0.1.0.
 
 # First npm release: owner publishes 0.1.0 manually
 
-This checkout prepares `@qofeno-labs/demotion@0.1.0`. Preparation and a successful dry run are
+This checkout prepares `demotion@0.1.0`. Preparation and a successful dry run are
 not publication. The owner performs the actual publish on their own computer.
 Provenance is explicitly disabled in package.json and the release workflow.
 No token needs to be pasted into chat or committed.
@@ -72,15 +89,15 @@ manual browser-authenticated publishing is the owner's chosen first-release path
 ## 3. Verify the registry and a clean consumer
 
 ```bash
-npm view @qofeno-labs/demotion@0.1.0 version --registry=https://registry.npmjs.org/
-npm view @qofeno-labs/demotion dist-tags --registry=https://registry.npmjs.org/
+npm view demotion@0.1.0 version --registry=https://registry.npmjs.org/
+npm view demotion dist-tags --registry=https://registry.npmjs.org/
 ```
 
 Expected: version `0.1.0`, with `latest` pointing to `0.1.0`. Registry availability
 is established only after these succeed. In a fresh folder outside the repo:
 
 ```bash
-npx --yes @qofeno-labs/demotion@0.1.0 init first-demotion-video
+npx --yes demotion@0.1.0 init first-demotion-video
 cd first-demotion-video
 npm install
 npm start
@@ -133,7 +150,7 @@ post the launch copy in [launch/x-launch.md](launch/x-launch.md). That copy assu
 - `E403`: check the active account, package-name ownership/permissions and the
   exact npm error. A pre-publish 404 does not guarantee the name is available to
   that account. Do not repeatedly bump versions to work around an authorization error.
-- Existing-version conflict: inspect `npm view @qofeno-labs/demotion@0.1.0 version` before
+- Existing-version conflict: inspect `npm view demotion@0.1.0 version` before
   retrying. A published name/version cannot be reused, even if later unpublished.
 - Consumer dependency failures: retain the exact error and npm/Node versions.
   Do not use `--force` or `--legacy-peer-deps` as the default starter workflow.

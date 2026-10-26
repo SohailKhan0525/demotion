@@ -1,6 +1,6 @@
 # Beat-driven UI panels
 
-`Terminal` and `CodePanel` are exported from `@qofeno-labs/demotion` (the generated starter aliases it as `demotion`). Place them inside a
+`Terminal` and `CodePanel` are exported from `demotion`. Place them inside a
 `Shot` in a `MotionProject`; their times are local shot beats, using the project's
 clock and theme. Load the bundled fonts with `ensureFontsLoaded()` as in the
 existing Remotion entry point.

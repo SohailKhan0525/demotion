@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// demotion CLI — `npx ${pkg.name} init my-video`
+// demotion CLI — `npx demotion init my-video`
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,12 +12,12 @@ const HELP = `demotion ${pkg.version}
 Motion graphics, written in code.
 
 Usage:
-  npx ${pkg.name} init <folder>    create a new video project in <folder>
-  npx ${pkg.name} --help           show this help
-  npx ${pkg.name} audio <cues.json> [out.wav]
+  npx demotion init <folder>    create a new video project in <folder>
+  npx demotion --help           show this help
+  npx demotion audio <cues.json> [out.wav]
                                 render a beat-synced soundtrack (music + sound effects)
-  npx ${pkg.name} license          explain the license (free vs commercial)
-  npx ${pkg.name} --version        print the version
+  npx demotion license          explain the license (free vs commercial)
+  npx demotion --version        print the version
 
 License: free for personal / non-commercial use. Companies, teams and any
 commercial use need a commercial license: https://ko-fi.com/qofenoai
@@ -52,7 +52,7 @@ if (!cmd || cmd === "--help" || cmd === "-h") {
   const specPath = arg;
   const outPath = process.argv[4] || "public/soundtrack.wav";
   if (!specPath || !fs.existsSync(specPath)) {
-    console.error(`Usage: npx ${pkg.name} audio <cues.json> [out.wav]`);
+    console.error("Usage: npx demotion audio <cues.json> [out.wav]");
     process.exit(1);
   }
   const { renderSoundtrack, encodeWav } = await import("../dist/audio.js");
@@ -73,7 +73,7 @@ Full terms: LICENSE and COMMERCIAL-LICENSE.md in the package.
 Demotion is built on Remotion, which has its own license: https://www.remotion.dev/docs/terms`);
 } else if (cmd === "init") {
   if (!arg) {
-    console.error(`Please give a folder name:  npx ${pkg.name} init my-video`);
+    console.error("Please give a folder name:  npx demotion init my-video");
     process.exit(1);
   }
   const target = path.resolve(process.cwd(), arg);
@@ -85,7 +85,6 @@ Demotion is built on Remotion, which has its own license: https://www.remotion.d
   copyDir(path.join(pkgRoot, "template"), target, {
     __NAME__: name,
     __DEMOTION_VERSION__: pkg.version,
-    __DEMOTION_PACKAGE__: pkg.name,
     __REMOTION_VERSION__: pkg.config.remotionVersion,
   });
   fs.cpSync(path.join(pkgRoot, "public", "fonts"), path.join(target, "public", "fonts"), { recursive: true });

@@ -8,7 +8,7 @@
     "render:4k": "remotion render src/index.ts MyVideo out/video-4k.mp4 --scale=2"
   },
   "dependencies": {
-    "demotion": "npm:__DEMOTION_PACKAGE__@^__DEMOTION_VERSION__",
+    "demotion": "^__DEMOTION_VERSION__",
     "@remotion/cli": "__REMOTION_VERSION__",
     "@remotion/fonts": "__REMOTION_VERSION__",
     "@remotion/layout-utils": "__REMOTION_VERSION__",

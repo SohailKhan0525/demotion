@@ -36,9 +36,11 @@ jobs:
             echo "::error::Publish 0.1.0 manually and push its v0.1.0 source tag first. See docs/PUBLISHING.md."
             exit 1
           fi
-          published_version="$(npm view @qofeno-labs/demotion@0.1.0 version --registry=https://registry.npmjs.org/)"
+          git show refs/tags/v0.1.0:package.json > "$RUNNER_TEMP/first-release-package.json"
+          FIRST_RELEASE_PACKAGE="$RUNNER_TEMP/first-release-package.json" node -e "const p=require(process.env.FIRST_RELEASE_PACKAGE); if(p.name!=='demotion') throw new Error('The baseline tag is not for the requested unscoped package');"
+          published_version="$(npm view demotion@0.1.0 version --registry=https://registry.npmjs.org/)"
           if [ "$published_version" != "0.1.0" ]; then
-            echo "::error::The manual @qofeno-labs/demotion@0.1.0 publication is not available in the public registry."
+            echo "::error::The manual demotion@0.1.0 publication is not available in the public registry."
             exit 1
           fi
       - name: Check publishing credential
