@@ -72,6 +72,10 @@ Five new components are available in the source: `CountUp`, `BarChart`,
 clock and support deterministic seeking. **Published npm 0.1.0 does not include
 these additions yet.** [Run the complete example and read the API guide](docs/components.md).
 
+![Data story rendered from the complete source example](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/data-story-preview.png)
+
+A frame from the tested source example; values are demonstration data.
+
 The [second launch film](https://github.com/SohailKhan0525/demotion/releases/tag/launch-v2)
 shows the new source components; “V2” is the film edition, not an npm 2.0 release.
 

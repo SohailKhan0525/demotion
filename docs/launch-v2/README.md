@@ -6,6 +6,7 @@ The second launch film is 30 seconds at 1920×1080 / 60 fps, with a procedural
 - [Download the MP4](https://github.com/SohailKhan0525/demotion/releases/download/launch-v2/demotion-v2-launch.mp4)
 - [Film release, poster and checksums](https://github.com/SohailKhan0525/demotion/releases/tag/launch-v2)
 - [Research, sources and rule-check limitations](research.md)
+- [Download, media, component and copy verification](verification.md)
 - [X post and three self-replies](x.md)
 - [Reddit drafts and required live-rule checks](reddit.md)
 - [DEV tutorial](devto.md)

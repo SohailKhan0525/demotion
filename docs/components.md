@@ -9,6 +9,11 @@ take **local shot beats**, not seconds or global frame numbers. Load bundled
 fonts with `ensureFontsLoaded()` as the starter does. No CSS animations, browser
 timers, speech service or network access is involved in their motion.
 
+![Rendered data-story example](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/data-story-preview.png)
+
+This frame comes from the external consumer render of the complete example.
+Values are demonstration data.
+
 ## Run the complete example
 
 [examples/data-story.tsx](../examples/data-story.tsx) is the complete, tested

@@ -46,3 +46,11 @@ Manual npm releases still use Release. docs/launch-v2 contains research, X,
 Reddit, DEV and additional platform drafts. Live Reddit/DEV/X Help/HN pages were
 blocked by the network proxy; do not claim their current rules were verified.
 Forem's default policy source was inspected and is distinguished from DEV rules.
+
+Delivery is complete: the public launch-v2 GitHub release contains the MP4,
+poster and checksums. Both assets were downloaded and checksum-verified; the
+public MP4's format, faststart, loudness and whole-timeline frames were checked.
+See docs/launch-v2/verification.md for exact results and workflow links. All 40
+tests pass on Node 22/24. The external candidate consumer passed types and a full
+450-frame DataStory render. npm latest remains 0.1.0; no new npm release or social
+post was made during this work. Keep provenance disabled for future npm releases.
