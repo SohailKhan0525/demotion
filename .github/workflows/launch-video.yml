@@ -3,6 +3,8 @@ name: Launch video
 on:
   push:
     tags: [launch-v2]
+    branches: [main]
+    paths: [.github/workflows/launch-video.yml]
   workflow_dispatch:
 
 concurrency:
@@ -33,6 +35,10 @@ jobs:
       - run: npm test
       - name: Prepare browser and encoder
         run: |
+          if ! command -v ffmpeg > /dev/null || ! command -v ffprobe > /dev/null; then
+            sudo apt-get update
+            sudo apt-get install --yes --no-install-recommends ffmpeg
+          fi
           ffmpeg -version
           ffprobe -version
           npx --no-install remotion browser ensure
