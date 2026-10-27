@@ -26,3 +26,8 @@ publisher qofeno-labs and no provenance. Registry installation, types, Studio,
 1080p rendering and the audio CLI were verified. The candidate also passed full
 4K rendering and an optional 3D still. v0.1.0 matches npm's published gitHead.
 The first-release bootstrap workflow is removed; only CI and manual Release remain.
+
+Unreleased CLI fix: init now normalizes directory basenames into valid npm package
+names, quotes the generated cd instruction and rejects an existing file cleanly.
+Regression coverage includes spaces, quotes, Unicode and reserved npm names.
+This change is on main; the published 0.1.0 package does not contain it yet.

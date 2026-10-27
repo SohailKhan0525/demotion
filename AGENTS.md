@@ -5,7 +5,7 @@ You are continuing **demotion**: a React toolkit + CLI for making polished, beat
 
 ## Rules (non-negotiable)
 - `npm install && npm run lint && npm run build && npm test` must pass before every commit.
-- Commit with **Conventional Commits**: `feat:` (minor) `fix:` (patch) `docs:`/`chore:`/`test:` (no release). **Never** use `!` or a `BREAKING CHANGE` footer — nothing is published yet and that would release 1.0.0 instead of 0.1.0.
+- Commit with **Conventional Commits**: `feat:` (minor) `fix:` (patch) `docs:`/`chore:`/`test:` (no release). **Never** use `!` or a `BREAKING CHANGE` footer — the package is on 0.x and an unintended breaking marker could trigger a major release.
 - Work on **`main` only**. No other branches.
 - **Never** commit tokens or secrets. The owner authorized publishing `@demotion/cli` publicly in their npm organization `demotion`, using GitHub Actions secret `NPM_SECRET`. The authenticating npm user is `qofeno-labs`. Keep provenance disabled. Later releases use the manual Release workflow. Never publish to another name or scope without explicit owner authorization.
 - **Do not change `LICENSE`, `COMMERCIAL-LICENSE.md` or licence wording** without the owner's explicit decision (see HANDOFF §7).

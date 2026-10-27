@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// demotion CLI — `npx ${pkg.name} init my-video`
+// demotion CLI — scaffold a video project or generate a soundtrack.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -77,11 +77,18 @@ Demotion is built on Remotion, which has its own license: https://www.remotion.d
     process.exit(1);
   }
   const target = path.resolve(process.cwd(), arg);
-  if (fs.existsSync(target) && fs.readdirSync(target).length > 0) {
-    console.error(`${arg} already exists and is not empty.`);
+  if (fs.existsSync(target) && (!fs.statSync(target).isDirectory() || fs.readdirSync(target).length > 0)) {
+    console.error(`${arg} already exists and is not an empty directory.`);
     process.exit(1);
   }
-  const name = path.basename(target);
+  // The directory may contain spaces, Unicode or punctuation; npm names cannot.
+  const normalizedName = path.basename(target).toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^[._-]+|[._-]+$/g, "")
+    .slice(0, 214);
+  const name = !normalizedName || ["node_modules", "favicon.ico"].includes(normalizedName)
+    ? "my-video"
+    : normalizedName;
   copyDir(path.join(pkgRoot, "template"), target, {
     __NAME__: name,
     __DEMOTION_VERSION__: pkg.version,
@@ -90,7 +97,12 @@ Demotion is built on Remotion, which has its own license: https://www.remotion.d
   fs.cpSync(path.join(pkgRoot, "public", "fonts"), path.join(target, "public", "fonts"), { recursive: true });
   console.log(`✔ Created ${arg}/`);
   console.log("✔ Copied fonts to public/fonts");
-  console.log(`Next: cd ${arg} && npm install && npm start`);
+  // Quote paths for the shell instructions, including leading dashes and apostrophes.
+  const shellPath = arg.startsWith("-") ? target : arg;
+  const cdPath = /^[a-zA-Z0-9_./-]+$/.test(shellPath)
+    ? shellPath
+    : "'" + shellPath.replaceAll("'", "'\\''") + "'";
+  console.log(`Next: cd ${cdPath} && npm install && npm start`);
   console.log("");
   console.log("Demotion is free for personal & non-commercial use. Business use needs a commercial license.");
   console.log("Get one or support the project: https://ko-fi.com/qofenoai");

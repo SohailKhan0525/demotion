@@ -34,3 +34,45 @@ test("demotion audio renders a mastered WAV from a cue file", { skip: !fs.exists
   const lufs = Number(out.match(/(-?\d+\.\d) LUFS/)[1]);
   assert.ok(Math.abs(lufs - -14) < 1, `mastered to ${lufs}`);
 });
+
+test("init accepts human-readable paths and prints a working cd command", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-paths-"));
+  try {
+    for (const [folder, expectedName] of [
+      ["My Video", "my-video"],
+      ['Sam\'s "Video"', "sam-s-video"],
+      ["🎬", "my-video"],
+      ["-demo", "demo"],
+      ["node_modules", "my-video"],
+      ["favicon.ico", "my-video"],
+    ]) {
+      const out = execFileSync(process.execPath, [path.resolve("bin/demotion.js"), "init", folder], { cwd: dir, encoding: "utf8" });
+      const target = path.join(dir, folder);
+      const manifest = JSON.parse(fs.readFileSync(path.join(target, "package.json"), "utf8"));
+      assert.equal(manifest.name, expectedName);
+      assert.ok(fs.existsSync(path.join(target, "src/MyVideo.tsx")));
+      const cdCommand = out.match(/^Next: (.+) && npm install && npm start$/m)[1];
+      const reached = execFileSync("bash", ["-c", `${cdCommand} && pwd -P`], { cwd: dir, encoding: "utf8" }).trim();
+      assert.equal(reached, fs.realpathSync(target));
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("init rejects an existing file without modifying it or printing a stack trace", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-file-"));
+  try {
+    const target = path.join(dir, "video");
+    fs.writeFileSync(target, "keep this file");
+    assert.throws(() => execFileSync(process.execPath, [path.resolve("bin/demotion.js"), "init", "video"], { cwd: dir, stdio: "pipe" }), error => {
+      assert.equal(error.status, 1);
+      assert.match(error.stderr.toString(), /already exists and is not an empty directory/);
+      assert.doesNotMatch(error.stderr.toString(), /ENOTDIR|node:fs|at file:/);
+      return true;
+    });
+    assert.equal(fs.readFileSync(target, "utf8"), "keep this file");
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
