@@ -31,3 +31,18 @@ Unreleased CLI fix: init now normalizes directory basenames into valid npm packa
 names, quotes the generated cd instruction and rejects an existing file cleanly.
 Regression coverage includes spaces, quotes, Unicode and reserved npm names.
 This change is on main; the published 0.1.0 package does not contain it yet.
+
+
+Second-take work: five new public components (`CountUp`, `BarChart`, `CaptionTrack`,
+`LowerThird`, `ProgressRing`) share Shot timing. See docs/components.md and the
+complete examples/data-story.tsx. LaunchV2 is a separate 30-second / 128 BPM /
+60 fps film; V2 is NOT the npm version. New APIs are source-preview additions,
+not part of npm 0.1.0. The README, film and platform copy explicitly state this.
+
+Commands: npm run qa:v2, npm run render:v2, npm run check:v2. Outputs are ignored
+under out/launch-v2. A Launch video workflow renders the immutable launch-v2 tag
+and publishes film assets to a GitHub prerelease; it never publishes npm.
+Manual npm releases still use Release. docs/launch-v2 contains research, X,
+Reddit, DEV and additional platform drafts. Live Reddit/DEV/X Help/HN pages were
+blocked by the network proxy; do not claim their current rules were verified.
+Forem's default policy source was inspected and is distinguished from DEV rules.

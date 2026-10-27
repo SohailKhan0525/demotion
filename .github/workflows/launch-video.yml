@@ -1,0 +1,59 @@
+name: Launch video
+
+on:
+  push:
+    tags: [launch-v2]
+  workflow_dispatch:
+
+concurrency:
+  group: launch-video-v2
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  film:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: launch-v2
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - name: Prepare browser and encoder
+        run: |
+          ffmpeg -version
+          ffprobe -version
+          npx --no-install remotion browser ensure
+      - name: Render the tagged film source
+        run: npm run render:v2
+        env:
+          DEMOTION_CONCURRENCY: "2"
+      - name: Verify delivery files
+        run: |
+          npm run check:v2
+          cd out/launch-v2
+          sha256sum demotion-v2-launch.mp4 poster.png > SHA256SUMS
+      - name: Publish film assets to GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if ! gh release view launch-v2 > /dev/null 2>&1; then
+            gh release create launch-v2 --verify-tag --prerelease --latest=false \
+              --title "demotion: Second Take (V2 launch film)" \
+              --notes-file docs/launch-v2/release-notes.md
+          fi
+          gh release upload launch-v2 out/launch-v2/demotion-v2-launch.mp4 \
+            out/launch-v2/poster.png out/launch-v2/SHA256SUMS --clobber

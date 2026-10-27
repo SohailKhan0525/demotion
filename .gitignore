@@ -3,6 +3,7 @@ out
 dist
 *.tgz
 public/launch-soundtrack.wav
+public/launch-v2-soundtrack.wav
 
 # Generated video exports stay out of the source repository
 *.mp4

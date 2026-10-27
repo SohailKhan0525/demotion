@@ -1,4 +1,7 @@
-# X launch: free-plan copy and posting sequence
+# Original launch: free-plan copy and posting sequence
+
+For the new second-take film, use [the V2 launch posts](launch-v2/x.md).
+The copy below belongs to the original 26-second film.
 
 Use this only after the npm publication and registry-backed install/render
 checks succeed. Attach the existing 26-second MP4 directly to the main post.

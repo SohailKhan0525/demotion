@@ -65,6 +65,16 @@ Change the text and colors here. Change the composition settings in
 lengths and composition duration consistent. `ensureFontsLoaded()` is already
 called by the starter, using files copied into `public/fonts`.
 
+## New on main: data stories and captions
+
+Five new components are available in the source: `CountUp`, `BarChart`,
+`CaptionTrack`, `LowerThird` and `ProgressRing`. They share the scene engine's beat
+clock and support deterministic seeking. **Published npm 0.1.0 does not include
+these additions yet.** [Run the complete example and read the API guide](docs/components.md).
+
+The [second launch film](https://github.com/SohailKhan0525/demotion/releases/tag/launch-v2)
+shows the new source components; “V2” is the film edition, not an npm 2.0 release.
+
 ## Components and timing
 
 For an existing Remotion project:
@@ -178,7 +188,7 @@ npm ci
 npm run dev
 ```
 
-Select **Launch**, **Lab**, or **UI** in Studio. Generated media stays in ignored
+Select **LaunchV2**, **Launch**, **Lab**, or **UI** in Studio. Generated media stays in ignored
 `out/`; the launch MP4 is intentionally not checked in. The source remains available
 to regenerate it.
 
@@ -186,6 +196,14 @@ to regenerate it.
 npm run lint
 npm run build
 npm test
+```
+
+Generate the second launch film and its visual checks:
+
+```bash
+npm run qa:v2          # out/launch-v2/contact-sheet.jpg + stills
+npm run render:v2      # out/launch-v2/demotion-v2-launch.mp4
+npm run check:v2       # verify codecs, dimensions, frames and duration
 ```
 
 See [development notes](docs/DEVELOPMENT.md) for source rendering and verification,

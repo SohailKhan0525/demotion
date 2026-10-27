@@ -33,3 +33,8 @@ export * from "./engine";
 export * from "./type";
 export * from "./ui/Terminal";
 export * from "./ui/CodePanel";
+export * from "./ui/CountUp";
+export * from "./ui/BarChart";
+export * from "./ui/CaptionTrack";
+export * from "./ui/LowerThird";
+export * from "./ui/ProgressRing";

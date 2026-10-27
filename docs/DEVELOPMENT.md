@@ -80,3 +80,39 @@ installed from registry.npmjs.org, passed TypeScript checking and rendered a
 1920×1080 video: 150 frames at 30fps, 5 seconds. The same release candidate also
 completed the full 3840×2160 starter render and an optional 3D still. The README's
 cue example generated a valid 5.5-second WAV. CI checks 30 tests on Node 22/24.
+
+
+## Second launch film and new components
+
+`LaunchV2` is the second film, not an npm major version. `npm run dev` prepares
+both soundtracks. The film runs for 64 beats at 128 BPM / 60 fps: 1800 frames,
+30 seconds. Its chart uses timeline values and explicitly labeled sample progress.
+
+```bash
+npm run qa:v2
+npm run render:v2
+npm run check:v2
+```
+
+Set `DEMOTION_BROWSER=/usr/bin/chromium` and `DEMOTION_CONCURRENCY=2` in containers
+with that browser installed. The scripts write `out/launch-v2`; all generated
+media remains ignored. The final MP4 uses the original synthesized WAV, encoded
+once to AAC with a 1.5-second end fade, and faststart for web playback. QA creates
+a whole-timeline contact sheet and a full-resolution opening poster.
+
+[Component documentation](components.md) describes the five source additions and
+the complete `examples/data-story.tsx`. The manual npm Release workflow remains
+separate from the Launch video workflow. The latter checks out the immutable
+`launch-v2` film tag, renders its source and attaches MP4/poster/checksums to a
+GitHub prerelease; it does not publish npm packages. The film and posts distinguish
+source-preview APIs from the original published npm 0.1.0 package.
+
+[Launch research and posts](launch-v2/research.md) include the exact research
+sources and blocked live-rule checks. No social post is sent automatically.
+
+Current source verification: installation, lint, build and all 40 tests pass.
+The packed candidate installs in a clean external starter, passes TypeScript,
+and renders the documented 450-frame / 7.5-second DataStory at 1920×1080 / 60 fps.
+Its settled data and caption frames were inspected. All X posts are valid under
+280 weighted characters; Bluesky drafts are 242 and 214 graphemes, and the
+Mastodon draft is 415 characters (instance limits still need checking).
