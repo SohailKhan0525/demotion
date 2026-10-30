@@ -70,3 +70,11 @@ prerelease. It does not publish npm. Do not move the older launch-v2 tag. Numeri
 delivery checks include audio/video start times and duration, BT.709 limited
 yuv420p, exact frame count and MP4 faststart. docs/promo/verification.md records
 what was actually checked; do not infer a release from source alone.
+
+Promo delivery is complete: promo-launch points to a4d2f9670c44c052ebb4c1c13ed7be7bbf1208b4.
+Its separate GitHub film prerelease contains the 19.3 MB MP4, poster and checksums.
+Public downloads, hashes, full media decoding, frame count, stream starts, color,
+audio loudness and encoded timeline were verified. Main/tag CI and the film
+workflow passed; all 47 tests pass. The exact typography example also rendered
+from a fresh npm 0.1.0 consumer (240 frames / four seconds). See docs/promo for
+details. No new npm package version was published; keep provenance disabled.
