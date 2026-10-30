@@ -61,7 +61,7 @@ node bin/demotion.js init /tmp/demotion-candidate
 In the generated project, install the actual tarball before its registry release:
 
 ```bash
-npm install /absolute/path/to/demotion/out/demotion-cli-0.1.0.tgz
+npm install /absolute/path/to/demotion/out/demotion-cli-0.2.0.tgz
 npm run render -- --browser-executable=/usr/bin/chromium --concurrency=2
 ```
 
@@ -71,10 +71,34 @@ Check types, a complete starter video, audio output and optional 3D dependency
 installation. Never substitute a source-tree import for a registry consumer test.
 
 
+## Verified 0.2.0 checks — 2026-10-30
+
+The public npm registry serves @demotion/cli@0.2.0 as latest, published by
+qofeno-labs with provenance disabled and no attestation. Its gitHead equals the
+v0.2.0 tag: 361560ded0cbb9721b2df333d2da317c5beb7cd4. Both the
+[Release run](https://github.com/SohailKhan0525/demotion/actions/runs/41098657398)
+and [source CI](https://github.com/SohailKhan0525/demotion/actions/runs/41098657273)
+passed. Installation, lint, build and all 51 tests also passed locally.
+
+A new project outside the source checkout used `npx --yes @demotion/cli@latest`
+and ordinary registry installation. Its folder `Published Story` produced the
+valid package name `published-story` and dependency `@demotion/cli: ^0.2.0`.
+All five new component exports loaded from the installed package. The exact
+packaged DataStory example and Root registration from docs/components.md passed
+TypeScript and rendered a complete H.264 video: 450 frames, 1920×1080, 60 fps,
+7.5 seconds. A whole-timeline contact sheet and full-resolution data/caption
+frames were inspected. The README audio example also ran through the installed
+CLI, producing a 5.5-second, 48 kHz, stereo PCM WAV.
+
+This verification used the published registry package, not the local candidate
+tarball. The older 4K, Studio and optional 3D checks below describe the initial
+release and were not repeated for 0.2.0.
+
 ## Verified 0.1.0 checks
 
-The public registry identifies @demotion/cli@0.1.0 with latest=0.1.0, publisher
-qofeno-labs and no provenance attestation. Its v0.1.0 source tag matches npm's
+At the initial release, the public registry identified @demotion/cli@0.1.0 with
+latest=0.1.0, publisher qofeno-labs and no provenance attestation. Its v0.1.0
+source tag matches npm's
 gitHead. A clean project outside the checkout used the normal npx command,
 installed from registry.npmjs.org, passed TypeScript checking and rendered a
 1920×1080 video: 150 frames at 30fps, 5 seconds. The same release candidate also
@@ -100,8 +124,8 @@ media remains ignored. The final MP4 uses the original synthesized WAV, encoded
 once to AAC with a 1.5-second end fade, and faststart for web playback. QA creates
 a whole-timeline contact sheet and a full-resolution opening poster.
 
-[Component documentation](components.md) describes the five source additions and
-the complete `examples/data-story.tsx`. The manual npm Release workflow remains
+[Component documentation](components.md) describes the five components published
+in npm 0.2.0 and the complete `examples/data-story.tsx`. The npm Release workflow remains
 separate from the Launch video workflow. The latter checks out the immutable
 `launch-v2` film tag, renders its source and attaches MP4/poster/checksums to a
 GitHub prerelease; it does not publish npm packages. The film and posts distinguish
@@ -110,7 +134,8 @@ source-preview APIs from the original published npm 0.1.0 package.
 [Launch research and posts](launch-v2/research.md) include the exact research
 sources and blocked live-rule checks. No social post is sent automatically.
 
-Current source verification: installation, lint, build and all 40 tests pass.
+Verification at the LaunchV2 film release: installation, lint, build and all
+40 tests passed.
 The packed candidate installs in a clean external starter, passes TypeScript,
 and renders the documented 450-frame / 7.5-second DataStory at 1920×1080 / 60 fps.
 Its settled data and caption frames were inspected. All X posts are valid under
