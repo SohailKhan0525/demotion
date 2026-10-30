@@ -75,8 +75,9 @@ npx remotion render src/index.ts PromoScene out/promo-scene.mp4
 
 The on-screen code is tested against this example. `CountUp`, `BarChart`,
 `ProgressRing`, `CaptionTrack` and `LowerThird`, shown later in the film, are
-source additions on `main` and are **not included in npm 0.1.0**. See the
-[component guide](../components.md) for running those additions from source.
+additions introduced in **npm 0.2.0**. The film was recorded against 0.1.0 and
+its source-preview labels describe that earlier release. See the
+[component guide](../components.md) to use them from npm 0.2.0 or later.
 
 ## Delivery and access
 

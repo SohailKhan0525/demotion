@@ -15,7 +15,8 @@ there is no hosted rendering service to configure.
 · [Film source, storyboard and reproduction guide](docs/promo/README.md)
 
 56 seconds of real components, original illustrations and procedural audio.
-The film labels the original npm toolkit and the newer source-preview APIs.
+The film was recorded against npm 0.1.0; the components it labels as source
+previews are included in the 0.2.0 release.
 
 ## Quick start
 
@@ -73,16 +74,20 @@ Change the text and colors here. Change the composition settings in
 lengths and composition duration consistent. `ensureFontsLoaded()` is already
 called by the starter, using files copied into `public/fonts`.
 
-## New on main: data stories and captions
+## New in 0.2.0: data stories and captions
 
-Five new components are available in the source: `CountUp`, `BarChart`,
+Five new components are included in `@demotion/cli@0.2.0`: `CountUp`, `BarChart`,
 `CaptionTrack`, `LowerThird` and `ProgressRing`. They share the scene engine's beat
-clock and support deterministic seeking. **Published npm 0.1.0 does not include
-these additions yet.** [Run the complete example and read the API guide](docs/components.md).
+clock and support deterministic seeking. Upgrade an existing project with
+`npm install @demotion/cli@latest`, or use the quick start above for a new project.
+[Run the complete example and read the API guide](docs/components.md).
+
+This release also fixes project creation in directories containing spaces,
+punctuation or Unicode, and prints safely quoted terminal instructions.
 
 ![Data story rendered from the complete source example](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/data-story-preview.png)
 
-A frame from the tested source example; values are demonstration data.
+A frame from the complete example; values are demonstration data.
 
 The [second launch film](https://github.com/SohailKhan0525/demotion/releases/tag/launch-v2)
 shows the new source components; “V2” is the film edition, not an npm 2.0 release.

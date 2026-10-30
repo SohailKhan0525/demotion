@@ -14,7 +14,8 @@ name must remain @demotion/cli; the executable name is demotion.
 `@demotion/cli@0.1.0` is published, with `latest` pointing to 0.1.0. The public
 registry identifies qofeno-labs as its publisher and has no provenance attestation.
 The source tag v0.1.0 identifies npm's gitHead. The temporary first-publication
-workflow has been retired; ordinary pushes run CI and cannot publish packages.
+workflow has been retired; ordinary source pushes run CI. Only an explicit
+release request or a manual Release dispatch can publish packages.
 
 The registry-backed consumer check used the documented npx command outside the
 source checkout, installed from registry.npmjs.org, passed TypeScript checking,
@@ -36,7 +37,28 @@ published name/version pairs are immutable.
 Use Conventional Commits. Dispatch Release on main (or beta for a prerelease) and
 explicitly enable its publish input. The workflow validates the first-release
 baseline and registry entry before semantic-release determines the next version,
-publishes it, writes release notes and records its source tag.
+publishes it, writes release notes and records its source tag. The optional
+`expected_version` input checks the computed version before any publication.
+
+When credentials are available only in GitHub Actions, an owner-authorized
+change to `.github/npm-release-request.json` on main can request the same Release
+job without retrieving the npm secret into a local environment:
+
+```json
+{
+  "version": "0.2.0"
+}
+```
+
+Use the intended next version. This file is a publication request, not general
+configuration: editing it and pushing main starts the publisher. Other paths
+do not trigger publication. The workflow runs install, lint, build and tests,
+then a semantic-release dry run; if its calculated version differs from the
+request, it stops before publication. It never changes versions to work around
+an authentication failure. The normal manual dispatch remains available.
+
+Release automation writes npm metadata, the changelog, source tag and GitHub
+release. Automatic issue/PR comments and failure issues are disabled.
 
 Do not bump a version repeatedly to work around authentication or organization
 permission failures. Check the Actions annotation and token's package/scope

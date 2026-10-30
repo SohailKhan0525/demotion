@@ -1,8 +1,7 @@
 # Data, captions and identity components
 
-These five APIs are available on **main**. They are not in the published
-`@demotion/cli@0.1.0` release. The manual Release workflow will publish the next
-version; check the npm version before treating them as registry features.
+These five APIs require **`@demotion/cli@0.2.0` or later**. They are absent from
+0.1.0. In an existing project, upgrade with `npm install @demotion/cli@latest`.
 
 All five components mount inside a `MotionProject` `Shot`, use its theme, and
 take **local shot beats**, not seconds or global frame numbers. Load bundled
@@ -20,51 +19,42 @@ Values are demonstration data.
 composition. It demonstrates every component in two shots, each eight beats.
 At 128 BPM and 60 fps it is 450 frames / 7.5 seconds.
 
-Until the next npm release, use the source candidate:
+Create a project with the release that includes these components:
 
 ```bash
-git clone https://github.com/SohailKhan0525/demotion.git
-cd demotion
-npm ci
-npm run build
-npm pack --pack-destination out
+npx --yes @demotion/cli@latest init my-story
+cd my-story
+npm install
 ```
 
-The tarball currently prints as `out/demotion-cli-0.1.0.tgz`; its source includes
-unreleased additions even though its version field still matches the release
-baseline. Install the **local tarball** into a generated starter, rather than
-reinstalling registry 0.1.0:
-
-```bash
-node bin/demotion.js init ../my-story
-cd ../my-story
-npm install /absolute/path/to/demotion/out/demotion-cli-0.1.0.tgz
-```
-
-Copy `examples/data-story.tsx` from the checkout to `my-story/src/DataStory.tsx`.
-In the starter's `src/Root.tsx`, import it and register this composition inside
-the existing root component:
+Copy `node_modules/@demotion/cli/examples/data-story.tsx` to `src/DataStory.tsx`.
+The example is included in the npm package. Replace `src/Root.tsx` with:
 
 ```tsx
+import { Composition } from "remotion";
+import { ensureFontsLoaded } from "@demotion/cli";
 import { DataStory, STORY_BEATS, storyClock } from "./DataStory";
 
-// Inside your existing root component:
-<Composition
-  id="DataStory"
-  component={DataStory}
-  durationInFrames={storyClock.duration(STORY_BEATS)}
-  fps={storyClock.fps}
-  width={1920}
-  height={1080}
-/>
+ensureFontsLoaded();
+
+export const RemotionRoot = () => (
+  <Composition
+    id="DataStory"
+    component={DataStory}
+    durationInFrames={storyClock.duration(STORY_BEATS)}
+    fps={storyClock.fps}
+    width={1920}
+    height={1080}
+  />
+);
 ```
 
 ```bash
 npm exec -- remotion render src/index.ts DataStory out/data-story.mp4
 ```
 
-After the new registry release, `npm install @demotion/cli@latest` replaces the
-local-tarball step. Keep all Remotion packages at the starter's matching version.
+Keep all Remotion packages at the starter's matching version. The launch films
+were recorded before 0.2.0 and label these components as source previews.
 
 ## CountUp
 

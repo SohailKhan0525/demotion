@@ -27,7 +27,8 @@ The second launch film is 30 seconds at 1920×1080 / 60 fps, with a procedural
 5. Adapt the additional platform copy where you already participate. Avoid
    mass-crossposting, engagement requests and unsolicited messages.
 
-The five new components are on main, not npm 0.1.0. Source-candidate instructions
+The five new components were source previews when this film was recorded against
+npm 0.1.0. They are included in npm 0.2.0. Current installation instructions
 are included. The manual npm Release workflow is separate from the film workflow;
 update the launch copy only after a new registry release and consumer check.
 
