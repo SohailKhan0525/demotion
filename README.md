@@ -9,6 +9,14 @@
 procedural audio, bundled fonts, and optional 3D panels. Videos render locally;
 there is no hosted rendering service to configure.
 
+[![Watch Ideas deserve motion, the Demotion promo film](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/promo-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/promo-launch/demotion-promo-launch.mp4)
+
+[Watch / download the promo MP4](https://github.com/SohailKhan0525/demotion/releases/download/promo-launch/demotion-promo-launch.mp4)
+· [Film source, storyboard and reproduction guide](docs/promo/README.md)
+
+56 seconds of real components, original illustrations and procedural audio.
+The film labels the original npm toolkit and the newer source-preview APIs.
+
 ## Quick start
 
 Use **Node.js 22.14+** and npm. Node 22 and 24 are tested in CI. Rendering needs a
@@ -78,6 +86,9 @@ A frame from the tested source example; values are demonstration data.
 
 The [second launch film](https://github.com/SohailKhan0525/demotion/releases/tag/launch-v2)
 shows the new source components; “V2” is the film edition, not an npm 2.0 release.
+The [latest promo](docs/promo/README.md) gives each demonstration more time and
+includes a [complete typography example](examples/promo-scene.tsx) that works
+with the published package.
 
 ## Components and timing
 

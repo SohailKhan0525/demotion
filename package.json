@@ -61,7 +61,7 @@
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run lint && npm run build",
     "test": "node --test test/*.test.mjs",
-    "predev": "npm run build && node scripts/launch-audio.mjs && node scripts/launch-v2.mjs audio",
+    "predev": "npm run build && node scripts/launch-audio.mjs && node scripts/launch-v2.mjs audio && node scripts/promo.mjs audio",
     "prerender": "npm run build && node scripts/launch-audio.mjs",
     "prerender:4k": "npm run build && node scripts/launch-audio.mjs",
     "audio:launch": "npm run build && node scripts/launch-audio.mjs",
@@ -70,7 +70,11 @@
     "postrender:4k": "node scripts/finalize-launch-audio.mjs out/demotion-launch-4k.mp4",
     "render:v2": "npm run build && node scripts/launch-v2.mjs render",
     "qa:v2": "npm run build && node scripts/launch-v2.mjs qa",
-    "check:v2": "node scripts/launch-v2.mjs check"
+    "check:v2": "node scripts/launch-v2.mjs check",
+    "audio:promo": "npm run build && node scripts/promo.mjs audio",
+    "qa:promo": "npm run build && node scripts/promo.mjs qa",
+    "render:promo": "npm run build && node scripts/promo.mjs render",
+    "check:promo": "node scripts/promo.mjs check"
   },
   "keywords": [
     "remotion",

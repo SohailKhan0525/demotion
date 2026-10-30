@@ -116,3 +116,12 @@ and renders the documented 450-frame / 7.5-second DataStory at 1920×1080 / 60 f
 Its settled data and caption frames were inspected. All X posts are valid under
 280 weighted characters; Bluesky drafts are 242 and 214 graphemes, and the
 Mastodon draft is 415 characters (instance limits still need checking).
+
+## Reference-directed promo film
+
+`PromoLaunch` is a separate 56-second composition at 120 BPM / 60 fps. The source
+is in `src/promo`; npm run dev generates its original score as well as the older
+soundtracks. `npm run qa:promo`, `npm run render:promo`, and `npm run check:promo`
+produce and validate the film under ignored `out/promo`. See the
+[promo guide](promo/README.md) for the storyboard, executable example, delivery
+workflow and verification. The uploaded reference is not redistributed.

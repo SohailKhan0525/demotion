@@ -54,3 +54,19 @@ See docs/launch-v2/verification.md for exact results and workflow links. All 40
 tests pass on Node 22/24. The external candidate consumer passed types and a full
 450-frame DataStory render. npm latest remains 0.1.0; no new npm release or social
 post was made during this work. Keep provenance disabled for future npm releases.
+
+New promo: the owner supplied a 69.6-second OpenDuet/CopilotKit reference and asked
+for its calmer product-demo direction. `PromoLaunch` is an original 56-second,
+120 BPM, 60 fps film using the existing palette/fonts, floating frame sculpture,
+readable code-to-video scenes and synthesized music. src/promo owns the art and
+timeline; docs/promo records observations, storyboard and reproduction. The
+reference footage, UI, branding and audio are not distributed. Original Launch
+and LaunchV2 stay available. The new examples/promo-scene.tsx uses published
+0.1.0 APIs; new data/caption components remain explicitly marked source-preview.
+
+Commands: npm run qa:promo / render:promo / check:promo. The Promo film workflow
+renders the immutable promo-launch tag and publishes a separate GitHub film
+prerelease. It does not publish npm. Do not move the older launch-v2 tag. Numeric
+delivery checks include audio/video start times and duration, BT.709 limited
+yuv420p, exact frame count and MP4 faststart. docs/promo/verification.md records
+what was actually checked; do not infer a release from source alone.
