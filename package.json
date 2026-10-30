@@ -1,6 +1,6 @@
 {
   "name": "@demotion/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Motion graphics, written in code. A React toolkit and CLI for making polished videos locally with Remotion: beat-synced motion, camera, type, transitions and sound. Free for personal use; commercial license available.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "author": "Qofeno Labs",
