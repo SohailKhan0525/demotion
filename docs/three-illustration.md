@@ -4,7 +4,7 @@
 0.3.0. They use Three.js geometry, React Three Fiber, and Remotion's `ThreeCanvas`.
 The main `@demotion/cli` entry has no Three.js dependency.
 
-Install the optional entry's peer dependencies alongside your Remotion project:
+For the React 18 / Remotion 4.0.528 starter, install the tested optional peers:
 
 ```sh
 npm install three@0.160.1 @react-three/fiber@8.17.10 @remotion/three@4.0.528 @react-three/postprocessing@2.16.3 postprocessing@6.36.4
@@ -17,8 +17,8 @@ composer, bloom, depth of field, or postprocessing passes.
 
 ## A complete example
 
-Copy [examples/illustration-three.tsx](../examples/illustration-three.tsx), then
-register it in your Remotion root:
+Copy [examples/illustration-three.tsx](../examples/illustration-three.tsx) to
+`src/IllustrationThree.tsx`, then register it in your Remotion root:
 
 ```tsx
 import { Composition } from "remotion";
