@@ -52,7 +52,8 @@ Git. The [reproduction guide](README.md) regenerates the source composition.
 
 `@demotion/cli@0.3.0` is public with latest=0.3.0, publisher qofeno-labs and no
 provenance attestation. Its gitHead agrees with v0.3.0 and the film source.
-The [semantic-release run](https://github.com/SohailKhan0525/demotion/actions/runs/41327785431)+completed successfully.
+The [semantic-release run](https://github.com/SohailKhan0525/demotion/actions/runs/41327785431)
+completed successfully.
 
 Install, lint, build and 68 tests pass, with Node 22/24 CI. The candidate's
 complete 450-frame 2D and 240-frame 3D examples were rendered in an external
