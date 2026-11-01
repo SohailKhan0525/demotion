@@ -3,20 +3,19 @@
 **Motion graphics, written in code.** Create videos with React and render them on your own computer using [Remotion](https://www.remotion.dev).
 
 [![CI](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml)
-[Package](https://www.npmjs.com/package/@demotion/cli) · [Examples](#edit-your-video) · [UI reference](docs/ui.md) · [Issues](https://github.com/SohailKhan0525/demotion/issues)
+[Package](https://www.npmjs.com/package/@demotion/cli) · [Illustration guide](docs/illustration.md) · [Examples](#edit-your-video) · [UI reference](docs/ui.md) · [Issues](https://github.com/SohailKhan0525/demotion/issues)
 
 `@demotion/cli` includes the `demotion` command, React components, beat-based timing,
-procedural audio, bundled fonts, and optional 3D panels. Videos render locally;
-there is no hosted rendering service to configure.
+animated SVG paths, procedural audio, bundled fonts, and optional 3D scenes.
+Videos render locally; there is no hosted rendering service to configure.
 
-[![Watch Ideas deserve motion, the Demotion promo film](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/promo-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/promo-launch/demotion-promo-launch.mp4)
+[![Watch Draw it. Give it depth., the Demotion 0.3 film](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/update-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
 
-[Watch / download the promo MP4](https://github.com/SohailKhan0525/demotion/releases/download/promo-launch/demotion-promo-launch.mp4)
-· [Film source, storyboard and reproduction guide](docs/promo/README.md)
+[Watch / download the 0.3 film](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
+· [Film source](src/update-film/UpdateFilm.tsx)
 
-56 seconds of real components, original illustrations and procedural audio.
-The film was recorded against npm 0.1.0; the components it labels as source
-previews are included in the 0.2.0 release.
+40 seconds of animated paths, original illustrations and real extruded SVG geometry,
+with a procedural soundtrack. Made with the APIs in `@demotion/cli@0.3.0`.
 
 ## Quick start
 
@@ -74,26 +73,43 @@ Change the text and colors here. Change the composition settings in
 lengths and composition duration consistent. `ensureFontsLoaded()` is already
 called by the starter, using files copied into `public/fonts`.
 
-## New in 0.2.0: data stories and captions
+## New in 0.3.0: draw it, give it depth
 
-Five new components are included in `@demotion/cli@0.2.0`: `CountUp`, `BarChart`,
+Reveal SVG strokes with `DrawPath`, move artwork along a curve with `FollowPath`,
+or use `usePathMotion` to read its position and rotation. These APIs use the
+containing `Shot`'s beat clock, so seeking to any frame gives the same result.
+`WorkflowIllustration` combines the path tools into a reusable animated diagram.
+
+For 3D, `Scene3D` provides a lit Three.js scene with camera poses timed in beats.
+`ExtrudedSvg` turns filled SVG contours into beveled meshes with depth, materials
+and optional staggered entrances. These exports live in `@demotion/cli/three`;
+install the [optional 3D dependencies](#optional-3d) before using them.
+
+[Build a complete 2D illustration](docs/illustration.md) ·
+[Build a complete 3D illustration](docs/three-illustration.md)
+
+Upgrade an existing project with `npm install @demotion/cli@latest`, or use the
+quick start above for a new project.
+
+## Since 0.2.0: data stories and captions
+
+Available since `@demotion/cli@0.2.0`: `CountUp`, `BarChart`,
 `CaptionTrack`, `LowerThird` and `ProgressRing`. They share the scene engine's beat
-clock and support deterministic seeking. Upgrade an existing project with
-`npm install @demotion/cli@latest`, or use the quick start above for a new project.
+clock and support deterministic seeking.
 [Run the complete example and read the API guide](docs/components.md).
 
-This release also fixes project creation in directories containing spaces,
-punctuation or Unicode, and prints safely quoted terminal instructions.
+The 0.2.0 release also fixed project creation in directories containing spaces,
+punctuation or Unicode, and added safely quoted terminal instructions.
 
 ![Data story rendered from the complete source example](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/data-story-preview.png)
 
 A frame from the complete example; values are demonstration data.
 
 The [second launch film](https://github.com/SohailKhan0525/demotion/releases/tag/launch-v2)
-shows the new source components; “V2” is the film edition, not an npm 2.0 release.
-The [latest promo](docs/promo/README.md) gives each demonstration more time and
-includes a [complete typography example](examples/promo-scene.tsx) that works
-with the published package.
+shows these components; “V2” is the film edition, not an npm 2.0 release.
+The archived [Ideas deserve motion promo](docs/promo/README.md) gives each
+demonstration more time and includes a [complete typography example](examples/promo-scene.tsx)
+that works with the published package.
 
 ## Components and timing
 
@@ -112,6 +128,8 @@ Import from `@demotion/cli`:
 | `MotionProject`, `Shot`, `useShot` | Scenes with camera motion, wipes, grain and render-time motion blur |
 | `KineticHeadline`, `WideStack` | Animated letters and variable-width type |
 | `Terminal`, `CodePanel` | Timed typing and source-code reveals |
+| `DrawPath`, `FollowPath`, `usePathMotion` | SVG stroke reveals, path position and rotation |
+| `WorkflowIllustration` | Animated source-to-composition diagram |
 
 `Terminal` and `CodePanel` use the clock and theme of their containing `Shot`.
 See [their props and examples](docs/ui.md). The toolkit also retains its earlier
@@ -151,7 +169,8 @@ The audio API is also available from `@demotion/cli/audio`.
 
 ## Optional 3D
 
-`Stack3D` and related exports live at `@demotion/cli/three`. For the **React 18 /
+`Scene3D`, `ExtrudedSvg`, `Stack3D` and related exports live at
+`@demotion/cli/three`. For the **React 18 /
 Remotion 4.0.528 starter**, install the tested optional dependencies:
 
 ```bash
@@ -159,11 +178,16 @@ npm install three@0.160.1 postprocessing@6.36.4 @react-three/fiber@8.17.10 @reac
 ```
 
 ```tsx
-import { Stack3D } from "@demotion/cli/three";
+import { Scene3D, ExtrudedSvg, Stack3D } from "@demotion/cli/three";
 ```
 
-The basic starter does not need these peers. Real depth of field can be expensive
-on software graphics, so use a small test render before rendering a long scene.
+The [3D illustration guide](docs/three-illustration.md) includes a complete scene
+and explains the supported SVG input. Expand strokes and text into filled paths
+before extruding them.
+
+The basic starter and 2D illustration APIs do not need these peers. Real depth of
+field can be expensive on software graphics, so use a small test render before
+rendering a long scene.
 
 ## Troubleshooting
 
@@ -208,9 +232,9 @@ npm ci
 npm run dev
 ```
 
-Select **LaunchV2**, **Launch**, **Lab**, or **UI** in Studio. Generated media stays in ignored
-`out/`; the launch MP4 is intentionally not checked in. The source remains available
-to regenerate it.
+Select **UpdateFilm**, **PromoLaunch**, **LaunchV2**, **Launch**, **Lab**, or **UI**
+in Studio. Generated media stays in ignored `out/`; the source remains available
+to regenerate each film.
 
 ```bash
 npm run lint
@@ -218,13 +242,16 @@ npm run build
 npm test
 ```
 
-Generate the second launch film and its visual checks:
+Generate the 0.3 update film and its visual checks:
 
 ```bash
-npm run qa:v2          # out/launch-v2/contact-sheet.jpg + stills
-npm run render:v2      # out/launch-v2/demotion-v2-launch.mp4
-npm run check:v2       # verify codecs, dimensions, frames and duration
+npm run qa:update      # out/update-film/contact-sheet.jpg + stills
+npm run render:update  # out/update-film/demotion-update-030.mp4
+npm run check:update   # verify codecs, dimensions, frames and duration
 ```
+
+The earlier films remain reproducible: [second launch film](docs/launch-v2/README.md)
+and [Ideas deserve motion](docs/promo/README.md).
 
 See [development notes](docs/DEVELOPMENT.md) for source rendering and verification,
 and [release instructions](docs/PUBLISHING.md) for publishing. npm releases are

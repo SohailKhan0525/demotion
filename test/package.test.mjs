@@ -37,15 +37,17 @@ test("CLI prints version and mentions the license", () => {
   assert.match(help, /commercial/i);
 });
 
-test("Remotion development packages stay on the same exact version as the CLI", () => {
+test("Remotion runtime and development packages stay on the same exact version as the CLI", () => {
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
   const lock = JSON.parse(fs.readFileSync("package-lock.json", "utf8"));
   const version = pkg.config.remotionVersion;
   assert.equal(pkg.devDependencies.remotion, version);
-  for (const [name, value] of Object.entries(pkg.devDependencies)) {
-    if (!name.startsWith("@remotion/")) continue;
-    assert.equal(value, version, name);
-    assert.equal(lock.packages[""].devDependencies[name], value, `lock metadata: ${name}`);
-    assert.equal(lock.packages[`node_modules/${name}`].version, version, `locked package: ${name}`);
+  for (const section of ["dependencies", "devDependencies"]) {
+    for (const [name, value] of Object.entries(pkg[section] ?? {})) {
+      if (!name.startsWith("@remotion/")) continue;
+      assert.equal(value, version, name);
+      assert.equal(lock.packages[""][section][name], value, `lock metadata: ${name}`);
+      assert.equal(lock.packages[`node_modules/${name}`].version, version, `locked package: ${name}`);
+    }
   }
 });

@@ -10,3 +10,5 @@ Demotion bundles these open-licensed fonts (SIL Open Font License 1.1). Their li
 | JetBrains Mono (variable) | https://github.com/JetBrains/JetBrainsMono — via `@fontsource-variable/jetbrains-mono` |
 
 Demotion is built on [Remotion](https://www.remotion.dev) (separate license, see https://www.remotion.dev/docs/terms) and, optionally, [three.js](https://threejs.org) (MIT) and [postprocessing](https://github.com/pmndrs/postprocessing) (Zlib).
+
+The 2D illustration tools use [`@remotion/paths`](https://github.com/remotion-dev/remotion/tree/main/packages/paths) (MIT). It is installed as a dependency with its own license text. The optional 3D illustration tools use Three.js's SVGLoader and geometry utilities under Three.js's MIT license.

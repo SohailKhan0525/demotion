@@ -22,6 +22,14 @@ await build({
   ...common,
   entryPoints: ["src/lib-three.ts"],
   outfile: "dist/three.js",
+  // Both public entries must use the same React context instance. Bundling a
+  // second ShotContext here silently loses a consumer's beat clock and theme.
+  plugins: [{
+    name: "shared-shot-context",
+    setup(builder) {
+      builder.onResolve({ filter: /(?:^|\/)engine\/context$/ }, () => ({ path: "./index.js", external: true }));
+    },
+  }],
   external: ["react", "react-dom", "react/jsx-runtime", "remotion", "@remotion/*", "three", "@react-three/*", "postprocessing"],
 });
 await build({

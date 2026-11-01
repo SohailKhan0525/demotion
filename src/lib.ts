@@ -38,3 +38,4 @@ export * from "./ui/BarChart";
 export * from "./ui/CaptionTrack";
 export * from "./ui/LowerThird";
 export * from "./ui/ProgressRing";
+export * from "./illustration";

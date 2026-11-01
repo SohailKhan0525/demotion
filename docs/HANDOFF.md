@@ -12,6 +12,14 @@ successful dry run or source push alone does not publish a package.
 
 ## Current npm release
 
+The owner has authorized the next **0.3.0 illustration release** and its update
+film. Source adds DrawPath, FollowPath, usePathMotion, WorkflowIllustration,
+Scene3D and ExtrudedSvg. The 2D entry uses @remotion/paths; Three remains optional.
+The two built entry points share ShotContext so consumer clocks/themes survive
+the package boundary. See docs/illustration.md, docs/three-illustration.md and
+docs/research-next.md. Release and public asset verification are in progress;
+do not confuse source changes with a completed publication.
+
 **@demotion/cli@0.2.0 is published**, with latest=0.2.0, publisher qofeno-labs
 and no provenance attestation. The npm gitHead and source tag v0.2.0 both identify
 361560ded0cbb9721b2df333d2da317c5beb7cd4. The

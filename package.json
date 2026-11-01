@@ -43,7 +43,9 @@
     "THIRD_PARTY_NOTICES.md",
     "docs/ui.md",
     "docs/components.md",
-    "examples"
+    "examples",
+    "docs/illustration.md",
+    "docs/three-illustration.md"
   ],
   "publishConfig": {
     "access": "public",
@@ -61,7 +63,7 @@
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run lint && npm run build",
     "test": "node --test test/*.test.mjs",
-    "predev": "npm run build && node scripts/launch-audio.mjs && node scripts/launch-v2.mjs audio && node scripts/promo.mjs audio",
+    "predev": "npm run build && node scripts/launch-audio.mjs && node scripts/launch-v2.mjs audio && node scripts/promo.mjs audio && node scripts/update-film.mjs audio",
     "prerender": "npm run build && node scripts/launch-audio.mjs",
     "prerender:4k": "npm run build && node scripts/launch-audio.mjs",
     "audio:launch": "npm run build && node scripts/launch-audio.mjs",
@@ -74,7 +76,11 @@
     "audio:promo": "npm run build && node scripts/promo.mjs audio",
     "qa:promo": "npm run build && node scripts/promo.mjs qa",
     "render:promo": "npm run build && node scripts/promo.mjs render",
-    "check:promo": "node scripts/promo.mjs check"
+    "check:promo": "node scripts/promo.mjs check",
+    "audio:update": "npm run build && node scripts/update-film.mjs audio",
+    "qa:update": "npm run build && node scripts/update-film.mjs qa",
+    "render:update": "npm run build && node scripts/update-film.mjs render",
+    "check:update": "node scripts/update-film.mjs check"
   },
   "keywords": [
     "remotion",
@@ -86,19 +92,19 @@
     "animation"
   ],
   "peerDependencies": {
+    "@react-three/fiber": "8.17.10",
+    "@react-three/postprocessing": "2.16.3",
     "@remotion/fonts": "^4.0.0",
     "@remotion/layout-utils": "^4.0.0",
     "@remotion/motion-blur": "^4.0.0",
     "@remotion/noise": "^4.0.0",
+    "@remotion/three": "4.0.528",
     "@remotion/transitions": "^4.0.0",
+    "postprocessing": "6.36.4",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
     "remotion": "^4.0.0",
-    "@remotion/three": "4.0.528",
-    "@react-three/fiber": "8.17.10",
-    "@react-three/postprocessing": "2.16.3",
-    "three": "0.160.1",
-    "postprocessing": "6.36.4"
+    "three": "0.160.1"
   },
   "devDependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
@@ -151,5 +157,8 @@
     "postprocessing": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "@remotion/paths": "4.0.528"
   }
 }

@@ -10,11 +10,14 @@ import { LaunchV2 } from "./launch-v2/LaunchV2";
 import { V2_BEATS, v2Clock } from "./launch-v2/timeline";
 import { PromoLaunch } from "./promo/PromoLaunch";
 import { PROMO_BEATS, promoClock } from "./promo/timeline";
+import { UpdateFilm } from "./update-film/UpdateFilm";
+import { UPDATE_BEATS, updateClock } from "./update-film/timeline";
 
 ensureFontsLoaded();
 
 export const RemotionRoot: React.FC = () => (
   <>
+  <Composition id="UpdateFilm" component={UpdateFilm} durationInFrames={updateClock.duration(UPDATE_BEATS)} fps={updateClock.fps} width={1920} height={1080} />
   <Composition id="PromoLaunch" component={PromoLaunch} durationInFrames={promoClock.duration(PROMO_BEATS)} fps={promoClock.fps} width={1920} height={1080} />
   <Composition id="LaunchV2" component={LaunchV2} durationInFrames={v2Clock.duration(V2_BEATS)} fps={v2Clock.fps} width={1920} height={1080} />
   <Composition id="UI" component={UI} durationInFrames={uiClock.duration(UI_BEATS)} fps={60} width={1920} height={1080} />
