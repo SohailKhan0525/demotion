@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/SohailKhan0525/demotion/compare/v0.2.0...v0.3.0) (2026-11-01)
+
+
+### Features
+
+* add beat-driven SVG and 3D illustrations with an update film ([b029eaa](https://github.com/SohailKhan0525/demotion/commit/b029eaa8b24f29673141a47da9670bb8c801ab2f))
+
 # [0.2.0](https://github.com/SohailKhan0525/demotion/compare/v0.1.0...v0.2.0) (2026-10-30)
 
 
