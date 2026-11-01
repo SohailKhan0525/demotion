@@ -3,6 +3,10 @@ name: Update film
 on:
   push:
     tags: [update-030]
+    # semantic-release commits carry [skip ci], which also skips a tag push.
+    # A deliberate workflow update can retry delivery from the same fixed tag.
+    branches: [main]
+    paths: [.github/workflows/update-film.yml]
   workflow_dispatch:
 
 concurrency:
