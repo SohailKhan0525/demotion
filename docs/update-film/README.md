@@ -11,6 +11,7 @@ source snapshot.
 [Download the MP4](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
 · [Film release, poster and checksums](https://github.com/SohailKhan0525/demotion/releases/tag/update-030)
 · [Animation and reference research](../research-next.md)
+· [Verified public downloads and media checks](verification.md)
 
 ## Storyboard and text equivalent
 

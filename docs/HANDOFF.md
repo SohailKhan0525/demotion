@@ -50,8 +50,11 @@ Preserve the license files and terms, and do not remove existing public APIs.
 UpdateFilm is the 40-second / 120 BPM / 60 fps illustration-update promo. The
 immutable update-030 tag points to the 0.3.0 release source. Its local render
 passed format and full-decode checks, and the whole encoded timeline and first/
-last frames were inspected. Public delivery is still being verified through
-[the film run](https://github.com/SohailKhan0525/demotion/actions/runs/41328162078).
+last frames were inspected. Public delivery is complete: the
+[film run](https://github.com/SohailKhan0525/demotion/actions/runs/41328162078)
+succeeded, and the 11.2 MB public MP4/poster downloads, hashes, full decode,
+metadata, loudness and encoded timeline were verified. See
+[delivery evidence](update-film/verification.md).
 Use qa:update / render:update / check:update; see docs/update-film/README.md.
 The workflow has an explicit path trigger for retries because semantic-release's
 [skip ci] commit marker also suppressed the original tag-triggered run.
