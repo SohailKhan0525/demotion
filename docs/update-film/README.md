@@ -65,7 +65,9 @@ Outputs are written under ignored `out/update-film/`:
 - `metadata.json` records the delivery check; `SHA256SUMS` covers MP4 and poster.
 
 The render script uses two independent browser workers by default, with one tab
-per worker. To use an existing Chromium and reduce memory use:
+per worker. It selects Chromium's `swangle` software WebGL renderer so the 3D
+shots also work on machines without a GPU. To use an existing Chromium and
+reduce memory use:
 
 ```bash
 DEMOTION_BROWSER=/usr/bin/chromium DEMOTION_WORKERS=1 DEMOTION_CONCURRENCY=1 npm run render:update

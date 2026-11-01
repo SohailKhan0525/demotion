@@ -12,46 +12,52 @@ successful dry run or source push alone does not publish a package.
 
 ## Current npm release
 
-The owner has authorized the next **0.3.0 illustration release** and its update
-film. Source adds DrawPath, FollowPath, usePathMotion, WorkflowIllustration,
-Scene3D and ExtrudedSvg. The 2D entry uses @remotion/paths; Three remains optional.
-The two built entry points share ShotContext so consumer clocks/themes survive
-the package boundary. See docs/illustration.md, docs/three-illustration.md and
-docs/research-next.md. Release and public asset verification are in progress;
-do not confuse source changes with a completed publication.
+**@demotion/cli@0.3.0 is published**, with latest=0.3.0, publisher qofeno-labs
+and no provenance attestation. The npm gitHead and source tag v0.3.0 both identify
+cc1d0d7b0c406541e9204280de037221eeb6a8eb. The
+[Release workflow](https://github.com/SohailKhan0525/demotion/actions/runs/41327785431)
+and its source CI passed on 2026-11-01.
 
-**@demotion/cli@0.2.0 is published**, with latest=0.2.0, publisher qofeno-labs
-and no provenance attestation. The npm gitHead and source tag v0.2.0 both identify
-361560ded0cbb9721b2df333d2da317c5beb7cd4. The
-[Release workflow](https://github.com/SohailKhan0525/demotion/actions/runs/41098657398)
-and its source CI passed on 2026-10-30.
+The illustration update adds DrawPath, FollowPath, usePathMotion and
+WorkflowIllustration to the main entry, plus Scene3D and ExtrudedSvg to optional
+/three. The 2D tools use @remotion/paths; the 3D tools use actual Three.js meshes,
+SVG holes, materials, smooth normals and a frame-driven camera. See
+[2D examples](illustration.md), [3D examples](three-illustration.md) and
+[research](research-next.md). Existing data, typography, audio and CLI APIs remain.
 
-This release includes CountUp, BarChart, CaptionTrack, LowerThird and ProgressRing,
-plus CLI fixes for spaces, quotes, Unicode, reserved npm names and existing files.
-See docs/components.md and the packaged examples/data-story.tsx. Existing users
-can upgrade with `npm install @demotion/cli@latest`.
+The built entries share ShotContext so clocks and themes survive the package
+boundary. The optional entry exports Fiber's ThreeElements type so consumer JSX
+works. SVG artwork has documented input limits and unsupported-feature errors.
 
-The registry release was verified in a fresh external project: all five exports,
-CLI folder-name normalization, TypeScript, the complete 450-frame / 7.5-second
-DataStory render at 1920×1080 / 60 fps, and the README's 5.5-second audio example.
-The encoded timeline and full-resolution data/caption frames were inspected.
-Installation, lint, build and all 51 source tests pass.
+Validation: install, lint, build and 68 tests pass; CI covers Node 22 and 24.
+A fresh packed consumer rendered the complete 450-frame 2D and 240-frame 3D
+examples at 1920×1080 / 60 fps. The published runtime bundles and all 74 type
+declarations match the tested candidate byte-for-byte. A separate registry CLI
+project installed 0.3.0, compiled both examples, and rendered inspected 2D/3D
+stills. The 2D package was also verified without the optional Three dependencies.
 
 Release automation is separate from ordinary source pushes. It runs through a
 manual Release dispatch or an explicitly authorized change to
-.github/npm-release-request.json. That file currently records the completed
-0.2.0 request; do not edit it during routine work. A semantic-release dry run
-checks the intended version before publication. Automatic issue/PR comments and
-failure issues are disabled. See docs/PUBLISHING.md.
+.github/npm-release-request.json. That file records the completed 0.3.0 request;
+do not edit it during routine work. A semantic-release dry run checks the
+intended version before publication. Automatic issue/PR comments and failure
+issues remain disabled. Provenance remains disabled. See docs/PUBLISHING.md.
 
-Read README.md for supported commands and docs/DEVELOPMENT.md for verification.
-Preserve the license files and terms. Older exported components remain for
-compatibility; do not delete public APIs as part of styling work.
+Preserve the license files and terms, and do not remove existing public APIs.
 
 ## Films and examples
 
-The source supports Launch, Lab, UI, LaunchV2 and PromoLaunch development
-compositions. The owner downloaded the original launch MP4. Keep generated
+UpdateFilm is the 40-second / 120 BPM / 60 fps illustration-update promo. The
+immutable update-030 tag points to the 0.3.0 release source. Its local render
+passed format and full-decode checks, and the whole encoded timeline and first/
+last frames were inspected. Public delivery is still being verified through
+[the film run](https://github.com/SohailKhan0525/demotion/actions/runs/41328162078).
+Use qa:update / render:update / check:update; see docs/update-film/README.md.
+The workflow has an explicit path trigger for retries because semantic-release's
+[skip ci] commit marker also suppressed the original tag-triggered run.
+
+The source supports Launch, Lab, UI, LaunchV2, PromoLaunch and UpdateFilm
+development compositions. The owner downloaded the original launch MP4. Keep generated
 videos out of Git; the source and film workflows can regenerate them. Obsolete
 publishing journals, old QA sheets and the unused Python pipeline were removed.
 
@@ -82,7 +88,7 @@ Film workflows publish media assets, not npm packages.
 
 docs/launch-v2 contains research and drafts for X, Reddit, DEV and other
 platforms. Older copy refers to npm 0.1.0 and source-preview components; update
-those claims to 0.2.0 before reusing it. Live Reddit/DEV/X Help/HN pages were
+those claims to the current 0.3.0 release before reusing it. Live Reddit/DEV/X Help/HN pages were
 blocked by the network proxy during research; do not claim their current rules
 were verified. Forem's default policy source was inspected and is distinguished
 from DEV rules. No social post is sent automatically.

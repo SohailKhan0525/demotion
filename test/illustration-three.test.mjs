@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { build } from "esbuild";
 import ts from "typescript";
 import { loadTs } from "./helpers.mjs";
@@ -117,6 +118,21 @@ test("the published 3D example typechecks against built declarations and core st
   }));
   const built = await build({ entryPoints: ["src/lib.ts"], bundle: true, write: false, metafile: true, external: ["react", "react-dom", "react/jsx-runtime", "remotion", "@remotion/*"] });
   assert.ok(!Object.keys(built.metafile.inputs).some((name) => /(?:^|\/)three(?:\/|$)|@react-three|postprocessing/.test(name)), "core must not pull in optional Three.js dependencies");
+  const guide = fs.readFileSync("docs/three-illustration.md", "utf8");
+  const registration = guide.match(/```tsx\n([\s\S]*?)\n```/)[1];
+  // Exercise the guide as the generated starter's actual Root module, so a
+  // renamed export cannot silently break the documented copy/paste workflow.
+  await build({
+    stdin: { contents: fs.readFileSync("template/src/index.ts", "utf8"), resolveDir: process.cwd(), loader: "ts" },
+    bundle: true, platform: "browser", jsx: "automatic", write: false, logLevel: "silent",
+    plugins: [{ name: "guide-root", setup(builder) {
+      builder.onResolve({ filter: /^\.\/Root$/ }, () => ({ path: "guide-root", namespace: "guide" }));
+      builder.onLoad({ filter: /.*/, namespace: "guide" }, () => ({
+        contents: registration.replace('"./IllustrationThree"', '"./examples/illustration-three"'),
+        resolveDir: process.cwd(), loader: "tsx",
+      }));
+    } }],
+  });
 });
 
 test("built /three inherits the main entry's Shot clock, theme and local beat rounding", async () => {

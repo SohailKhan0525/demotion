@@ -61,7 +61,7 @@ node bin/demotion.js init /tmp/demotion-candidate
 In the generated project, install the actual tarball before its registry release:
 
 ```bash
-npm install /absolute/path/to/demotion/out/demotion-cli-0.2.0.tgz
+npm install /absolute/path/to/demotion/out/demotion-cli-0.3.0.tgz
 npm run render -- --browser-executable=/usr/bin/chromium --concurrency=2
 ```
 
@@ -70,6 +70,35 @@ npx command and npm install in a fresh directory outside the source checkout.
 Check types, a complete starter video, audio output and optional 3D dependency
 installation. Never substitute a source-tree import for a registry consumer test.
 
+
+## Verified 0.3.0 checks — 2026-11-01
+
+Semantic-release published @demotion/cli@0.3.0 with latest=0.3.0, publisher
+qofeno-labs and no provenance attestation. npm gitHead and v0.3.0 agree on
+`cc1d0d7b0c406541e9204280de037221eeb6a8eb`. The
+[Release run](https://github.com/SohailKhan0525/demotion/actions/runs/41327785431)
+and [Node 22/24 source CI](https://github.com/SohailKhan0525/demotion/actions/runs/41327785426)
+succeeded. Local install, lint, build and all 68 tests passed.
+
+The packed candidate was installed outside the checkout with ordinary npm
+resolution. The 2D package imports and renders without Three.js installed. The
+complete 2D illustration example rendered 450 frames / 7.5 seconds; after adding
+the documented optional peers, the complete 3D example rendered 240 frames /
+four seconds. Both are 1920×1080 / 60 fps and their encoded timelines were
+visually inspected. The 3D file also passed a full decode.
+
+The public tarball's three runtime bundles and all 74 declaration files match
+the tested candidate byte-for-byte. A separate project created by the public
+latest CLI depends on ^0.3.0. It installed from the registry, passed TypeScript
+for both examples, and rendered inspected 2D and 3D stills. Tests exercise
+rounded beat boundaries, reverse seeking, static reduced motion, unique SVG IDs,
+SVG extrusion holes and normals, input limits, camera timing, and shared context
+across built package entries. Ten real Chromium parser probes additionally
+checked hidden layers, nested opacity and namespace errors.
+
+The new film uses `npm run qa:update`, `npm run render:update` and
+`npm run check:update`. Its source and reproduction guide are in
+[docs/update-film](update-film/README.md); publication is separate from npm.
 
 ## Verified 0.2.0 checks — 2026-10-30
 

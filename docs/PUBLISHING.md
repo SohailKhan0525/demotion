@@ -11,10 +11,11 @@ name must remain @demotion/cli; the executable name is demotion.
 
 ## Current release
 
-`@demotion/cli@0.2.0` is published, with `latest` pointing to 0.2.0. The public
+`@demotion/cli@0.3.0` is published, with `latest` pointing to 0.3.0. The public
 registry identifies qofeno-labs as its publisher and has no provenance attestation.
-The source tag v0.2.0 identifies npm's gitHead. The
-[0.2.0 Release run](https://github.com/SohailKhan0525/demotion/actions/runs/41098657398)
+The source tag v0.3.0 identifies npm's gitHead,
+`cc1d0d7b0c406541e9204280de037221eeb6a8eb`. The
+[0.3.0 Release run](https://github.com/SohailKhan0525/demotion/actions/runs/41327785431)
 completed successfully. The initial v0.1.0 tag remains the baseline checked by
 the workflow. The temporary first-publication
 workflow has been retired; ordinary source pushes run CI. Only an explicit
@@ -31,7 +32,7 @@ npm install
 npm start
 ```
 
-Use another terminal in my-video for npm run render. Do not republish 0.1.0 or 0.2.0;
+Use another terminal in my-video for npm run render. Do not republish 0.1.0, 0.2.0 or 0.3.0;
 published name/version pairs are immutable.
 
 ## Later releases
@@ -48,11 +49,11 @@ job without retrieving the npm secret into a local environment:
 
 ```json
 {
-  "version": "0.2.0"
+  "version": "0.3.0"
 }
 ```
 
-The example above is the completed 0.2.0 request. For a later release, use the
+The example above is the completed 0.3.0 request. For a later release, use the
 intended next version. This file is a publication request, not general
 configuration: editing it and pushing main starts the publisher. Other paths
 do not trigger publication. The workflow runs install, lint, build and tests,

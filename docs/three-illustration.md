@@ -24,7 +24,7 @@ Copy [examples/illustration-three.tsx](../examples/illustration-three.tsx) to
 import { Composition } from "remotion";
 import { IllustrationThree, illustrationClock, ILLUSTRATION_BEATS } from "./IllustrationThree";
 
-export const Root = () => <Composition
+export const RemotionRoot = () => <Composition
   id="IllustrationThree"
   component={IllustrationThree}
   width={1920}
@@ -36,6 +36,18 @@ export const Root = () => <Composition
 
 The example is 240 frames / four seconds at 60 fps. It builds a layered sculpture
 from inline SVG contours. There are no network images or model downloads.
+
+In the generated starter, replace the composition in `src/Root.tsx` with the
+registration above, then render its new composition ID:
+
+```sh
+npx remotion render src/index.ts IllustrationThree out/illustration-three.mp4
+```
+
+On a machine without a GPU, append `--gl=swangle` to use Chromium's software
+WebGL renderer. If Remotion cannot download a browser, also pass
+`--browser-executable=/path/to/chromium`. These are renderer flags, not component
+props.
 
 ## Scene3D
 
