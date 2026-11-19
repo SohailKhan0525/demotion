@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/SohailKhan0525/demotion/compare/v0.5.0...v0.5.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* wait for Archivo before fitting animated headlines ([2cfbc81](https://github.com/SohailKhan0525/demotion/commit/2cfbc8133f6a7a347c0ceb816a5c10c196131ffe))
+
 # [0.5.0](https://github.com/SohailKhan0525/demotion/compare/v0.4.0...v0.5.0) (2026-11-19)
 
 
