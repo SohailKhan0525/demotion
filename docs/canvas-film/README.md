@@ -29,7 +29,7 @@ The editor is a single HTML file with an inline JavaScript drawing function and 
 | 18–21 s | Save frame reveals the finished card with its PNG filename. |
 | 21–24 s | The npm command stays on screen so the viewer can make their own copy. |
 
-The film calls the same `drawTitleCard` function as the [editable example](../../examples/canvas-launch.html). The film illustrates the editor controls and pointer around that live drawing. The [film drawing code](../../scripts/canvas-film/visuals.mjs) adds the camera framing, chapter titles, and transitions. The [renderer](../../scripts/canvas-film/render.mjs) registers the bundled fonts and uses Demotion’s beat clock and audio engine for the score. The film stays at 120 BPM as the title editor demonstrates its independent 96 BPM setting.
+The film calls the same `drawTitleCard` function as the [editable example](../../examples/canvas-launch.html). The film illustrates the editor controls and pointer around that live drawing. The [film drawing code](https://github.com/SohailKhan0525/demotion/blob/v0.4.0/scripts/canvas-film/visuals.mjs) adds the camera framing, chapter titles, and transitions. The [renderer](https://github.com/SohailKhan0525/demotion/blob/v0.4.0/scripts/canvas-film/render.mjs) registers the bundled fonts and uses Demotion’s beat clock and audio engine for the score. The film stays at 120 BPM as the title editor demonstrates its independent 96 BPM setting.
 
 ## Render and review from source
 

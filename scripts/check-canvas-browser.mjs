@@ -80,6 +80,19 @@ try {
   });
   assert.ok(exportState.canceled);
   assert.equal(Number(exportState.at), 8.5);
+  await page.evaluate(async () => {
+    const link = document.querySelector("#clip-download");
+    const deadline = performance.now() + 15000;
+    while (link.hidden) {
+      if (performance.now() >= deadline) throw new Error(document.querySelector("#export-status").textContent);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    if (link.download !== "demotion-title.webm") throw new Error("unexpected clip filename");
+  });
+  // Some browser profiles require a fresh click for a second download on the same page.
+  if (!await stat(join(downloads, "demotion-title.webm")).catch(() => null)) {
+    await page.evaluate(() => document.querySelector("#clip-download").click());
+  }
   const video = await waitForDownload("demotion-title.webm");
   // MediaRecorder can omit WebM container duration. Inspect the actual packet timeline.
   const probe = JSON.parse(execFileSync("ffprobe", ["-v", "error", "-show_packets", "-show_streams",
