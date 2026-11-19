@@ -35,13 +35,19 @@
   "files": [
     "dist",
     "bin",
-    "template",
+    "template/src",
+    "template/package.json",
+    "template/README.md",
+    "template/remotion.config.ts",
+    "template/tsconfig.json",
+    "template/_dot_gitignore",
     "public/fonts",
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
     "docs/product-launch.md",
     "docs/canvas-film",
+    "docs/showcase",
     "docs/ui.md",
     "docs/components.md",
     "examples",
@@ -54,14 +60,15 @@
     "registry": "https://registry.npmjs.org/"
   },
   "config": {
-    "remotionVersion": "4.0.528"
+    "remotionVersion": "4.0.528",
+    "showcaseTag": "v0.5.0"
   },
   "scripts": {
     "dev": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts Launch out/demotion-launch.mp4 --codec=h264 --crf=18",
     "render:4k": "remotion render src/index.ts Launch out/demotion-launch-4k.mp4 --scale=2 --codec=h264 --crf=18",
     "build": "node scripts/build.mjs",
-    "lint": "tsc --noEmit",
+    "lint": "tsc -p tsconfig.lint.json",
     "prepublishOnly": "npm run lint && npm run build",
     "test": "node --test test/*.test.mjs",
     "predev": "npm run build && node scripts/launch-audio.mjs && node scripts/launch-v2.mjs audio && node scripts/promo.mjs audio && node scripts/update-film.mjs audio",
@@ -83,7 +90,11 @@
     "render:update": "npm run build && node scripts/update-film.mjs render",
     "check:update": "node scripts/update-film.mjs check",
     "render:canvas": "npm run build && node scripts/canvas-film/render.mjs",
-    "check:canvas": "node scripts/canvas-film/check.mjs"
+    "check:canvas": "node scripts/canvas-film/check.mjs",
+    "studio:showcase": "npm run build && node scripts/showcase/render.mjs --prepare && remotion studio src/index.ts",
+    "qa:showcase": "npm run build && node scripts/showcase/render.mjs --stills",
+    "render:showcase": "npm run build && node scripts/showcase/render.mjs",
+    "check:showcase": "node scripts/showcase/check.mjs"
   },
   "keywords": [
     "remotion",

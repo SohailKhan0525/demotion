@@ -5,10 +5,11 @@ import { HomeIcon, LayersIcon, PaletteIcon, ToggleIcon } from "./icons";
 
 const ICONS = [HomeIcon, LayersIcon, PaletteIcon, ToggleIcon];
 
-export const Sidebar: React.FC<{ items: string[]; active?: number; dark?: boolean }> = ({
+export const Sidebar: React.FC<{ items: string[]; active?: number; dark?: boolean; brand?: string }> = ({
   items,
   active = 0,
   dark = false,
+  brand = "RewampUI",
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -52,7 +53,7 @@ export const Sidebar: React.FC<{ items: string[]; active?: number; dark?: boolea
           }}
         />
         <span style={{ fontWeight: 800, fontSize: 14.5, color: activeText, letterSpacing: -0.3 }}>
-          RewampUI
+          {brand}
         </span>
       </div>
 

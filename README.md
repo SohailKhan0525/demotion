@@ -4,43 +4,46 @@ Make product launch videos in code. Demotion is an MIT-licensed toolkit for timi
 
 [![CI](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml)
 
-[Product launch guide](docs/product-launch.md) · [Canvas example](examples/canvas-launch.html) · [Component guides](docs/components.md) · [Contribute](CONTRIBUTING.md)
+[![Watch the Demotion toolkit showcase](https://github.com/SohailKhan0525/demotion/releases/download/v0.5.0/poster.png)](https://github.com/SohailKhan0525/demotion/releases/download/v0.5.0/demotion-showcase.mp4)
 
-[![Watch the Demotion Canvas launch film](https://raw.githubusercontent.com/SohailKhan0525/demotion/v0.4.0/docs/assets/canvas-launch-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/demotion-canvas-launch.mp4)
-
-[Watch the 24-second film](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/demotion-canvas-launch.mp4) · [Download the editable demo](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/canvas-launch.html) · [How the film was made](docs/canvas-film/README.md)
+[Watch the full toolkit film](https://github.com/SohailKhan0525/demotion/releases/download/v0.5.0/demotion-showcase.mp4) · [Find the source for a scene](docs/showcase/README.md) · [Repository inventory](docs/showcase/inventory.md)
 
 ## Quick start
 
-**Make the title card from the film.** Download the HTML above and open it in your browser. Change the title and tempo, scrub the twelve beats, and select **Save frame** for a PNG. In browsers with video export support, **Export clip** records the full twelve-beat animation as a silent video at your chosen tempo. The demo runs offline and uses the same JavaScript Canvas 2D drawing function as the film.
+Find the film, chapter list and source guide from your terminal:
+
+```sh
+npx --yes @demotion/cli@0.5.0 showcase
+```
+
+**Make a title card.** Open the standalone HTML in your browser, change the title and tempo, then scrub the twelve beats. **Save frame** exports a PNG. In browsers with video export support, **Export clip** records the animation as a silent video at your chosen tempo. [Download the editable Canvas demo](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/canvas-launch.html) · [Watch the 24-second editor walkthrough](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/demotion-canvas-launch.mp4)
 
 With Node.js 22.14+ and npm, you can also create a copy from the published package:
 
 ```bash
-npx --yes @demotion/cli@0.4.0 demo
+npx --yes @demotion/cli@0.5.0 demo
 ```
 
 Open `canvas-launch.html` in your browser or text editor. To start a React video project with the published toolkit:
 
 ```bash
-npx --yes @demotion/cli@0.4.0 init my-video
+npx --yes @demotion/cli@0.5.0 init my-video
 cd my-video
 npm install
 npm start
 ```
 
-**To explore the React films in Studio:** Use Node.js 22.14+ and npm. From a terminal:
+**To edit the full toolkit film in Studio**, install Node.js 22.14+, npm, FFmpeg and ffprobe. Prepare its clips and open Studio from the checkout:
 
 ```bash
 git clone https://github.com/SohailKhan0525/demotion.git
 cd demotion
 npm ci
-npm run dev
+npm run studio:showcase
 ```
 
-Select **UpdateFilm** in Remotion Studio and drag the playhead to inspect a frame.
-Edit `src/update-film/UpdateFilm.tsx` for the artwork and `src/update-film/timeline.ts`
-for the timing. Node 22 and 24 are tested in CI. Setup requires network access for
+Select **Showcase** in Remotion Studio and drag the playhead to inspect a scene.
+The [film guide](docs/showcase/README.md) identifies the original composition, example or component behind each shot. Node 22 and 24 are tested in CI. Setup requires network access for
 dependencies and a Chromium download on first use. Fonts are bundled.
 
 ## Create a video project from this checkout
@@ -141,7 +144,7 @@ that works with the published package.
 
 ## Components and timing
 
-For an existing Remotion project, install the release with `npm install @demotion/cli@0.4.0`, or install your local tarball to test changes.
+For an existing Remotion project, install the release with `npm install @demotion/cli@0.5.0`, or install your local tarball to test changes.
 
 Import from `@demotion/cli`:
 
@@ -241,7 +244,7 @@ your render, include the composition, frame number, and what you expected to see
 ## Development
 
 Follow the [quick start](#quick-start) to open the repository in Studio.
-Select **UpdateFilm**, **PromoLaunch**, **LaunchV2**, **Launch**, **Lab**, or **UI**
+Select **Showcase**, **UpdateFilm**, **PromoLaunch**, **LaunchV2**, **Launch**, **Lab**, or **UI**
 in Studio. Generated media stays in ignored `out/`; the source remains available
 to regenerate each film.
 
@@ -251,16 +254,14 @@ npm run build
 npm test
 ```
 
-Render the current illustration film and check the output (requires FFmpeg and ffprobe):
+Render and check the toolkit showcase with FFmpeg, ffprobe and Chromium installed:
 
 ```bash
-npm run qa:update      # out/update-film/contact-sheet.jpg + stills
-npm run render:update  # out/update-film/demotion-update-030.mp4
-npm run check:update   # verify codecs, dimensions, frames and duration
+npm run render:showcase
+npm run check:showcase
 ```
 
-The earlier films remain reproducible: [second launch film](docs/launch-v2/README.md)
-and [Ideas deserve motion](docs/promo/README.md).
+[Launch a project on GitHub](docs/product-launch.md) · [Data film](docs/launch-v2/README.md) · [Ideas deserve motion](docs/promo/README.md) · [Illustration film](docs/update-film/README.md) · [Canvas film](docs/canvas-film/README.md)
 
 See [development notes](docs/DEVELOPMENT.md) for source rendering and verification,
 and [release instructions](docs/PUBLISHING.md) for publishing. npm releases are

@@ -6,6 +6,7 @@ public/launch-soundtrack.wav
 public/launch-v2-soundtrack.wav
 public/promo-soundtrack.wav
 public/update-soundtrack.wav
+public/showcase/
 
 # Generated video exports stay out of the source repository
 *.mp4
