@@ -10,7 +10,7 @@ npm run lint && npm run build && npm test
 ```
 
 `npm run dev` builds the toolkit, generates the four film soundtracks and opens
-Remotion Studio. Select `UpdateFilm` for the illustration tools, `PromoLaunch`
+Remotion Studio. Select `Showcase` for the [toolkit film and scene sources](showcase/README.md), `UpdateFilm` for the illustration tools, `PromoLaunch`
 for the typography and product demo, or `LaunchV2` for data stories and captions.
 `Launch` is the original 52-beat film. `Lab` and `UI` contain shorter studies.
 

@@ -5,6 +5,20 @@ import os from "node:os";
 import path from "node:path";
 import { execFileSync, spawnSync } from "node:child_process";
 
+test("showcase prints the film and source links for the same published edition", () => {
+  const result = spawnSync(process.execPath, ["bin/demotion.js", "showcase"], { encoding: "utf8" });
+  assert.equal(result.status, 0);
+  const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+  const repo = "https://github.com/SohailKhan0525/demotion";
+  const tag = pkg.config.showcaseTag;
+  assert.match(tag, /^v\d+\.\d+\.\d+$/);
+  assert.ok(result.stdout.includes(`${repo}/releases/download/${tag}/demotion-showcase.mp4`));
+  assert.ok(result.stdout.includes(`${repo}/releases/download/${tag}/chapters.json`));
+  assert.ok(result.stdout.includes(`${repo}/blob/${tag}/docs/showcase/README.md`));
+  assert.ok(result.stdout.includes(`${repo}/archive/refs/tags/${tag}.zip`));
+  assert.notEqual(spawnSync(process.execPath, ["bin/demotion.js", "showcase", "--unknown"]).status, 0);
+});
+
 test("demo copies the standalone editor, honors a custom name and preserves existing files", (t) => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-demo-"));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
@@ -35,6 +49,7 @@ test("demotion init scaffolds a complete project (fonts, licenses, sources)", ()
   assert.match(out, /Created my-video\//);
   assert.match(out, /Starter code: MIT License/);
   const p = path.join(dir, "my-video");
+  assert.ok(!fs.existsSync(path.join(p, "node_modules")), "starter must exclude development caches");
   for (const f of ["package.json", "remotion.config.ts", "tsconfig.json", "src/index.ts", "src/Root.tsx", "src/MyVideo.tsx", "README.md", ".gitignore",
     "public/fonts/ArchivoVariable.woff2", "public/fonts/AbrilFatface.woff2", "public/fonts/JetBrainsMonoVariable.woff2", "public/fonts/licenses/OFL-archivo.txt"]) {
     assert.ok(fs.existsSync(path.join(p, f)), `${f} missing`);

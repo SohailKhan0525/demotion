@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@demotion/cli": ["./src/lib.ts"],
+      "@demotion/cli/three": ["./src/lib-three.ts"]
+    }
+  }
+}

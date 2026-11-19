@@ -22,7 +22,7 @@ export const UI: React.FC = () => <MotionProject clock={uiClock} hud={<div style
   <Shot beats={4} bg={T.field} wipe={{ kind: "slats", accent: T.accent }}>
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
       <CodePanel fontSize={34} file="Beat-clock example" at={0.1} over={2.6} lines={[
-        [{ text: "import ", color: T.accent }, { text: '{ createBeatClock } from "demotion";' }],
+        [{ text: "import ", color: T.accent }, { text: `{ createBeatClock } from "${packageJson.name}";` }],
         "", "const clock = createBeatClock({", "  bpm: 120,", "  fps: 60,", "});", "",
         [{ text: "clock.frame(4)", color: T.accent }, { text: " // 120 frames" }],
       ]} />

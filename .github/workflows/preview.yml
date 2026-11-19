@@ -38,6 +38,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: npm run build
       - name: Prepare Chromium and FFmpeg
         run: |
           if ! command -v ffmpeg >/dev/null; then

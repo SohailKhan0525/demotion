@@ -1,0 +1,109 @@
+name: Toolkit showcase
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'examples/**'
+      - 'docs/assets/**'
+      - 'template/**'
+      - 'public/fonts/**'
+      - 'scripts/showcase/**'
+      - 'scripts/build.mjs'
+      - 'scripts/promo-media.mjs'
+      - 'tsconfig.json'
+      - 'tsconfig.build.json'
+      - 'package*.json'
+      - '.github/workflows/showcase.yml'
+  workflow_call:
+    inputs:
+      release_tag:
+        description: Verified npm release tag to receive the film assets
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing showcase release tag to deliver, or leave empty for a preview
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: toolkit-showcase-${{ inputs.release_tag || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ inputs.release_tag && format('refs/tags/{0}', inputs.release_tag) || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Verify package and film editions
+        if: inputs.release_tag != ''
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          node -e 'const p = require("./package.json"); if (process.env.RELEASE_TAG !== p.config.showcaseTag || process.env.RELEASE_TAG !== "v" + p.version) throw Error("Package and showcase tag must match the selected release");'
+      - run: npm ci --no-audit --no-fund
+      - name: Prepare Chromium and FFmpeg
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install --yes --no-install-recommends ffmpeg
+          fi
+          npx --no-install remotion browser ensure
+      - name: Render and check the encoded showcase
+        run: |
+          npm run render:showcase
+          npm run check:showcase
+      - name: Assemble verified downloads
+        working-directory: out/showcase
+        run: |
+          zip -q frame-review.zip qa/second-*.jpg qa/chapters.jpg qa/report.json qa/per-frame.json
+          sha256sum demotion-showcase.mp4 poster.png chapters.json frame-review.zip > SHA256SUMS
+          sha256sum -c SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: showcase-film
+          path: |
+            out/showcase/demotion-showcase.mp4
+            out/showcase/poster.png
+            out/showcase/chapters.json
+            out/showcase/frame-review.zip
+            out/showcase/SHA256SUMS
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 7
+
+  deliver:
+    needs: render
+    if: inputs.release_tag != '' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: showcase-film
+          path: film
+      - name: Attach checked files to the existing release
+        working-directory: film
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          sha256sum -c SHA256SUMS
+          gh release upload "$RELEASE_TAG" demotion-showcase.mp4 poster.png chapters.json frame-review.zip --clobber
+          gh release upload "$RELEASE_TAG" SHA256SUMS --clobber

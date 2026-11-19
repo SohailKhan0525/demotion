@@ -4,7 +4,7 @@
 0.3.0. They use Three.js geometry, React Three Fiber, and Remotion's `ThreeCanvas`.
 The main `@demotion/cli` entry has no Three.js dependency.
 
-Use the 0.4.0 starter to create a React 18 / Remotion 4.0.528 project. [Starter instructions](../README.md#quick-start)
+Use the 0.5.0 starter to create a React 18 / Remotion 4.0.528 project. [Starter instructions](../README.md#quick-start)
 
 In the generated `my-video` directory, install the tested 3D dependencies.
 

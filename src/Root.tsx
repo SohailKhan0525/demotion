@@ -15,8 +15,12 @@ import { UPDATE_BEATS, updateClock } from "./update-film/timeline";
 
 ensureFontsLoaded();
 
+import { Showcase } from "./showcase/Showcase";
+import { SHOWCASE_BEATS, showcaseClock } from "./showcase/timeline";
+
 export const RemotionRoot: React.FC = () => (
   <>
+  <Composition id="Showcase" component={Showcase} durationInFrames={showcaseClock.duration(SHOWCASE_BEATS)} fps={showcaseClock.fps} width={1920} height={1080} />
   <Composition id="UpdateFilm" component={UpdateFilm} durationInFrames={updateClock.duration(UPDATE_BEATS)} fps={updateClock.fps} width={1920} height={1080} />
   <Composition id="PromoLaunch" component={PromoLaunch} durationInFrames={promoClock.duration(PROMO_BEATS)} fps={promoClock.fps} width={1920} height={1080} />
   <Composition id="LaunchV2" component={LaunchV2} durationInFrames={v2Clock.duration(V2_BEATS)} fps={v2Clock.fps} width={1920} height={1080} />

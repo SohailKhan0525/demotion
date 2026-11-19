@@ -14,6 +14,7 @@ Motion graphics, written in code.
 Usage:
   npx ${pkg.name} init <folder>    create a new video project in <folder>
   npx ${pkg.name} demo [file.html] copy the editable, offline Canvas launch demo
+  npx ${pkg.name} showcase         print links to the toolkit film, guide and tagged source
   npx ${pkg.name} --help           show this help
   npx ${pkg.name} audio <cues.json> [out.wav]
                                 render a beat-synced soundtrack (music + sound effects)
@@ -26,6 +27,8 @@ Demotion uses the MIT License. Remotion and the bundled fonts have their own ter
 const copyDir = (from, to, vars) => {
   fs.mkdirSync(to, { recursive: true });
   for (const entry of fs.readdirSync(from, { withFileTypes: true })) {
+    // Rendering the starter in a checkout can create template/node_modules/.cache.
+    if (entry.isDirectory() && entry.name === "node_modules") continue;
     const src = path.join(from, entry.name);
     const dst = path.join(to, entry.name.replace(/^_dot_/, "."));
     if (entry.isDirectory()) copyDir(src, dst, vars);
@@ -47,6 +50,29 @@ if (!cmd || cmd === "--help" || cmd === "-h") {
   console.log(HELP);
 } else if (cmd === "--version" || cmd === "-v") {
   console.log(pkg.version);
+} else if (cmd === "showcase") {
+  const usage = `Usage: npx ${pkg.name} showcase`;
+  if (args.length === 1 && ["--help", "-h"].includes(args[0])) {
+    console.log(usage);
+  } else if (args.length) {
+    console.error(usage);
+    process.exitCode = 1;
+  } else {
+    const tag = pkg.config.showcaseTag;
+    const repo = pkg.homepage.split("#")[0];
+    console.log(`Demotion showcase (${tag})
+Watch the film
+${repo}/releases/download/${tag}/demotion-showcase.mp4
+
+Chapter timings
+${repo}/releases/download/${tag}/chapters.json
+
+Read the guide
+${repo}/blob/${tag}/docs/showcase/README.md
+
+Download the editable source
+${repo}/archive/refs/tags/${tag}.zip`);
+  }
 } else if (cmd === "demo") {
   const usage = `Usage: npx ${pkg.name} demo [file.html]
 Copies the offline title editor. The default filename is canvas-launch.html.`;

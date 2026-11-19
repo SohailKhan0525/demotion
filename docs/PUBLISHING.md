@@ -52,12 +52,12 @@ job without retrieving the npm secret into a local environment:
 
 ```json
 {
-  "version": "0.4.0",
-  "film": "canvas-launch"
+  "version": "0.5.0",
+  "film": "showcase"
 }
 ```
 
-The optional film field makes a second job check out the new version tag, render and verify the film, and attach it to that release with the editable HTML, poster and checksums. If only this job fails, rerun the failed job. Omit the film field for a package-only release. For a later release, use the intended next version. This file is a publication request, not general
+For `showcase`, the media job checks out the version tag, renders and verifies the film, and attaches the MP4, poster, chapters, frame review and checksums to the release. The earlier `canvas-launch` edition also delivered an editable HTML file. If only this job fails, rerun the failed job. Omit the film field for a package-only release. For a later release, use the intended next version. This file is a publication request, not general
 configuration: editing it and pushing main starts the publisher. Other paths
 do not trigger publication. The workflow runs install, lint, build and tests,
 then a semantic-release dry run; if its calculated version differs from the

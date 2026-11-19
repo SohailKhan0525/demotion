@@ -15,6 +15,10 @@ The CLI executable remains demotion. Generated projects depend on and import
 optional /three exports. Verify publication against the public registry; a
 successful dry run or source push alone does not publish a package.
 
+## Toolkit showcase and npm 0.5.0
+
+`demotion showcase` prints the film and chapter links. The [showcase guide](showcase/README.md) maps the edit to its source. The accompanying [inventory](showcase/inventory.md) records the repository snapshot used to plan it.
+
 ## Canvas launch and npm 0.4.0
 
 The 0.4.0 release is the first MIT npm edition. `demotion demo` writes the
