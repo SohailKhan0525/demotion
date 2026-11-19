@@ -21,9 +21,7 @@ export const Route = () => (
 );
 ```
 
-The illustration components first shipped in `@demotion/cli@0.3.0`. To try the
-MIT source, build this checkout and install its tarball in the generated
-`my-video` starter. [Source starter instructions](../README.md#create-a-video-project-from-this-checkout)
+The illustration components first shipped in `@demotion/cli@0.3.0`. Use the MIT-licensed 0.4.0 starter to try them in a new project. [Starter instructions](../README.md#quick-start)
 
 From `my-video`, copy and render the example. It registers its own
 `IllustrationStory` composition and loads the starter’s bundled fonts.

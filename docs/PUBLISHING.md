@@ -9,9 +9,9 @@ Publishing is public and provenance is disabled in package.json, CLI flags and
 workflow environment. No OIDC provenance permission is requested. The package
 name must remain @demotion/cli; the executable name is demotion.
 
-## Published 0.3.0 release
+## Historical 0.3.0 release
 
-`@demotion/cli@0.3.0` is published, with `latest` pointing to 0.3.0. The public
+At its release, `@demotion/cli@0.3.0` carried the `latest` tag. The public
 registry identifies qofeno-labs as its publisher and has no provenance attestation.
 The source tag v0.3.0 identifies npm's gitHead,
 `cc1d0d7b0c406541e9204280de037221eeb6a8eb`. The
@@ -21,9 +21,8 @@ the workflow. The temporary first-publication
 workflow has been retired; ordinary source pushes run CI. Only an explicit
 release request or a manual Release dispatch can publish packages.
 
-The MIT transition is in the GitHub source. The existing 0.3.0 tarball
-contains its original PolyForm license. Check the packed LICENSE and package
-metadata when preparing the first MIT registry release.
+The 0.3.0 tarball contains its original PolyForm license. Version 0.4.0 is
+the first release that packages the MIT license and editable Canvas demo.
 
 Registry consumer verification uses the documented npx command outside the
 source checkout and installs from registry.npmjs.org. Version-specific results
@@ -53,12 +52,12 @@ job without retrieving the npm secret into a local environment:
 
 ```json
 {
-  "version": "0.3.0"
+  "version": "0.4.0",
+  "film": "canvas-launch"
 }
 ```
 
-The example above is the completed 0.3.0 request. For a later release, use the
-intended next version. This file is a publication request, not general
+The optional film field makes a second job check out the new version tag, render and verify the film, and attach it to that release with the editable HTML, poster and checksums. If only this job fails, rerun the failed job. Omit the film field for a package-only release. For a later release, use the intended next version. This file is a publication request, not general
 configuration: editing it and pushing main starts the publisher. Other paths
 do not trigger publication. The workflow runs install, lint, build and tests,
 then a semantic-release dry run; if its calculated version differs from the

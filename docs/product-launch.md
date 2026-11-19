@@ -7,6 +7,8 @@ the command that recreates it. GitHub’s Open Source Guides
 recommend a clear project home and examples that explain why someone would
 use the project. [Finding Users for Your Project](https://opensource.guide/finding-users/)
 
+See how this works in the [Canvas launch film](canvas-film/README.md) and its [annotated YouTube references](canvas-film/references.md).
+
 ## Give readers a first edit
 
 For visitors without a Node.js setup, the downloadable HTML study is an

@@ -6,15 +6,30 @@ Make product launch videos in code. Demotion is an MIT-licensed toolkit for timi
 
 [Product launch guide](docs/product-launch.md) · [Canvas example](examples/canvas-launch.html) · [Component guides](docs/components.md) · [Contribute](CONTRIBUTING.md)
 
-[![Poster for Draw it. Give it depth., the version 0.3 illustration film](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/update-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
+[![Watch the Demotion Canvas launch film](https://raw.githubusercontent.com/SohailKhan0525/demotion/v0.4.0/docs/assets/canvas-launch-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/demotion-canvas-launch.mp4)
 
-Watch a path become a 3D illustration in the [40-second launch film](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4). Its [tagged source](https://github.com/SohailKhan0525/demotion/tree/update-030/src/update-film) matches the recording. That edition predates the MIT release of the source.
+[Watch the 24-second film](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/demotion-canvas-launch.mp4) · [Download the editable demo](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/canvas-launch.html) · [How the film was made](docs/canvas-film/README.md)
 
 ## Quick start
 
-**In a browser, without installing anything:** Download [canvas-launch.html](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/examples/canvas-launch.html) and open the saved file. The example uses plain JavaScript and Canvas 2D and runs offline. Use it to try the timing of a launch sequence.
+**Make the title card from the film.** Download the HTML above and open it in your browser. Change the title and tempo, scrub the twelve beats, and select **Save frame** for a PNG. In browsers with video export support, **Export clip** records the full twelve-beat animation as a silent video at your chosen tempo. The demo runs offline and uses the same JavaScript Canvas 2D drawing function as the film.
 
-**To edit and render the full films:** Use Node.js 22.14+ and npm. From a terminal:
+With Node.js 22.14+ and npm, you can also create a copy from the published package:
+
+```bash
+npx --yes @demotion/cli@0.4.0 demo
+```
+
+Open `canvas-launch.html` in your browser or text editor. To start a React video project with the published toolkit:
+
+```bash
+npx --yes @demotion/cli@0.4.0 init my-video
+cd my-video
+npm install
+npm start
+```
+
+**To explore the React films in Studio:** Use Node.js 22.14+ and npm. From a terminal:
 
 ```bash
 git clone https://github.com/SohailKhan0525/demotion.git
@@ -85,7 +100,9 @@ Change the text and colors here. Change the composition settings in
 lengths and composition duration consistent. `ensureFontsLoaded()` is already
 called by the starter, using files copied into `public/fonts`.
 
-## New in 0.3.0: draw it, give it depth
+## The 0.3 illustration tools
+
+[Watch the original 0.3 illustration film](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4).
 
 Reveal SVG strokes with `DrawPath`, move artwork along a curve with `FollowPath`,
 or use `usePathMotion` to read its position and rotation. These APIs use the
@@ -124,7 +141,7 @@ that works with the published package.
 
 ## Components and timing
 
-For an existing Remotion project, install the tarball you built above from its local path.
+For an existing Remotion project, install the release with `npm install @demotion/cli@0.4.0`, or install your local tarball to test changes.
 
 Import from `@demotion/cli`:
 

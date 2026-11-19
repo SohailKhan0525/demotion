@@ -1,8 +1,6 @@
 # Data, captions and identity components
 
-These five components first shipped in `@demotion/cli@0.2.0`. To use the MIT
-source in a video project, build the tarball from this checkout and install it
-in the generated starter. [Create a video project from this checkout](../README.md#create-a-video-project-from-this-checkout)
+These five components first shipped in `@demotion/cli@0.2.0`. Use the MIT-licensed 0.4.0 starter for this walkthrough. [Create a video project](../README.md#quick-start)
 
 All five components mount inside a `MotionProject` `Shot`, use its theme, and
 take **local shot beats**, not seconds or global frame numbers. Load bundled
@@ -21,7 +19,7 @@ composition. It demonstrates every component in two shots, each eight beats.
 At 128 BPM and 60 fps it is 450 frames / 7.5 seconds.
 
 In the generated `my-video` directory, copy the example from the installed
-tarball.
+package.
 
 ```bash
 cp node_modules/@demotion/cli/examples/data-story.tsx src/DataStory.tsx

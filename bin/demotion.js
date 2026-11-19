@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// demotion CLI — scaffold a video project or generate a soundtrack.
+// demotion CLI — create a video project, an offline demo or a soundtrack.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,6 +13,7 @@ Motion graphics, written in code.
 
 Usage:
   npx ${pkg.name} init <folder>    create a new video project in <folder>
+  npx ${pkg.name} demo [file.html] copy the editable, offline Canvas launch demo
   npx ${pkg.name} --help           show this help
   npx ${pkg.name} audio <cues.json> [out.wav]
                                 render a beat-synced soundtrack (music + sound effects)
@@ -46,6 +47,26 @@ if (!cmd || cmd === "--help" || cmd === "-h") {
   console.log(HELP);
 } else if (cmd === "--version" || cmd === "-v") {
   console.log(pkg.version);
+} else if (cmd === "demo") {
+  const usage = `Usage: npx ${pkg.name} demo [file.html]
+Copies the offline title editor. The default filename is canvas-launch.html.`;
+  if (args.length === 1 && ["--help", "-h"].includes(args[0])) {
+    console.log(usage);
+    process.exit(0);
+  }
+  const files = args[0] === "--" ? args.slice(1) : args;
+  if (files.length > 1 || files[0] === "" || (args[0] !== "--" && files[0]?.startsWith("-"))) {
+    console.error(usage);
+    process.exit(1);
+  }
+  const target = files[0] ?? "canvas-launch.html";
+  try {
+    fs.copyFileSync(path.join(pkgRoot, "examples", "canvas-launch.html"), target, fs.constants.COPYFILE_EXCL);
+  } catch (error) {
+    console.error(error.code === "EEXIST" ? `${target} already exists. Choose a new filename.` : error.message);
+    process.exit(1);
+  }
+  console.log(`Created ${target}. Open it in a browser to edit, play or save a frame.`);
 } else if (cmd === "audio") {
   const specPath = args[0];
   const outPath = args[1] || "public/soundtrack.wav";

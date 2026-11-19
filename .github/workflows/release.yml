@@ -24,6 +24,8 @@ jobs:
     if: (github.event_name == 'push' || inputs.publish) && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    outputs:
+      film_tag: ${{ steps.film.outputs.tag }}
     permissions:
       contents: write
     steps:
@@ -67,3 +69,58 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_SECRET || secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: "false"
           EXPECTED_RELEASE_VERSION: ${{ inputs.expected_version }}
+      - name: Select the film requested for this release
+        id: film
+        if: github.event_name == 'push'
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, appendFileSync } from "node:fs";
+          import { execFileSync } from "node:child_process";
+          const request = JSON.parse(readFileSync(".github/npm-release-request.json", "utf8"));
+          if (request.film === "canvas-launch") {
+            const tag = "v" + request.version;
+            const tagCommit = execFileSync("git", ["rev-parse", tag + "^{commit}"], { encoding: "utf8" }).trim();
+            const head = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+            if (tagCommit !== head) throw new Error("Requested tag differs from the released commit");
+            appendFileSync(process.env.GITHUB_OUTPUT, "tag=" + tag + "\n");
+          }
+          JS
+
+  canvas-film:
+    needs: release
+    if: needs.release.outputs.film_tag != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.release.outputs.film_tag }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Prepare FFmpeg
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install --yes --no-install-recommends ffmpeg
+          fi
+      - name: Render the tagged film and check every frame
+        run: |
+          npm run render:canvas
+          npm run check:canvas
+      - name: Attach the film and its editable example to the package release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.release.outputs.film_tag }}
+        run: |
+          cp examples/canvas-launch.html out/canvas-film/
+          cd out/canvas-film
+          zip -q frame-review.zip qa/second-*.jpg qa/report.json qa/per-frame.json
+          sha256sum demotion-canvas-launch.mp4 poster.png canvas-launch.html frame-review.zip > SHA256SUMS
+          gh release upload "$RELEASE_TAG" demotion-canvas-launch.mp4 poster.png canvas-launch.html frame-review.zip SHA256SUMS --clobber
