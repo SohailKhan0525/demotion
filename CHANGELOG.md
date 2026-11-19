@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/SohailKhan0525/demotion/compare/v0.4.0...v0.5.0) (2026-11-19)
+
+
+### Features
+
+* showcase the complete Demotion toolkit in a chaptered launch film ([#3](https://github.com/SohailKhan0525/demotion/issues/3)) ([ab05cfb](https://github.com/SohailKhan0525/demotion/commit/ab05cfb1e4c856221a2bc881c68e232d57f504a1))
+
 # [0.4.0](https://github.com/SohailKhan0525/demotion/compare/v0.3.0...v0.4.0) (2026-11-19)
 
 
