@@ -131,7 +131,7 @@ function DisplayType() {
     <Sample label="SerifReveal"><SerifReveal text="Form" background={T.chalk} ink={T.ink} stroke={T.field} /></Sample>
     <Alternating labels={["StackType", "NumberRoll"]}>
       <StackType text="TYPE" fontSize={295} background={T.field} ink={T.chalk} />
-      <NumberRoll value="120" caption="beats per minute" background={T.accent} color={T.ink} />
+      <NumberRoll value="120" caption="beats per minute" background={T.field} color={T.chalk} />
     </Alternating>
   </Spread>;
 }

@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/**'
       - 'examples/**'
+      - 'docs/assets/**'
       - 'template/**'
       - 'public/fonts/**'
       - 'scripts/showcase/**'
