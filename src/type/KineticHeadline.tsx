@@ -2,6 +2,7 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { measureText } from "@remotion/layout-utils";
 import { useShot } from "../engine/context";
+import { useArchivoMeasurementFamily } from "./archivoReady";
 import { clamp, clamp01, outExpo, spring } from "../core/math";
 import { archivo, FONT_FAMILY } from "../font";
 
@@ -26,8 +27,10 @@ export const KineticHeadline: React.FC<{
 }> = ({ text, at = -0.15, width = 1500, wdth = 112, color, accent, accentIndex = -1, stagger = 2.6, underline = true }) => {
   const { frame, at: atBeat, clock } = useShot();
   const fps = clock.fps;
+  const fontFamily = useArchivoMeasurementFamily(FONT_FAMILY);
+  if (!fontFamily) return null;
   const vs = archivo(wdth, 900);
-  const natural = measureText({ text, fontFamily: "Archivo", fontSize: 200, fontWeight: "900", additionalStyles: { fontVariationSettings: vs } }).width;
+  const natural = measureText({ text, fontFamily, fontSize: 200, fontWeight: "900", additionalStyles: { fontVariationSettings: vs } }).width;
   const size = (200 * width) / natural;
   const letters = text.split("");
   const start = atBeat(at);

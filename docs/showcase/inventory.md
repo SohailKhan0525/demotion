@@ -444,6 +444,20 @@ The showcase adds 14 files to the baseline, bringing the source tree to 218 path
 
 The generated package release also updates [CHANGELOG.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.0/CHANGELOG.md), [package-lock.json](https://github.com/SohailKhan0525/demotion/blob/v0.5.0/package-lock.json) and the version field in [package.json](https://github.com/SohailKhan0525/demotion/blob/v0.5.0/package.json).
 
+## Typography patch for npm 0.5.1
+
+A parallel render exposed a width change in the settled “MOTION” headline at 0:35. The patch waits for the bundled Archivo font before measuring text. The v0.5.1 checkout contains 220 files in 40 subdirectories, including two additions to the 218-file film edition.
+
+| Files at v0.5.1 | Patch change |
+| --- | --- |
+| [src/type/archivoReady.ts](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/src/type/archivoReady.ts) · [test/font.test.mjs](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/test/font.test.mjs) | New font-readiness helper and regression test. |
+| [src/font.ts](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/src/font.ts) · [src/type/KineticHeadline.tsx](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/src/type/KineticHeadline.tsx) · [src/type/WideStack.tsx](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/src/type/WideStack.tsx) | Track Archivo registration and fit the two typography components after the face is ready. |
+| [.github/npm-release-request.json](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/.github/npm-release-request.json) | Requests the 0.5.1 package release. |
+| [README.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/README.md) · [docs/showcase/README.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/docs/showcase/README.md) | Update the npm examples and identify the fixed source for local renders. The movie and chapter downloads belong to the 0.5.0 film edition. |
+| [docs/components.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/docs/components.md) · [docs/illustration.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/docs/illustration.md) · [docs/three-illustration.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/docs/three-illustration.md) | Refer readers to the starter installation instructions for its current version. |
+| [docs/showcase/inventory.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/docs/showcase/inventory.md) | Records this patch against the film edition. |
+| [CHANGELOG.md](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/CHANGELOG.md) · [package.json](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/package.json) · [package-lock.json](https://github.com/SohailKhan0525/demotion/blob/v0.5.1/package-lock.json) | The release workflow writes the package version, lockfile version and patch release notes. |
+
 ## Release history and workflow evidence
 
 The 42 commits leading to v0.4.0 cover 227 distinct pathnames from 8 October to 19 November 2026. The 204 rows above describe the release tree. The other 23 names occur only in earlier revisions. The links below open each commit at the point where its change was made. [Full release history](https://github.com/SohailKhan0525/demotion/commits/v0.4.0/)

@@ -3,6 +3,7 @@ import { AbsoluteFill } from "remotion";
 import { measureText } from "@remotion/layout-utils";
 import { useVideoConfig } from "remotion";
 import { useShot } from "../engine/context";
+import { useArchivoMeasurementFamily } from "./archivoReady";
 import { clamp01, outExpo, spring } from "../core/math";
 import { archivo, FONT_FAMILY, LABEL_FAMILY } from "../font";
 
@@ -21,9 +22,11 @@ export const WideStack: React.FC<{
   const { frame, at: atBeat, clock } = useShot();
   const fps = clock.fps;
   const { height } = useVideoConfig();
+  const fontFamily = useArchivoMeasurementFamily(FONT_FAMILY);
+  if (!fontFamily) return null;
   const raw = widths.map((w) => {
     const vs = archivo(w, 900);
-    const nat = measureText({ text, fontFamily: "Archivo", fontSize: 200, fontWeight: "900", additionalStyles: { fontVariationSettings: vs } }).width;
+    const nat = measureText({ text, fontFamily, fontSize: 200, fontWeight: "900", additionalStyles: { fontVariationSettings: vs } }).width;
     return { w, vs, size: (200 * width) / nat };
   });
   // all rows share one column width; if the stack would be taller than the frame, shrink the column to fit

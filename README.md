@@ -13,7 +13,7 @@ Make product launch videos in code. Demotion is an MIT-licensed toolkit for timi
 Find the film, chapter list and source guide from your terminal:
 
 ```sh
-npx --yes @demotion/cli@0.5.0 showcase
+npx --yes @demotion/cli@0.5.1 showcase
 ```
 
 **Make a title card.** Open the standalone HTML in your browser, change the title and tempo, then scrub the twelve beats. **Save frame** exports a PNG. In browsers with video export support, **Export clip** records the animation as a silent video at your chosen tempo. [Download the editable Canvas demo](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/canvas-launch.html) · [Watch the 24-second editor walkthrough](https://github.com/SohailKhan0525/demotion/releases/download/v0.4.0/demotion-canvas-launch.mp4)
@@ -21,13 +21,13 @@ npx --yes @demotion/cli@0.5.0 showcase
 With Node.js 22.14+ and npm, you can also create a copy from the published package:
 
 ```bash
-npx --yes @demotion/cli@0.5.0 demo
+npx --yes @demotion/cli@0.5.1 demo
 ```
 
 Open `canvas-launch.html` in your browser or text editor. To start a React video project with the published toolkit:
 
 ```bash
-npx --yes @demotion/cli@0.5.0 init my-video
+npx --yes @demotion/cli@0.5.1 init my-video
 cd my-video
 npm install
 npm start
@@ -144,7 +144,7 @@ that works with the published package.
 
 ## Components and timing
 
-For an existing Remotion project, install the release with `npm install @demotion/cli@0.5.0`, or install your local tarball to test changes.
+For an existing Remotion project, install the release with `npm install @demotion/cli@0.5.1`, or install your local tarball to test changes.
 
 Import from `@demotion/cli`:
 

@@ -1,5 +1,6 @@
 import { loadFont } from "@remotion/fonts";
 import { staticFile } from "remotion";
+import { trackArchivoRegistration } from "./type/archivoReady";
 
 let loaded: Promise<unknown> | null = null;
 
@@ -16,7 +17,9 @@ let loaded: Promise<unknown> | null = null;
 export const ensureFontsLoaded = () => {
   if (!loaded) {
     loaded = Promise.all([
-      loadFont({ family: "Archivo", url: staticFile("fonts/ArchivoVariable.woff2"), weight: "100 900", style: "normal" }),
+      trackArchivoRegistration(
+        loadFont({ family: "Archivo", url: staticFile("fonts/ArchivoVariable.woff2"), weight: "100 900", style: "normal" }),
+      ),
       loadFont({ family: "Abril Fatface", url: staticFile("fonts/AbrilFatface.woff2"), weight: "400", style: "normal" }),
       ...[500, 600, 700].map((w) =>
         loadFont({ family: "Barlow Semi Condensed", url: staticFile(`fonts/BarlowSemiCondensed-${w}.woff2`), weight: String(w), style: "normal" })

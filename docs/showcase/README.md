@@ -32,7 +32,7 @@ Times are elapsed minutes and seconds. The releases preserve the earlier films, 
 From an installed copy, `demotion showcase` prints the stable film, chapter and guide links. For a fresh installation:
 
 ```sh
-npx --yes @demotion/cli@0.5.0 showcase
+npx --yes @demotion/cli@0.5.1 showcase
 ```
 
 To edit the film itself, use Node.js 22.14+ and a checkout of the release. Have FFmpeg, ffprobe, curl, and a Chromium browser available. The setup fetches the Canvas film and verifies its SHA-256. It also renders the starter and the standalone 2D example at their original frame rates.
@@ -43,6 +43,8 @@ cd demotion
 npm ci
 npm run studio:showcase
 ```
+
+For your own multicore renders, use `--branch v0.5.1` in the clone command. That revision waits for Archivo before fitting the kinetic headlines and stacked type.
 
 In Studio, select **Showcase**. Edit the source of a shot using the table above. To change when the shot appears, edit its `startFrame` or duration in the [timeline](https://github.com/SohailKhan0525/demotion/blob/v0.5.0/src/showcase/timeline.ts). The cut uses 208 beats at 120 BPM. Source offsets in this timeline use 60 frames per second, including for the staged video clips.
 

@@ -1,6 +1,6 @@
 # Data, captions and identity components
 
-These five components first shipped in `@demotion/cli@0.2.0`. Use the MIT-licensed 0.5.0 starter for this walkthrough. [Create a video project](../README.md#quick-start)
+These five components first shipped in `@demotion/cli@0.2.0`. Use the MIT-licensed starter for this walkthrough. [Create a video project](../README.md#quick-start)
 
 All five components mount inside a `MotionProject` `Shot`, use its theme, and
 take **local shot beats**, not seconds or global frame numbers. Load bundled
