@@ -1,3 +1,11 @@
+# [0.4.0](https://github.com/SohailKhan0525/demotion/compare/v0.3.0...v0.4.0) (2026-11-19)
+
+
+### Features
+
+* open source Demotion and add a hands-on product launch guide ([#1](https://github.com/SohailKhan0525/demotion/issues/1)) ([31e6eaa](https://github.com/SohailKhan0525/demotion/commit/31e6eaa775695b5db28d6e75f496e3924f9a18a4))
+* release the editable Canvas title demo and its launch film ([#2](https://github.com/SohailKhan0525/demotion/issues/2)) ([4e1b159](https://github.com/SohailKhan0525/demotion/commit/4e1b15981d2922ea2b494933de0af3f3742b51e1))
+
 # [0.3.0](https://github.com/SohailKhan0525/demotion/compare/v0.2.0...v0.3.0) (2026-11-01)
 
 
