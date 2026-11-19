@@ -15,10 +15,19 @@ The CLI executable remains demotion. Generated projects depend on and import
 optional /three exports. Verify publication against the public registry; a
 successful dry run or source push alone does not publish a package.
 
-## Current npm release
+## Canvas launch and npm 0.4.0
 
-**@demotion/cli@0.3.0 is published**, with latest=0.3.0, publisher qofeno-labs
-and no provenance attestation. The npm gitHead and source tag v0.3.0 both identify
+The 0.4.0 release is the first MIT npm edition. `demotion demo` writes the
+editable standalone Canvas title editor. The new film renders its actual
+JavaScript drawing function and uses the toolkit's audio engine. See the
+[film guide](canvas-film/README.md) for the render and frame checks and the
+[release](https://github.com/SohailKhan0525/demotion/releases/tag/v0.4.0)
+for the MP4, HTML, poster, and checksums.
+
+## Historical 0.3.0 release
+
+At release, **@demotion/cli@0.3.0** carried the latest tag, was published by
+qofeno-labs, and had no provenance attestation. The npm gitHead and source tag v0.3.0 both identify
 cc1d0d7b0c406541e9204280de037221eeb6a8eb. The
 [Release workflow](https://github.com/SohailKhan0525/demotion/actions/runs/41327785431)
 and its source CI passed on 2026-11-01.
@@ -43,8 +52,7 @@ stills. The 2D package was also verified without the optional Three dependencies
 
 Release automation is separate from ordinary source pushes. It runs through a
 manual Release dispatch or an explicitly authorized change to
-.github/npm-release-request.json. That file records the completed 0.3.0 request;
-do not edit it during routine work. A semantic-release dry run checks the
+.github/npm-release-request.json. The 0.4.0 request includes the Canvas launch film. A semantic-release dry run checks the
 intended version before publication. Automatic issue/PR comments and failure
 issues remain disabled. Provenance remains disabled. See docs/PUBLISHING.md.
 

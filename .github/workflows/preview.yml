@@ -12,6 +12,7 @@ on:
       - 'package*.json'
       - 'examples/canvas-launch.html'
       - 'scripts/preview-films.ts'
+      - 'scripts/check-canvas-browser.mjs'
       - '.github/workflows/preview.yml'
   pull_request:
     branches: [main]
@@ -48,14 +49,12 @@ jobs:
         run: |
           npx --no-install esbuild scripts/preview-films.ts --bundle --platform=node --packages=external --format=esm --outfile=out/preview-films.mjs
           node out/preview-films.mjs
-      - name: Open the standalone canvas example
+      - name: Exercise the standalone Canvas editor and verify its downloaded PNG
         run: |
-          page="file://$GITHUB_WORKSPACE/examples/canvas-launch.html"
-          chrome=(google-chrome --headless --disable-gpu --disable-background-networking --window-size=1100,960 "--user-data-dir=$RUNNER_TEMP/canvas-chrome")
-          "${chrome[@]}" --dump-dom "$page" > "$RUNNER_TEMP/canvas-dom.html"
-          # The draw function sets this accessible text after painting the canvas.
-          grep -q 'aria-valuetext="' "$RUNNER_TEMP/canvas-dom.html"
-          "${chrome[@]}" --screenshot="$PWD/out/film-previews/canvas-launch.png" "$page"
+          DEMOTION_BROWSER="$(command -v google-chrome)" node scripts/check-canvas-browser.mjs
+          google-chrome --headless --disable-gpu --disable-background-networking --window-size=1100,960 \
+            "--user-data-dir=$RUNNER_TEMP/canvas-chrome" --screenshot="$PWD/out/film-previews/canvas-launch.png" \
+            "file://$GITHUB_WORKSPACE/examples/canvas-launch.html"
           test -s out/film-previews/canvas-launch.png
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

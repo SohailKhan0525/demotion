@@ -5,6 +5,30 @@ import os from "node:os";
 import path from "node:path";
 import { execFileSync, spawnSync } from "node:child_process";
 
+test("demo copies the standalone editor, honors a custom name and preserves existing files", (t) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-demo-"));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const demo = (...args) => spawnSync(process.execPath, [path.resolve("bin/demotion.js"), "demo", ...args], {
+    cwd: dir, encoding: "utf8",
+  });
+  const source = fs.readFileSync("examples/canvas-launch.html", "utf8");
+  assert.match(source, /<script id="title-card-renderer">/);
+  assert.match(source, /Copyright \(c\) 2026 Qofeno Labs/);
+  assert.match(demo("--help").stdout, /demo \[file\.html\]/);
+  assert.equal(demo("one.html", "two.html").status, 1);
+  assert.deepEqual(fs.readdirSync(dir), []);
+  for (const args of [[], ["My title.html"]]) {
+    const dest = path.join(dir, args[0] ?? "canvas-launch.html");
+    assert.equal(demo(...args).status, 0);
+    assert.equal(fs.readFileSync(dest, "utf8"), source);
+    fs.writeFileSync(dest, "my edits");
+    const retry = demo(...args);
+    assert.equal(retry.status, 1);
+    assert.match(retry.stderr, /already exists/);
+    assert.equal(fs.readFileSync(dest, "utf8"), "my edits");
+  }
+});
+
 test("demotion init scaffolds a complete project (fonts, licenses, sources)", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-"));
   const out = execFileSync("node", [path.resolve("bin/demotion.js"), "init", "my-video"], { cwd: dir }).toString();

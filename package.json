@@ -80,7 +80,9 @@
     "audio:update": "npm run build && node scripts/update-film.mjs audio",
     "qa:update": "npm run build && node scripts/update-film.mjs qa",
     "render:update": "npm run build && node scripts/update-film.mjs render",
-    "check:update": "node scripts/update-film.mjs check"
+    "check:update": "node scripts/update-film.mjs check",
+    "render:canvas": "npm run build && node scripts/canvas-film/render.mjs",
+    "check:canvas": "node scripts/canvas-film/check.mjs"
   },
   "keywords": [
     "remotion",
@@ -111,6 +113,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@fontsource/abril-fatface": "^5.3.0",
     "@fontsource/barlow-semi-condensed": "^5.3.0",
+    "@napi-rs/canvas": "1.1.1",
     "@react-three/fiber": "^8.17.10",
     "@react-three/postprocessing": "^2.16.3",
     "@remotion/cli": "4.0.528",

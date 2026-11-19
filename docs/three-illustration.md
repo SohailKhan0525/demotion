@@ -4,8 +4,7 @@
 0.3.0. They use Three.js geometry, React Three Fiber, and Remotion's `ThreeCanvas`.
 The main `@demotion/cli` entry has no Three.js dependency.
 
-Create the React 18 / Remotion 4.0.528 starter and install the tarball built
-from the MIT source checkout. [Source starter instructions](../README.md#create-a-video-project-from-this-checkout)
+Use the 0.4.0 starter to create a React 18 / Remotion 4.0.528 project. [Starter instructions](../README.md#quick-start)
 
 In the generated `my-video` directory, install the tested 3D dependencies.
 
@@ -20,7 +19,7 @@ composer, bloom, depth of field, or postprocessing passes.
 
 ## A complete example
 
-From the same directory, copy the example from the installed tarball.
+From the same directory, copy the example from the installed package.
 
 ```sh
 cp node_modules/@demotion/cli/examples/illustration-three.tsx src/IllustrationThree.tsx

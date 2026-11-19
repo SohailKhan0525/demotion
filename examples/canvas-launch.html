@@ -28,100 +28,221 @@ SOFTWARE.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Launch title study · Demotion</title>
   <style>
-    :root { color-scheme: light; font: 100%/1.45 system-ui, sans-serif; color: #0d0e12; background: #f2f0ea; }
+    :root { color-scheme: light; font: 100%/1.5 system-ui, sans-serif; color: #0d0e12; background: #f2f0ea; }
     * { box-sizing: border-box; }
     body { margin: 0; }
-    main { width: min(100% - 2rem, 58rem); margin: clamp(1rem, 4vw, 3rem) auto; }
-    h1 { font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.055em; line-height: 1; margin: 0 0 .7rem; }
-    p { margin: 0 0 1.25rem; }
-    canvas { display: block; width: 100%; height: auto; background: #0d0e12; }
-    .controls { display: flex; flex-wrap: wrap; align-items: end; gap: .8rem 1rem; margin-top: 1rem; }
-    label { display: grid; gap: .25rem; font-weight: 600; font-size: .88rem; }
+    main { width: min(100% - 2rem, 65rem); margin: clamp(1.2rem, 3.5vw, 3rem) auto; }
+    .heading { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: .7rem 2rem; margin-bottom: 1.25rem; }
+    h1 { font-size: clamp(2.35rem, 5.4vw, 4.2rem); font-weight: 750; letter-spacing: -.075em; line-height: 1; margin: 0; }
+    p { margin: .65rem 0 0; max-width: 40rem; }
+    .format, #time { font: .78rem ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .editor { border: 1px solid #0d0e12; background: #0d0e12; color: #f2f0ea; border-radius: .65rem; overflow: hidden; }
+    canvas { display: block; width: 100%; height: auto; background: #f2f0ea; }
+    .panel { padding: clamp(.9rem, 2vw, 1.45rem); }
+    .controls { display: flex; flex-wrap: wrap; align-items: end; gap: .8rem 1rem; }
+    label { display: grid; gap: .3rem; font-size: .82rem; font-weight: 600; }
     .title { flex: 1 1 12rem; }
     input, select, button { font: inherit; color: inherit; }
-    input[type=text], select, button { min-height: 2.65rem; padding: .45rem .8rem; border: 1px solid #0d0e12; border-radius: .25rem; background: transparent; }
-    button { cursor: pointer; }
-    #play { background: #0d0e12; color: #f2f0ea; min-width: 5.5rem; }
-    :focus-visible { outline: 3px solid #2b3cff; outline-offset: 3px; }
-    .seek { margin-top: 1rem; }
-    .seek span { display: flex; justify-content: space-between; gap: 1rem; }
-    #position { margin: 0; width: 100%; min-height: 2rem; accent-color: #2b3cff; }
-    #time { font: 0.875rem ui-monospace, monospace; }
+    input[type=text], select, button { min-height: 2.65rem; padding: .45rem .85rem; border: 1px solid #656469; border-radius: .35rem; background: #0d0e12; }
+    select { color-scheme: dark; }
+    button { cursor: pointer; font-weight: 600; }
+    button:hover { border-color: #f2f0ea; }
+    #play { background: #d4ff3a; border-color: #d4ff3a; color: #0d0e12; min-width: 6rem; }
+    :focus-visible { outline: 3px solid #d4ff3a; outline-offset: 3px; }
+    .seek { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid #434249; }
+    .seek > span { display: flex; justify-content: space-between; align-items: center; }
+    #position { display: block; width: 100%; min-height: 1.5rem; margin: .15rem 0 0; accent-color: #d4ff3a; }
+    .export { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; border-top: 1px solid #434249; margin-top: .6rem; padding-top: .9rem; }
+    .export span { font-size: .88rem; }
+    .export a { color: #d4ff3a; }
+    .export button:disabled { opacity: .55; cursor: default; }
+    @media (max-width: 32rem) {
+      .panel { padding: .8rem; }
+      .controls { gap: .6rem; }
+      .title { flex-basis: calc(100% - 8rem); min-width: 0; }
+      input[type=text] { min-width: 0; }
+      .controls button { flex: 1; }
+    }
   </style>
 </head>
 <body>
   <main>
-    <h1>Launch title study</h1>
-    <p>Edit the title, then play or scrub from the first draft to the final card.</p>
+    <header class="heading">
+      <div><h1>Launch title study</h1>
+        <p>Edit the title, then play or scrub from the first draft to the final card.</p>
+      </div>
+      <span class="format">960 × 540</span>
+    </header>
+    <div class="editor">
     <canvas id="screen" width="960" height="540" role="img" aria-label="Animated title preview">Title preview of a twelve-beat launch sequence.</canvas>
+    <div class="panel">
     <div class="controls">
       <label class="title">Title <input id="title" type="text" value="On cue" maxlength="24"></label>
       <label>Tempo <select id="tempo">
-        <option value="90">90 BPM</option><option value="120" selected>120 BPM</option><option value="150">150 BPM</option>
+        <option value="90">90 BPM</option><option value="96">96 BPM</option><option value="120" selected>120 BPM</option><option value="150">150 BPM</option>
       </select></label>
       <button id="play" type="button">Play</button>
       <button id="save" type="button">Save frame</button>
     </div>
     <label class="seek" for="position"><span>Playhead <span id="time" aria-hidden="true">0.0 / 6.0 s</span></span></label>
     <input id="position" type="range" min="0" max="12" step="0.01" value="0">
+    <div class="export">
+      <button id="export-clip" type="button" aria-describedby="export-status" disabled>Export clip</button>
+      <span id="export-status" role="status">Video export needs browser recording support.</span>
+      <a id="clip-download" hidden>Download clip</a>
+    </div>
+    </div>
+    </div>
     <noscript>Enable JavaScript to draw and edit the preview.</noscript>
   </main>
+  <script id="title-card-renderer">
+    // The editor and launch film call the same renderer. Beat 0, 4 and 8 start the three acts.
+    function drawTitleCard(ctx, {
+      title = 'On cue', beat = 0, bpm = 120, width = 960, height = 540,
+      reducedMotion = false, displayFont = 'system-ui, sans-serif', monoFont = 'ui-monospace, monospace'
+    } = {}) {
+      const ink = '#0D0E12', paper = '#F2F0EA', blue = '#2B3CFF', lime = '#D4FF3A';
+      const b = Math.max(0, Math.min(12, beat)), stage = Math.min(2, Math.floor(b / 4));
+      const progress = reducedMotion ? 1 : 1 - Math.pow(2, -3.2 * (b - stage * 4));
+      const movement = reducedMotion ? 0 : b;
+      const background = [paper, blue, ink][stage], fg = stage === 0 ? ink : paper;
+      ctx.save();
+      ctx.scale(width / 960, height / 540);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      const opacity = ctx.globalAlpha;
+      ctx.fillStyle = background;
+      ctx.fillRect(0, 0, 960, 540);
+
+      function label(text, x, y, color = fg) {
+        ctx.fillStyle = color;
+        ctx.font = '500 17px ' + monoFont;
+        ctx.fillText(text, x, y);
+      }
+      function line(x1, y1, x2, y2, color, alpha = 1) {
+        ctx.save();
+        ctx.globalAlpha = opacity * alpha;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.restore();
+      }
+      function colorMix(a, z, amount) {
+        const channels = [1, 3, 5].map(i => {
+          const n = parseInt(a.slice(i, i + 2), 16);
+          return Math.round(n + (parseInt(z.slice(i, i + 2), 16) - n) * amount);
+        });
+        return 'rgb(' + channels.join(',') + ')';
+      }
+
+      // A ring of folded paper: adjacent creases share vertices. Turn the ring
+      // in depth, then paint its facets back-to-front for a solid silhouette.
+      const spin = -.48 + .045 * movement + (stage === 1 ? .21 * progress : 0);
+      const tilt = -.50 + .09 * Math.sin(movement * .32);
+      const twist = stage === 0 ? .12 : .22;
+      const facets = [];
+      const folds = 18, count = folds * 2;
+      function vertex(i, outer) {
+        const t = i * Math.PI * 2 / count;
+        const ridge = i % 2 ? -1 : 1;
+        const angle = t + spin + (outer ? twist : 0);
+        const r = outer
+          ? (164 + 18 * ridge) * (1 + .12 * Math.sin(2 * t + .7))
+          : 52 + 5 * ridge;
+        const x = r * Math.cos(angle);
+        const y = r * Math.sin(angle);
+        const depth = (outer ? 30 : 11) * ridge + 16 * Math.sin(t * 2);
+        const z = y * Math.sin(tilt) + depth * Math.cos(tilt);
+        const projectedY = y * Math.cos(tilt) - depth * Math.sin(tilt);
+        const perspective = 680 / (680 - z);
+        return {x: 708 + (x - .22 * projectedY) * perspective,
+                y: 258 + (.20 * x + projectedY) * perspective, z};
+      }
+      for (let i = 0; i < count; i++) {
+        const corners = [vertex(i, false), vertex(i, true), vertex(i + 1, true), vertex(i + 1, false)];
+        const light = .5 + .5 * Math.cos(i * Math.PI * 2 / count - 1);
+        const bright = i % 2 === 0;
+        const highlight = stage === 1 ? lime : stage === 2 && i >= 3 && i < 9 ? lime : blue;
+        const color = bright ? colorMix(highlight, paper, .18 + .52 * light)
+                             : colorMix(highlight, ink, .40 + .37 * (1 - light));
+        facets.push({corners, color, z: corners.reduce((sum, p) => sum + p.z, 0) / 4});
+      }
+      if (stage === 0) {
+        for (let i = 0; i <= 6; i++) {
+          line(498 + 69 * i, 93, 498 + 69 * i, 423, ink, .08);
+          line(498, 93 + 55 * i, 912, 93 + 55 * i, ink, .08);
+        }
+      }
+      facets.sort((a, z) => a.z - z.z);
+      for (const {corners, color} of facets) {
+        ctx.beginPath();
+        ctx.moveTo(corners[0].x, corners[0].y);
+        for (const p of corners.slice(1)) ctx.lineTo(p.x, p.y);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = .65;
+        ctx.stroke();
+      }
+
+      // The left side is reserved for live type, including long unbroken titles.
+      ctx.fillStyle = stage === 0 ? blue : lime;
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        const x = 48 + i * 8;
+        ctx.moveTo(x, 55); ctx.lineTo(x + 6, 55);
+        ctx.lineTo(x + 13, 38); ctx.lineTo(x + 7, 38);
+        ctx.closePath(); ctx.fill();
+      }
+      label('DEMOTION', 90, 54);
+      label(['Title draft', 'Time the entrance', 'Final card'][stage], 48, 207);
+      const text = String(title).trim() || 'Untitled';
+      const x = 44, maxWidth = 446, maxSize = stage === 0 ? 110 : 132;
+      ctx.font = '800 ' + maxSize + 'px ' + displayFont;
+      const fontSize = maxSize * Math.min(1, maxWidth / Math.max(1, ctx.measureText(text).width));
+      ctx.font = '800 ' + fontSize + 'px ' + displayFont;
+      const baseline = 322 + (stage === 1 ? 16 * (1 - progress) : 0);
+      ctx.fillStyle = fg;
+      ctx.fillText(text, x, baseline);
+      if (stage === 0) {
+        ctx.fillStyle = blue;
+        ctx.fillRect(x + ctx.measureText(text).width + 7, baseline - fontSize * .78, 4, fontSize * .8);
+      }
+
+      line(48, 448, 912, 448, fg, .35);
+      const active = Math.min(11, Math.floor(b));
+      label('BEAT ' + String(active + 1).padStart(2, '0') + ' / 12', 48, 492);
+      for (let i = 0; i < 12; i++) {
+        const x = 300 + i * 28;
+        ctx.fillStyle = i === active ? stage === 0 ? blue : lime : fg;
+        ctx.globalAlpha = opacity * (i <= active ? 1 : .25);
+        ctx.fillRect(x, i === active ? 476 : 481, 21, i === active ? 13 : 3);
+      }
+      ctx.globalAlpha = opacity;
+      ctx.textAlign = 'right';
+      label(bpm + ' BPM', 912, 492);
+      ctx.restore();
+    }
+  </script>
   <script>
     const byId = id => document.getElementById(id);
     const canvas = byId('screen'), ctx = canvas.getContext('2d');
     const title = byId('title'), tempo = byId('tempo'), position = byId('position'), play = byId('play');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const ink = '#0D0E12', paper = '#F2F0EA', blue = '#2B3CFF', lime = '#D4FF3A';
     const stages = ['Set the title', 'Time the entrance', 'Final card'];
     const beats = 12;
     let beat = 0, playing = false, lastTime = 0, frame = 0;
 
-    function label(text, x, y, color) {
-      ctx.fillStyle = color;
-      ctx.font = '20px ui-monospace, monospace';
-      ctx.fillText(text, x, y);
-    }
-
     function draw() {
-      const stage = Math.min(2, Math.floor(beat / 4));
-      const final = stage === 2, foreground = final ? ink : paper;
       const text = title.value.trim() || 'Untitled';
-      ctx.fillStyle = final ? lime : stage === 1 ? blue : ink;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      label('DEMOTION', 48, 64, foreground);
-      label(stages[stage], 676, 64, foreground);
-
-      // Three offset copies show the entrance timing. The last act resolves to one title.
-      const family = stage === 0 ? 'ui-monospace, monospace' : 'system-ui, sans-serif';
-      const maxSize = stage === 0 ? 110 : 150;
-      ctx.font = 'bold ' + maxSize + 'px ' + family;
-      const maxWidth = stage === 1 ? 792 : 840;
-      const fontSize = maxSize * Math.min(1, maxWidth / Math.max(1, ctx.measureText(text).width));
-      ctx.font = 'bold ' + fontSize + 'px ' + family;
-      if (stage === 1 && !reduced.matches) {
-        const offset = 24 * Math.exp(-1.2 * (beat - 4));
-        ctx.strokeStyle = lime;
-        ctx.lineWidth = 1.5;
-        for (let copy = 1; copy <= 3; copy++) ctx.strokeText(text, 48 + copy * offset, 310 - copy * offset);
-      }
-      ctx.fillStyle = foreground;
-      ctx.fillText(text, 48, 310);
-      if (stage === 0) {
-        // The draft keeps its editing caret until the title moves onto the beat grid.
-        ctx.fillStyle = lime;
-        ctx.fillRect(58 + ctx.measureText(text).width, 312 - fontSize * .8, 5, fontSize * .85);
-      }
-
       const active = Math.min(beats - 1, Math.floor(beat));
-      for (let i = 0; i < beats; i++) {
-        const x = 48 + i * 72;
-        ctx.globalAlpha = i <= active ? 1 : .25;
-        ctx.fillStyle = !final && i === active ? lime : foreground;
-        ctx.fillRect(x, 416, 62, i === active ? 24 : 8);
-        ctx.globalAlpha = 1;
-      }
-      label('BEAT ' + String(active + 1).padStart(2, '0') + ' / 12', 48, 488, foreground);
-      label(tempo.value + ' BPM', 816, 488, foreground);
+      const stage = Math.min(2, Math.floor(beat / 4));
+      drawTitleCard(ctx, {title: text, beat, bpm: Number(tempo.value), reducedMotion: reduced.matches,
+        width: canvas.width, height: canvas.height});
       position.value = String(beat);
       const elapsed = (beat * 60 / Number(tempo.value)).toFixed(1);
       byId('time').textContent = elapsed + ' / ' + (beats * 60 / Number(tempo.value)).toFixed(1) + ' s';
@@ -163,6 +284,91 @@ SOFTWARE.
       link.click();
     });
     draw();
+  </script>
+  <script id="clip-export">
+    const exportButton = byId('export-clip'), exportStatus = byId('export-status');
+    const clipDownload = byId('clip-download');
+    const formats = ['video/webm;codecs=vp8', 'video/webm;codecs=vp9', 'video/webm', 'video/mp4'];
+    const format = typeof MediaRecorder === 'function' && typeof canvas.captureStream === 'function'
+      && typeof MediaRecorder.isTypeSupported === 'function' && formats.find(type => MediaRecorder.isTypeSupported(type));
+    let cancelExport = null;
+    function releaseDownload() {
+      if (clipDownload.hasAttribute('href')) URL.revokeObjectURL(clipDownload.href);
+      clipDownload.removeAttribute('href');
+      clipDownload.hidden = true;
+    }
+    if (format) {
+      exportButton.disabled = false;
+      exportStatus.textContent = 'Save the full 12-beat sequence as a silent ' + (format.includes('webm') ? 'WebM.' : 'MP4.');
+    }
+    exportButton.addEventListener('click', () => {
+      if (cancelExport) { cancelExport('Export canceled.'); return; }
+      releaseDownload();
+      // Record a separate canvas so title, tempo and playhead edits never change a clip in progress.
+      const settings = {title: title.value.trim() || 'Untitled', bpm: Number(tempo.value), reducedMotion: reduced.matches};
+      const duration = beats * 60000 / settings.bpm;
+      const output = document.createElement('canvas');
+      output.width = canvas.width;
+      output.height = canvas.height;
+      const context = output.getContext('2d');
+      let stream, recorder, animation, finalHold, completed = false, closed = false;
+      const chunks = [];
+
+      function close(message) {
+        if (closed) return;
+        closed = true;
+        cancelAnimationFrame(animation);
+        clearTimeout(finalHold);
+        if (recorder && recorder.state !== 'inactive') recorder.stop();
+        stream?.getTracks().forEach(track => track.stop());
+        cancelExport = null;
+        exportButton.textContent = 'Export clip';
+        exportStatus.textContent = message;
+      }
+
+      try {
+        drawTitleCard(context, {...settings, beat: 0});
+        stream = output.captureStream(30);
+        recorder = new MediaRecorder(stream, {mimeType: format, videoBitsPerSecond: 4000000});
+        recorder.ondataavailable = event => { if (event.data.size && !closed) chunks.push(event.data); };
+        recorder.onerror = () => close('Recording failed. Try exporting again.');
+        recorder.onstop = () => {
+          if (closed) return;
+          if (!completed || !chunks.length) { close('Recording ended before the clip was complete.'); return; }
+          const type = recorder.mimeType || chunks[0].type || format;
+          const filename = 'demotion-title.' + (type.includes('mp4') ? 'mp4' : 'webm');
+          clipDownload.download = filename;
+          clipDownload.href = URL.createObjectURL(new Blob(chunks, {type}));
+          clipDownload.hidden = false;
+          clipDownload.click();
+          close('Your clip is ready.');
+        };
+        cancelExport = close;
+        exportButton.textContent = 'Cancel export';
+        exportStatus.textContent = 'Recording ' + (duration / 1000).toFixed(1) + ' seconds. Keep this tab visible.';
+        recorder.start();
+        const started = performance.now();
+        function paint(now) {
+          if (closed) return;
+          const elapsed = Math.max(0, now - started);
+          const beat = Math.min(beats, elapsed * settings.bpm / 60000);
+          drawTitleCard(context, {...settings, beat});
+          if (elapsed < duration) animation = requestAnimationFrame(paint);
+          else {
+            completed = true;
+            // Give captureStream one sampling interval to collect the final frame.
+            finalHold = setTimeout(() => { if (recorder.state === 'recording') recorder.stop(); }, 40);
+          }
+        }
+        animation = requestAnimationFrame(paint);
+      } catch {
+        close('This browser could not start the recording. Try another supported browser.');
+      }
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelExport?.('Export canceled because the tab was hidden.');
+    });
+    window.addEventListener('pagehide', () => { cancelExport?.('Export canceled.'); releaseDownload(); });
   </script>
 </body>
 </html>
