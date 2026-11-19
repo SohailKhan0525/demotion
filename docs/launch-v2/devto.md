@@ -6,6 +6,10 @@ tags: react, typescript, webdev, tutorial
 ai_disclosure_level: fully_autonomous
 ---
 
+**Archived tutorial, 27 October 2026.** The local tarball and version references
+below describe the second film's source snapshot. For the current example and
+registration, see the [data-story guide](../components.md).
+
 A counter in a web dashboard can animate once when it mounts. A counter in a
 rendered video has a harder job: it must produce the right value for frame 180
 whether the renderer visits frame 179 first, starts at frame 180, or seeks
@@ -53,10 +57,11 @@ browser on first use. Package installation and that browser download need an
 Internet connection; the starter copies its fonts locally.
 
 ```bash
-git clone https://github.com/SohailKhan0525/demotion.git
+git clone --branch launch-v2 --depth 1 https://github.com/SohailKhan0525/demotion.git
 cd demotion
 npm ci
 npm run build
+mkdir -p out
 npm pack --pack-destination out
 node bin/demotion.js init ../my-story
 ```
@@ -211,9 +216,8 @@ editor or a replacement for understanding Remotion. More complex 3D and
 render-time blur can increase rendering cost.
 
 The [repository](https://github.com/SohailKhan0525/demotion) includes the component
-guide and the second launch film. demotion is source-available and free for
-personal/non-commercial use. Business, client or product work needs a commercial
-license; Remotion has its own terms. Read those terms before using it for work.
+guide and the second launch film. The original article and licensing details
+remain available in the [film's source snapshot](https://github.com/SohailKhan0525/demotion/blob/launch-v2/docs/launch-v2/devto.md).
 
 If you adapt the example, which part needs the most help: layout, timing,
 caption authoring or the rendering setup?

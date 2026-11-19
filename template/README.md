@@ -11,8 +11,13 @@ npm run render:4k   # out/video-4k.mp4 (3840x2160)
 
 Edit `src/MyVideo.tsx`. Everything renders on your own computer.
 
-## License
+## Licenses
 
-[demotion](https://github.com/SohailKhan0525/demotion) is free for personal and non-commercial use. Using it for business, client or product work needs a commercial license — https://ko-fi.com/qofenoai
+The starter code is available under the MIT License. Keep its copyright and
+permission notice with copies of the code. The CLI places the full notice in
+`DEMOTION-LICENSE.txt` in the generated project.
 
-Demotion is built on Remotion, which has its own license: https://www.remotion.dev/docs/terms
+Check the `LICENSE` in `node_modules/@demotion/cli` for the toolkit version
+installed in this project. The previously published npm package through 0.3.0
+ships its original license. Bundled font licenses are in `public/fonts/licenses`.
+[Remotion has separate terms](https://www.remotion.dev/docs/terms-4-0).

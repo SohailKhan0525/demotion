@@ -49,17 +49,14 @@ test("promo's visible code is the complete example's real Shot, and bundles", as
   for (const name of [...t.PROMO_SOURCE_APIS, "KineticHeadline", "CodePanel", "CameraRig", "MotionProject", "Shot"]) assert.equal(typeof api[name], "function", name);
 });
 
-test("promo commands target the actual CLI and starter tasks", () => {
-  const pkg = JSON.parse(fs.readFileSync("package.json"));
+test("the promo render command matches the generated starter", () => {
   const template = JSON.parse(fs.readFileSync("template/package.json"));
-  assert.equal(t.PROMO_INSTALL, `npx --yes ${pkg.name}@latest init my-video`);
-  assert.deepEqual(t.PROMO_COMMANDS.slice(1), ["cd my-video", "npm install", "npm start"]);
   assert.match(template.scripts.start, /remotion studio/);
   assert.equal(t.PROMO_RENDER, "npm run render");
   assert.match(template.scripts.render, /out\/video.mp4/);
   const source = fs.readFileSync("src/promo/PromoLaunch.tsx", "utf8");
-  assert.match(source, /New APIs are not in npm 0.1.0/);
-  assert.match(source, /Commercial license for business/);
+  assert.match(source, /Select PromoLaunch in Studio/);
+  assert.match(source, /Demotion source on GitHub · MIT License/);
 });
 
 test("promo documentation registers the exported example and its actual frame count", async () => {

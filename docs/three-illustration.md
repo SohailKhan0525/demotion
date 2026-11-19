@@ -4,7 +4,10 @@
 0.3.0. They use Three.js geometry, React Three Fiber, and Remotion's `ThreeCanvas`.
 The main `@demotion/cli` entry has no Three.js dependency.
 
-For the React 18 / Remotion 4.0.528 starter, install the tested optional peers:
+Create the React 18 / Remotion 4.0.528 starter and install the tarball built
+from the MIT source checkout. [Source starter instructions](../README.md#create-a-video-project-from-this-checkout)
+
+In the generated `my-video` directory, install the tested 3D dependencies.
 
 ```sh
 npm install three@0.160.1 @react-three/fiber@8.17.10 @remotion/three@4.0.528 @react-three/postprocessing@2.16.3 postprocessing@6.36.4
@@ -17,12 +20,21 @@ composer, bloom, depth of field, or postprocessing passes.
 
 ## A complete example
 
-Copy [examples/illustration-three.tsx](../examples/illustration-three.tsx) to
-`src/IllustrationThree.tsx`, then register it in your Remotion root:
+From the same directory, copy the example from the installed tarball.
+
+```sh
+cp node_modules/@demotion/cli/examples/illustration-three.tsx src/IllustrationThree.tsx
+```
+
+Replace `src/Root.tsx` with this registration for the four-second sculpture.
+[Scene source](../examples/illustration-three.tsx)
 
 ```tsx
 import { Composition } from "remotion";
+import { ensureFontsLoaded } from "@demotion/cli";
 import { IllustrationThree, illustrationClock, ILLUSTRATION_BEATS } from "./IllustrationThree";
+
+ensureFontsLoaded();
 
 export const RemotionRoot = () => <Composition
   id="IllustrationThree"
@@ -37,11 +49,10 @@ export const RemotionRoot = () => <Composition
 The example is 240 frames / four seconds at 60 fps. It builds a layered sculpture
 from inline SVG contours. There are no network images or model downloads.
 
-In the generated starter, replace the composition in `src/Root.tsx` with the
-registration above, then render its new composition ID:
+Render the composition from `my-video`.
 
 ```sh
-npx remotion render src/index.ts IllustrationThree out/illustration-three.mp4
+npm exec -- remotion render src/index.ts IllustrationThree out/illustration-three.mp4
 ```
 
 On a machine without a GPU, append `--gl=swangle` to use Chromium's software

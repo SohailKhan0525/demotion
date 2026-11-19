@@ -1,8 +1,8 @@
 {
   "name": "@demotion/cli",
   "version": "0.3.0",
-  "description": "Motion graphics, written in code. A React toolkit and CLI for making polished videos locally with Remotion: beat-synced motion, camera, type, transitions and sound. Free for personal use; commercial license available.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "description": "Motion graphics, written in code. A React toolkit and CLI for making polished videos locally with Remotion: beat-synced motion, camera, type, transitions and sound.",
+  "license": "MIT",
   "author": "Qofeno Labs",
   "repository": {
     "type": "git",
@@ -39,8 +39,8 @@
     "public/fonts",
     "README.md",
     "LICENSE",
-    "COMMERCIAL-LICENSE.md",
     "THIRD_PARTY_NOTICES.md",
+    "docs/product-launch.md",
     "docs/ui.md",
     "docs/components.md",
     "examples",

@@ -23,8 +23,6 @@ export const promoStart = (id: PromoShotId) => {
   for (const shot of PROMO_SHOTS) { if (shot.id === id) return beat; beat += shot.beats; }
   throw new Error(`Unknown promo scene: ${id}`);
 };
-export const PROMO_INSTALL = "npx --yes @demotion/cli@latest init my-video";
-export const PROMO_COMMANDS = [PROMO_INSTALL, "cd my-video", "npm install", "npm start"] as const;
 export const PROMO_RENDER = "npm run render";
 export const PROMO_CODE = [
   '<Shot beats={8} bg={theme.field}>',

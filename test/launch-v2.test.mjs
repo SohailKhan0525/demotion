@@ -22,7 +22,6 @@ test("V2 advertises exported APIs and its code snippet compiles against the buil
   for (const name of timeline.V2_API_NAMES) assert.equal(typeof api[name], "function", `${name} missing from public package`);
   const [imports, ...body] = timeline.V2_CODE;
   await build({ stdin: { contents: `${imports}\nexport const Example = () => (<>\n${body.filter(line => !line.trimStart().startsWith("//")).join("\n")}\n</>);`, loader: "tsx", resolveDir: process.cwd() }, bundle: true, platform: "browser", write: false, logLevel: "silent" });
-  assert.equal(timeline.V2_INSTALL, `npx --yes ${JSON.parse(fs.readFileSync("package.json")).name}@latest init my-video`);
 });
 
 test("the complete documented data-story example bundles against the public entrypoint", async () => {

@@ -9,7 +9,7 @@ Publishing is public and provenance is disabled in package.json, CLI flags and
 workflow environment. No OIDC provenance permission is requested. The package
 name must remain @demotion/cli; the executable name is demotion.
 
-## Current release
+## Published 0.3.0 release
 
 `@demotion/cli@0.3.0` is published, with `latest` pointing to 0.3.0. The public
 registry identifies qofeno-labs as its publisher and has no provenance attestation.
@@ -20,6 +20,10 @@ completed successfully. The initial v0.1.0 tag remains the baseline checked by
 the workflow. The temporary first-publication
 workflow has been retired; ordinary source pushes run CI. Only an explicit
 release request or a manual Release dispatch can publish packages.
+
+The MIT transition is in the GitHub source. The existing 0.3.0 tarball
+contains its original PolyForm license. Check the packed LICENSE and package
+metadata when preparing the first MIT registry release.
 
 Registry consumer verification uses the documented npx command outside the
 source checkout and installs from registry.npmjs.org. Version-specific results

@@ -1,16 +1,18 @@
 # Development
 
-Use the existing checkout. Node 22.14+ is required; CI checks Node 22 and 24.
+Run these checks from the repository root with Node.js 22.14 or newer. CI tests
+Node 22 and 24. For a first contribution, start with the
+[contributor guide](../CONTRIBUTING.md).
 
 ```bash
 npm ci
-npm run dev
 npm run lint && npm run build && npm test
 ```
 
-The source checkout's `dev` task builds the toolkit and generates the launch
-soundtrack before starting Remotion Studio. Studio offers Launch (the original
-52-beat film), Lab (motion/type studies) and UI (terminal/code panels).
+`npm run dev` builds the toolkit, generates the four film soundtracks and opens
+Remotion Studio. Select `UpdateFilm` for the illustration tools, `PromoLaunch`
+for the typography and product demo, or `LaunchV2` for data stories and captions.
+`Launch` is the original 52-beat film. `Lab` and `UI` contain shorter studies.
 
 For a container with an installed Chromium browser:
 
@@ -38,13 +40,12 @@ not establish visual quality. The media checker verifies the expected full
 
 ## Layout
 
-- src/core, engine, type, ui: beat timing, scene engine, typography, UI panels.
-- src/audio: deterministic sound synthesis and mastering.
-- src/three: optional 3D exports.
-- src/components, v2, transitions: retained public component API.
-- src/launch and lab: development compositions, not prebuilt media.
-- bin and template: the published CLI and generated starter.
-- test: source, CLI, packaging and content checks.
+- `src/core`, `src/engine`, `src/type` and `src/ui` implement beat timing, scenes, typography and UI panels.
+- `src/audio` synthesizes and masters sound. `src/illustration` animates SVG paths, and `src/three` contains the optional 3D exports.
+- `src/components`, `src/v2` and `src/transitions` contain additional public components.
+- `src/Root.tsx` registers the Studio compositions. Follow its imports to find the source of each film or study.
+- `bin/` and `template/` contain the CLI and the starter it generates.
+- `test/` contains source, CLI, packaging and content checks.
 
 The old Python soundtrack implementation and its unused timeline files were
 removed. The active soundtrack engine is TypeScript. Do not remove exported
@@ -54,6 +55,7 @@ legacy components merely because their styles differ; that changes the public AP
 
 ```bash
 npm run build
+mkdir -p out
 npm pack --pack-destination out
 node bin/demotion.js init /tmp/demotion-candidate
 ```
@@ -102,7 +104,7 @@ The new film uses `npm run qa:update`, `npm run render:update` and
 
 ## Verified 0.2.0 checks — 2026-10-30
 
-The public npm registry serves @demotion/cli@0.2.0 as latest, published by
+At the time of this check, the public npm registry served @demotion/cli@0.2.0 as latest, published by
 qofeno-labs with provenance disabled and no attestation. Its gitHead equals the
 v0.2.0 tag: 361560ded0cbb9721b2df333d2da317c5beb7cd4. Both the
 [Release run](https://github.com/SohailKhan0525/demotion/actions/runs/41098657398)
@@ -137,8 +139,8 @@ cue example generated a valid 5.5-second WAV. CI checks 30 tests on Node 22/24.
 
 ## Second launch film and new components
 
-`LaunchV2` is the second film, not an npm major version. `npm run dev` prepares
-both soundtracks. The film runs for 64 beats at 128 BPM / 60 fps: 1800 frames,
+`LaunchV2` is the second film. `npm run dev` prepares its soundtrack.
+The film runs for 64 beats at 128 BPM / 60 fps: 1800 frames,
 30 seconds. Its chart uses timeline values and explicitly labeled sample progress.
 
 ```bash

@@ -9,6 +9,7 @@ import { Terminal } from "../ui/Terminal";
 import { CodePanel } from "../ui/CodePanel";
 import { ParticleText } from "../components/ParticleText";
 import { StackShot } from "./StackShot";
+import { SOURCE_QUICK_START } from "./sourceQuickStart";
 import { INIT_CMD, MYVIDEO } from "./code";
 import type { LaunchShotId } from "./timeline";
 
@@ -70,17 +71,17 @@ const Sound: React.FC = () => {
 };
 const License: React.FC = () => {
   const { frame, at, clock, theme: T } = useShot();
-  return <><div style={{ position: "absolute", top: 125, width: "100%", textAlign: "center", fontFamily: FONT_FAMILY, fontSize: 115, fontWeight: 900, color: T.ink }}>FREE TO START.</div>
+  return <><div style={{ position: "absolute", top: 125, width: "100%", textAlign: "center", fontFamily: FONT_FAMILY, fontSize: 115, fontWeight: 900, color: T.ink }}>OPEN SOURCE.</div>
     <Center><div style={{ display: "flex", gap: 36, marginTop: 80 }}>{[
-      ["PERSONAL & NON-COMMERCIAL", "FREE", "Personal projects, study, hobby"],
-      ["TEAMS & COMPANIES", "COMMERCIAL", "Solo · Team · Company"],
+      ["DEMOTION SOURCE", "MIT", "Use, modify and share the code"],
+      ["RENDERING ENGINE", "REMOTION", "See Remotion’s license terms"],
     ].map(([label, hero, detail], i) => {
       const p = spring((frame - at(0.25 + i * 0.18)) / clock.fps, 4, 0.55);
       return <div key={hero} style={{ width: 720, height: 340, boxSizing: "border-box", padding: 44, background: i ? T.ink : T.accent, color: i ? T.chalk : T.ink,
         borderRadius: 26, transform: `translateY(${(1 - p) * 180}px)`, opacity: clamp01(p), fontFamily: LABEL_FAMILY }}>
         <div style={{ fontSize: 31 }}>{label}</div><div style={{ fontFamily: FONT_FAMILY, fontWeight: 900, fontSize: i ? 66 : 130, margin: "30px 0" }}>{hero}</div><div style={{ fontSize: 31 }}>{detail}</div>
       </div>;
-    })}</div></Center><Caption dark>ko-fi.com/qofenoai · See full license terms in the repository</Caption></>;
+    })}</div></Center><Caption dark>Find the Demotion license and third-party notices in the repository</Caption></>;
 };
 const Final: React.FC = () => {
   const { frame, at, clock, theme: T } = useShot();
@@ -90,8 +91,8 @@ const Final: React.FC = () => {
     <div style={{ position: "absolute", top: 720, left: 0, right: 0, textAlign: "center", color: T.chalk, fontFamily: LABEL_FAMILY, fontSize: 42,
       opacity: clamp01(p), transform: `translateY(${(1 - p) * 50}px)` }}>MOTION GRAPHICS, WRITTEN IN CODE.</div>
     <div style={{ position: "absolute", top: 805, left: 0, right: 0, textAlign: "center", fontFamily: MONO_FAMILY, fontSize: 28, color: T.ink }}>
-      <span style={{ display: "inline-block", background: T.accent, padding: "15px 26px", borderRadius: 99 }}>PRE-RELEASE · BUILD FROM SOURCE</span>
-    </div><Caption>github.com/SohailKhan0525/demotion · ko-fi.com/qofenoai</Caption></>;
+      <span style={{ display: "inline-block", background: T.accent, padding: "15px 26px", borderRadius: 99 }}>{SOURCE_QUICK_START[0]}</span>
+    </div><Caption>{SOURCE_QUICK_START.slice(1).join(" && ")}</Caption></>;
 };
 
 export const LaunchShot: React.FC<{ id: LaunchShotId }> = ({ id }) => {
@@ -101,14 +102,13 @@ export const LaunchShot: React.FC<{ id: LaunchShotId }> = ({ id }) => {
     case "code": return <WideStack text="CODE" color={T.ink} accent={T.spark} />;
     case "meet": return <><KineticHeadline text="demotion" color={T.chalk} accent={T.accent} width={1420} wdth={100} /><Caption>MOTION GRAPHICS, WRITTEN IN CODE</Caption></>;
     case "nolist": return <NoList />;
-    case "terminal": return <><Center><Terminal title="Source checkout · pre-release" fontSize={30} width={1640} height={640} lines={[
+    case "terminal": return <><Center><Terminal title="MIT source checkout · local scaffold CLI" fontSize={30} width={1640} height={640} lines={[
       { at: 0.2, text: INIT_CMD, prompt: true, type: 1.25 },
       { at: 1.55, text: "✔ Created my-video/", color: T.accent },
       { at: 1.75, text: "✔ Copied fonts to public/fonts" },
       { at: 2, text: "Next: cd my-video && npm install && npm start" },
-      { at: 2.3, text: "Demotion is free for personal & non-commercial use. Business use needs a commercial license." },
-      { at: 2.6, text: "Get one or support the project: https://ko-fi.com/qofenoai" },
-    ]} /></Center><Caption>LOCAL CLI · ACTUAL SCAFFOLD OUTPUT</Caption></>;
+      { at: 2.3, text: "Starter code: MIT License (DEMOTION-LICENSE.txt)." },
+    ]} /></Center><Caption>LOCAL CLI · THE GENERATED PROJECT INSTALLS ITS TOOLKIT FROM NPM</Caption></>;
     case "codepanel": return <Center><CodePanel file="src/MyVideo.tsx · actual starter" lines={MYVIDEO} at={0.1} over={2.6} fontSize={32} height={830} /></Center>;
     case "number": return <NumberShot />;
     case "stack": return <><StackShot /><Caption>CODE → PREVIEW → RENDER · WORKFLOW ILLUSTRATION</Caption></>;

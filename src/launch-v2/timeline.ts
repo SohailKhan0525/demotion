@@ -23,7 +23,6 @@ export const v2Start = (id: V2ShotId) => {
   throw new Error(`Unknown V2 shot: ${id}`);
 };
 
-export const V2_INSTALL = "npx --yes @demotion/cli@latest init my-video";
 export const V2_API_NAMES = ["CountUp", "BarChart", "CaptionTrack", "LowerThird", "ProgressRing"] as const;
 export const V2_CODE = [
   'import { CountUp, BarChart } from "@demotion/cli";',
