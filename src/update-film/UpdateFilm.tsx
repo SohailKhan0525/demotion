@@ -8,7 +8,8 @@ import { clamp01, inOutExpo, spring } from "../core/math";
 import { DrawPath, FollowPath, WorkflowIllustration } from "../illustration";
 import { Scene3D } from "../three/Scene3D";
 import { ExtrudedSvg } from "../three/ExtrudedSvg";
-import { UPDATE_CODE, UPDATE_INSTALL, UPDATE_SHOTS, UPDATE_VERSION, updateClock } from "./timeline";
+import { SOURCE_QUICK_START } from "../launch/sourceQuickStart";
+import { UPDATE_CODE, UPDATE_SHOTS, UPDATE_VERSION, updateClock } from "./timeline";
 
 // Original mark. The inner subpath cuts a real opening through the extruded mesh.
 const MARK_OUTER = "M20 15H90C151 15 184 48 184 100S151 185 90 185H20Z";
@@ -121,19 +122,19 @@ const Code = () => <>
     {UPDATE_CODE.map((line,i)=><In key={i} at={i*.12} style={{fontFamily:MONO_FAMILY,fontSize:28,lineHeight:1.9,whiteSpace:"pre",color:i===1||i===2?T.accent:T.chalk}}>{line}</In>)}
     <In at={1} style={{fontSize:21,color:T.chalk,opacity:.6,marginTop:32,fontFamily:MONO_FAMILY}}>Inside a Shot · route is your SVG path</In>
   </div>
-  <Foot dark><span>Included in @demotion/cli {UPDATE_VERSION}</span><span>3D via optional /three entry</span></Foot>
+  <Foot dark><span>Illustration APIs introduced in {UPDATE_VERSION}</span><span>3D via optional /three entry</span></Foot>
 </>;
 
 const Close = () => <>
   <Header chapter="Create your next film" />
   <div style={{position:"absolute",left:96,top:220,right:96}}>
     <In at={-0.2}><div style={{fontSize:164,fontVariationSettings:archivo(88,650),letterSpacing:-9,lineHeight:1.03}}>Make it yours.</div></In>
-    <In at={.2} style={{fontSize:32,marginTop:32}}>The illustration update · @demotion/cli {UPDATE_VERSION}</In>
-    <In at={.5} style={{marginTop:78,padding:"30px 36px",background:T.ink,color:T.accent,fontFamily:MONO_FAMILY,fontSize:35,borderRadius:12}}>{UPDATE_INSTALL}</In>
-    <In at={.7} style={{fontFamily:MONO_FAMILY,fontSize:25,marginTop:22}}>cd my-video  →  npm install  →  npm start</In>
+    <In at={.2} style={{fontSize:32,marginTop:32}}>Preview the illustration scenes from the repository.</In>
+    <In at={.5} style={{marginTop:78,padding:"30px 36px",background:T.ink,color:T.accent,fontFamily:MONO_FAMILY,fontSize:35,borderRadius:12}}>{SOURCE_QUICK_START[0]}</In>
+    <In at={.7} style={{fontFamily:MONO_FAMILY,fontSize:25,marginTop:22}}>{SOURCE_QUICK_START.slice(1).join(" && ")}</In>
     <In at={.9} style={{marginTop:70,fontSize:30,color:T.field}}>github.com/SohailKhan0525/demotion</In>
   </div>
-  <Foot><span>Free for personal / non-commercial use. Commercial license for business.</span><span>Remotion has separate terms.</span></Foot>
+  <Foot><span>Demotion source on GitHub · MIT License</span><span>Remotion has separate terms.</span></Foot>
 </>;
 
 export const UpdateFilm: React.FC<{muted?:boolean}> = ({muted=false}) => <AbsoluteFill style={{fontFamily:FONT_FAMILY}}>

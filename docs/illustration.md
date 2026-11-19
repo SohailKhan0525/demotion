@@ -21,11 +21,20 @@ export const Route = () => (
 );
 ```
 
-The complete [illustration example](../examples/illustration.tsx) includes a
-registered 1920×1080, 60 fps composition at 128 BPM. Its 16 beats produce 450
-frames. In a project with the package installed, copy it into `src/` and run
-`npx remotion render src/illustration.tsx IllustrationStory out/illustration.mp4`.
-The example calls `ensureFontsLoaded()`; `demotion init` supplies the font files.
+The illustration components first shipped in `@demotion/cli@0.3.0`. To try the
+MIT source, build this checkout and install its tarball in the generated
+`my-video` starter. [Source starter instructions](../README.md#create-a-video-project-from-this-checkout)
+
+From `my-video`, copy and render the example. It registers its own
+`IllustrationStory` composition and loads the starter’s bundled fonts.
+
+```sh
+cp node_modules/@demotion/cli/examples/illustration.tsx src/illustration.tsx
+npm exec -- remotion render src/illustration.tsx IllustrationStory out/illustration.mp4
+```
+
+The composition runs for 16 beats at 128 BPM, producing 450 frames at
+1920×1080 and 60 fps. [Illustration example](../examples/illustration.tsx)
 
 ## Drawing and following paths
 

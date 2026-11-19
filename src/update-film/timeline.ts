@@ -20,7 +20,6 @@ export const updateStart = (id: UpdateShotId) => {
   for (const shot of UPDATE_SHOTS) { if (shot.id === id) return beat; beat += shot.beats; }
   throw new Error(`Unknown update shot: ${id}`);
 };
-export const UPDATE_INSTALL = "npx --yes @demotion/cli@latest init my-video";
 export const UPDATE_CODE = [
   '<svg viewBox="0 0 800 400">',
   '  <DrawPath d={route} over={4} />',

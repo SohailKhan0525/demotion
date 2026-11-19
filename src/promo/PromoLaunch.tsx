@@ -11,7 +11,8 @@ import { ProgressRing } from "../ui/ProgressRing";
 import { CaptionTrack } from "../ui/CaptionTrack";
 import { LowerThird } from "../ui/LowerThird";
 import { CodeLines, Copy, FrameSculpture, Note, Paper, Reveal, Surface, TypeSpecimen, Wordmark, useBeatMotion } from "./art";
-import { PROMO_BEATS, PROMO_CAPTIONS, PROMO_CODE, PROMO_COMMANDS, PROMO_RENDER, PROMO_SHOTS, promoClock, type PromoShotId } from "./timeline";
+import { SOURCE_QUICK_START } from "../launch/sourceQuickStart";
+import { PROMO_BEATS, PROMO_CAPTIONS, PROMO_CODE, PROMO_RENDER, PROMO_SHOTS, promoClock, type PromoShotId } from "./timeline";
 
 const CenterHeading: React.FC<{ first: string; second?: string; sub?: string }> = ({ first, second, sub }) => <div style={{ position: "absolute", top: 174, left: 120, right: 120, textAlign: "center" }}>
   <Reveal at={-0.55}><div style={{ fontSize: 83, fontWeight: 500, letterSpacing: -4.6, color: T.ink }}>{first} {second && <span style={{ color: T.field }}>{second}</span>}</div></Reveal>
@@ -48,7 +49,7 @@ const Code = () => <>
   <Copy eyebrow="A scene is a component" lines={["Write a scene.", "Watch it move."]} detail="Use React to compose your animation, one reusable part at a time." />
   <Reveal at={0.15} x={80} style={{ position: "absolute", left: 810, top: 230 }}><Paper dark style={{ width: 930, height: 510, transform: "rotate(1deg)" }}><div style={{ padding: "24px 30px", borderBottom: `1px solid ${T.chalk}20`, fontSize: 23, color: `${T.chalk}A0`, fontFamily: MONO_FAMILY }}>scene.tsx <span style={{ float: "right", color: T.accent }}>React</span></div><CodeLines lines={PROMO_CODE} /></Paper></Reveal>
   <Reveal at={2.1} style={{ position: "absolute", left: 1040, top: 677 }}><Paper style={{ width: 680, height: 200, background: T.field }}><KineticHeadline text="Make it move." width={555} color={T.chalk} accent={T.accent} at={2.25} stagger={2} underline={false} /></Paper></Reveal>
-  <Note>Shot + KineticHeadline · available in npm 0.1.0</Note>
+  <Note>Edit examples/promo-scene.tsx to try this title.</Note>
 </>;
 
 const Type = () => {
@@ -79,27 +80,27 @@ const Timing = () => {
 };
 
 const Data = () => <>
-  <Copy eyebrow="New on main · source preview" lines={["Give numbers", "a story."]} detail="Counters, charts and progress rings. Animated from the values you provide." />
+  <Copy eyebrow="Data and captions" lines={["Give numbers", "a story."]} detail="Counters, charts and progress rings. Animated from the values you provide." />
   <Reveal at={0.15} x={55} style={{ position: "absolute", left: 825, top: 250 }}><Paper dark style={{ width: 915, height: 575, padding: 44, boxSizing: "border-box", transform: "rotate(-1deg)" }}>
     <div style={{ color: `${T.chalk}A0`, fontSize: 22, marginBottom: 28 }}>The timing behind this film</div>
     <CountUp value={120} suffix=" BPM" fontSize={92} at={0.5} over={2} label="One clock, every scene" />
     <div style={{ marginTop: 40 }}><BarChart width={815} rowHeight={73} max={6} at={1} over={2.5} stagger={0.25} suffix=" sec" data={[{ label: "Opening", value: 4, color: T.accent }, { label: "Code scene", value: 6, color: T.field }, { label: "Typography", value: 4, color: T.spark }]} /></div>
   </Paper></Reveal>
   <Reveal at={1.5} style={{ position: "absolute", right: 120, top: 710 }}><Paper dark style={{ padding: 20, borderRadius: 32 }}><ProgressRing value={0.75} size={170} strokeWidth={12} at={1.7} over={2} label="Sample progress" /></Paper></Reveal>
-  <Note>Chart: actual scene lengths. Ring: sample value. New APIs are not in npm 0.1.0.</Note>
+  <Note>The bars show scene lengths from this film. The ring shows sample progress.</Note>
 </>;
 
 const Captions = () => {
   const { beat } = useBeatMotion();
   return <>
-    <Copy eyebrow="New on main · source preview" lines={["Keep the", "story clear."]} detail="Write your captions and title cards. Choose when each one appears." />
+    <Copy eyebrow="Data and captions" lines={["Keep the", "story clear."]} detail="Write your captions and title cards. Choose when each one appears." />
     <Reveal at={0.15} x={60} style={{ position: "absolute", left: 810, top: 240 }}><Paper style={{ width: 950, height: 610, background: T.field }}>
       <div style={{ position: "absolute", top: 45, left: 45, fontSize: 22, color: `${T.chalk}A0` }}>Rendered with CaptionTrack + LowerThird</div>
       <div style={{ position: "absolute", left: 360, top: 110, transform: `rotate(${Math.sin(beat * Math.PI / 4) * 3}deg)` }}><FrameSculpture size={245} assembled /></div>
       <LowerThird title="A story worth telling." subtitle="Made with demotion" at={0.6} beats={6.8} left={40} bottom={165} width={690} />
       <CaptionTrack cues={PROMO_CAPTIONS} fontSize={32} bottom={50} />
     </Paper></Reveal>
-    <Note>Authored captions; no automatic transcription. New APIs are not in npm 0.1.0.</Note>
+    <Note>Each caption has a start beat, a duration and a line of text.</Note>
   </>;
 };
 
@@ -118,10 +119,10 @@ const Toolkit = () => {
           {i === 3 && <CountUp value={120} at={0.6} fontSize={76} color={T.field} />}
           {i === 4 && <div style={{ padding: 6, background: T.ink, borderRadius: 20 }}><ProgressRing value={0.75} at={0.7} size={92} strokeWidth={8} color={T.accent} /></div>}
           {i === 5 && <div style={{ padding: "13px 19px", borderRadius: 12, background: T.ink, color: T.chalk, fontSize: 28 }}>Every word.</div>}
-        </div><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 22, color: T.ink, marginTop: 15 }}>{name}<span style={{ fontSize: 17, color: `${T.ink}80` }}>{i > 2 ? "on main" : "npm 0.1.0"}</span></div></Paper>;
+        </div><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 22, color: T.ink, marginTop: 15 }}>{name}</div></Paper>;
       })}
     </div>
-    <Note>Includes core tools and source-preview additions. More in the component guide.</Note>
+    <Note>Find the source example in examples/data-story.tsx.</Note>
   </>;
 };
 
@@ -156,10 +157,10 @@ const Render = () => {
 };
 
 const Install = () => <>
-  <Copy eyebrow="Start with the published CLI" lines={["Your next film", "starts here."]} detail="Create a project. Install its dependencies. Open the preview." top={285} />
-  <Reveal at={0.15} x={50} style={{ position: "absolute", left: 795, top: 280 }}><Paper dark style={{ width: 1000, height: 455 }}><div style={{ padding: "25px 34px", fontSize: 23, color: `${T.chalk}A0`, borderBottom: `1px solid ${T.chalk}20` }}>Terminal</div><div style={{ padding: "30px 32px", color: T.chalk, fontFamily: MONO_FAMILY, fontSize: 27, lineHeight: 2.4 }}>{PROMO_COMMANDS.map((line, i) => <Reveal key={line} at={0.4 + i * 0.7} y={18}><span style={{ color: T.accent }}>$ </span>{line}</Reveal>)}</div></Paper></Reveal>
+  <Copy eyebrow="Run the source" lines={["Your next film", "starts here."]} detail="Clone the repository and preview its scenes in Remotion Studio." top={285} />
+  <Reveal at={0.15} x={50} style={{ position: "absolute", left: 795, top: 280 }}><Paper dark style={{ width: 1000, height: 455 }}><div style={{ padding: "25px 34px", fontSize: 23, color: `${T.chalk}A0`, borderBottom: `1px solid ${T.chalk}20` }}>Terminal</div><div style={{ padding: "30px 32px", color: T.chalk, fontFamily: MONO_FAMILY, fontSize: 25, lineHeight: 2.4 }}>{SOURCE_QUICK_START.map((line, i) => <Reveal key={line} at={0.4 + i * 0.7} y={18}><span style={{ color: T.accent }}>$ </span>{line}</Reveal>)}</div></Paper></Reveal>
   <Reveal at={3.2} style={{ position: "absolute", left: 825, top: 785, color: `${T.ink}B0`, fontSize: 26 }}>Node.js 22.14+ · npm · Chromium for rendering</Reveal>
-  <Note>npm 0.1.0: original toolkit. New data and caption components: source on GitHub.</Note>
+  <Note>Select PromoLaunch in Studio to edit this film.</Note>
 </>;
 
 const Close = () => <>
@@ -170,7 +171,7 @@ const Close = () => <>
   <div style={{ position: "absolute", left: 795, top: 420 }}><FrameSculpture size={245} assembled /></div>
   <Reveal at={0.5} style={{ position: "absolute", left: 0, right: 0, top: 752, display: "flex", justifyContent: "center" }}><Wordmark size={64} /></Reveal>
   <Reveal at={0.8} style={{ position: "absolute", left: 0, right: 0, top: 858, textAlign: "center", color: T.field, fontSize: 29 }}>github.com/SohailKhan0525/demotion</Reveal>
-  <div style={{ position: "absolute", bottom: 62, left: 100, right: 100, textAlign: "center", color: `${T.ink}A6`, fontSize: 23 }}>Free for personal use · Commercial license for business · Remotion terms apply</div>
+  <div style={{ position: "absolute", bottom: 62, left: 100, right: 100, textAlign: "center", color: `${T.ink}A6`, fontSize: 23 }}>Demotion source on GitHub · MIT License · Remotion terms apply</div>
 </>;
 
 const scenes: Record<PromoShotId, React.FC> = { intro: Intro, workflow: Workflow, code: Code, type: Type, timing: Timing, data: Data, captions: Captions, toolkit: Toolkit, sound: Sound, render: Render, install: Install, close: Close };

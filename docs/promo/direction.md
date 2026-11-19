@@ -40,6 +40,8 @@ footage, UI, mascot, logos or soundtrack is embedded or redistributed.
 
 ## Storyboard and text equivalent
 
+This table describes the archived October 2026 film as released at `promo-launch`.
+
 | Time | Visible message | Demonstration |
 | --- | --- | --- |
 | 0–4s | Ideas deserve motion. A React toolkit for videos that feel designed. | Original layered frame sculpture with typography and chart studies |

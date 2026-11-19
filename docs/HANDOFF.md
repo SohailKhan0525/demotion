@@ -1,5 +1,10 @@
 # Current handoff
 
+Demotion-owned code in this checkout is MIT-licensed. Use the source quick start
+in the [README](../README.md), or open the [standalone Canvas example](../examples/canvas-launch.html)
+in a browser. For contributor setup see [CONTRIBUTING](../CONTRIBUTING.md).
+For a GitHub launch see the [product launch guide](product-launch.md).
+
 The owner authorized the npm organization package **@demotion/cli**, using
 GitHub Actions secret **NPM_SECRET**. The authenticating npm account is
 qofeno-labs. Do not use demotion (npm rejected its unscoped name), the deleted
@@ -43,7 +48,8 @@ do not edit it during routine work. A semantic-release dry run checks the
 intended version before publication. Automatic issue/PR comments and failure
 issues remain disabled. Provenance remains disabled. See docs/PUBLISHING.md.
 
-Preserve the license files and terms, and do not remove existing public APIs.
+Tagged releases through v0.3.0 and their published packages retain the terms
+shipped with those artifacts. Preserve third-party notices in current builds.
 
 ## Films and examples
 
@@ -87,11 +93,10 @@ timeline were verified. Use npm run qa:promo / render:promo / check:promo;
 docs/promo/verification.md records the evidence. Do not move either film tag.
 Film workflows publish media assets, not npm packages.
 
-## Promotion
+## Historical promotion drafts
 
-docs/launch-v2 contains research and drafts for X, Reddit, DEV and other
-platforms. Older copy refers to npm 0.1.0 and source-preview components; update
-those claims to the current 0.3.0 release before reusing it. Live Reddit/DEV/X Help/HN pages were
-blocked by the network proxy during research; do not claim their current rules
-were verified. Forem's default policy source was inspected and is distinguished
-from DEV rules. No social post is sent automatically.
+The 27 October 2026 campaign drafts describe the package, terms and source
+previews available when the second film was recorded. The immutable tag
+preserves that copy and the original research limits. Use the current guide for
+a GitHub release of the MIT checkout.
+[October campaign archive](https://github.com/SohailKhan0525/demotion/tree/launch-v2/docs/launch-v2) · [Current launch guide](product-launch.md)

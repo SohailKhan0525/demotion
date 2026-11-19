@@ -51,7 +51,22 @@ test("launch CLI demonstration uses real scaffold output and actual typing lengt
     const typing = launchSpec().cues.find((c) => c.kind === "typing");
     assert.equal(typing.steps, INIT_CMD.length);
     assert.equal(typing.at, shotStart("terminal") + 0.2);
-    assert.ok(shots.includes("PRE-RELEASE · BUILD FROM SOURCE"));
+    assert.ok(shots.includes("MIT source checkout · local scaffold CLI"));
     assert.ok(!shots.includes("npm i demotion"));
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test("all film editions point to the source checkout quick start", async () => {
+  const { SOURCE_QUICK_START } = await loadTs("src/launch/sourceQuickStart.ts");
+  const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+  assert.deepEqual(SOURCE_QUICK_START, [
+    `git clone ${pkg.repository.url.replace(/^git\+/, "")}`,
+    "cd demotion", "npm ci", "npm run dev",
+  ]);
+  assert.match(pkg.scripts.dev, /remotion studio/);
+  for (const file of ["launch/shots.tsx", "launch-v2/LaunchV2.tsx", "promo/PromoLaunch.tsx", "update-film/UpdateFilm.tsx"]) {
+    const scene = fs.readFileSync(`src/${file}`, "utf8");
+    assert.match(scene, /SOURCE_QUICK_START(?:\.map|\[0\])/, file);
+    assert.doesNotMatch(scene, /@latest|source preview|not in npm 0\.1\.0/i, file);
+  }
 });

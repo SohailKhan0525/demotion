@@ -16,12 +16,10 @@ Usage:
   npx ${pkg.name} --help           show this help
   npx ${pkg.name} audio <cues.json> [out.wav]
                                 render a beat-synced soundtrack (music + sound effects)
-  npx ${pkg.name} license          explain the license (free vs commercial)
+  npx ${pkg.name} license          print the Demotion license
   npx ${pkg.name} --version        print the version
 
-License: free for personal / non-commercial use. Companies, teams and any
-commercial use need a commercial license: https://ko-fi.com/qofenoai
-Support Demotion: https://ko-fi.com/qofenoai
+Demotion uses the MIT License. Remotion and the bundled fonts have their own terms.
 `;
 
 const copyDir = (from, to, vars) => {
@@ -42,15 +40,15 @@ const copyDir = (from, to, vars) => {
   }
 };
 
-const [cmd, arg] = process.argv.slice(2);
+const [cmd, ...args] = process.argv.slice(2);
 
 if (!cmd || cmd === "--help" || cmd === "-h") {
   console.log(HELP);
 } else if (cmd === "--version" || cmd === "-v") {
   console.log(pkg.version);
 } else if (cmd === "audio") {
-  const specPath = arg;
-  const outPath = process.argv[4] || "public/soundtrack.wav";
+  const specPath = args[0];
+  const outPath = args[1] || "public/soundtrack.wav";
   if (!specPath || !fs.existsSync(specPath)) {
     console.error(`Usage: npx ${pkg.name} audio <cues.json> [out.wav]`);
     process.exit(1);
@@ -63,19 +61,21 @@ if (!cmd || cmd === "--help" || cmd === "-h") {
   fs.writeFileSync(outPath, encodeWav(s));
   console.log(`✔ ${outPath}  ${s.seconds.toFixed(1)}s  ${s.lufs.toFixed(1)} LUFS  peak ${(20 * Math.log10(s.peak)).toFixed(1)} dBFS  (${((Date.now() - t0) / 1000).toFixed(1)}s)`);
 } else if (cmd === "license") {
-  console.log(`Demotion is licensed under the PolyForm Noncommercial License 1.0.0.
-
-  Free ........ personal projects, hobby, research, education, charities, schools, governments
-  Commercial .. companies, teams, freelancers and any paid or product-promoting work
-
-Commercial licenses (Solo / Team / Company): https://ko-fi.com/qofenoai
-Full terms: LICENSE and COMMERCIAL-LICENSE.md in the package.
-Demotion is built on Remotion, which has its own license: https://www.remotion.dev/docs/terms`);
+  console.log(fs.readFileSync(path.join(pkgRoot, "LICENSE"), "utf8").trimEnd());
+  console.log("\nFor bundled font notices and dependency terms, see THIRD_PARTY_NOTICES.md.");
 } else if (cmd === "init") {
-  if (!arg) {
-    console.error(`Please give a folder name:  npx ${pkg.name} init my-video`);
+  const usage = `Usage: npx ${pkg.name} init <folder>
+Quote a folder name containing spaces, for example: npx ${pkg.name} init "My Video"`;
+  if (args.length === 1 && ["--help", "-h"].includes(args[0])) {
+    console.log(usage);
+    process.exit(0);
+  }
+  const folders = args[0] === "--" ? args.slice(1) : args;
+  if (folders.length !== 1 || !folders[0]) {
+    console.error(usage);
     process.exit(1);
   }
+  const [arg] = folders;
   const target = path.resolve(process.cwd(), arg);
   if (fs.existsSync(target) && (!fs.statSync(target).isDirectory() || fs.readdirSync(target).length > 0)) {
     console.error(`${arg} already exists and is not an empty directory.`);
@@ -95,6 +95,7 @@ Demotion is built on Remotion, which has its own license: https://www.remotion.d
     __REMOTION_VERSION__: pkg.config.remotionVersion,
   });
   fs.cpSync(path.join(pkgRoot, "public", "fonts"), path.join(target, "public", "fonts"), { recursive: true });
+  fs.copyFileSync(path.join(pkgRoot, "LICENSE"), path.join(target, "DEMOTION-LICENSE.txt"));
   console.log(`✔ Created ${arg}/`);
   console.log("✔ Copied fonts to public/fonts");
   // Quote paths for the shell instructions, including leading dashes and apostrophes.
@@ -104,8 +105,7 @@ Demotion is built on Remotion, which has its own license: https://www.remotion.d
     : "'" + shellPath.replaceAll("'", "'\\''") + "'";
   console.log(`Next: cd ${cdPath} && npm install && npm start`);
   console.log("");
-  console.log("Demotion is free for personal & non-commercial use. Business use needs a commercial license.");
-  console.log("Get one or support the project: https://ko-fi.com/qofenoai");
+  console.log("Starter code: MIT License (DEMOTION-LICENSE.txt).");
 } else {
   console.error(`Unknown command: ${cmd}\n`);
   console.log(HELP);

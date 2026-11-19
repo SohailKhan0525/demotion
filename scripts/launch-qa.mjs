@@ -10,20 +10,21 @@ const { SHOTS, launchClock } = await import("data:text/javascript;base64," + Buf
 let beat = 0;
 const shots = SHOTS.map((shot) => { const start = launchClock.frame(beat); beat += shot.beats; return { ...shot, start, end: launchClock.frame(beat) }; });
 const frames = process.argv.slice(2).length ? process.argv.slice(2).map(Number) : [...new Set([
-  0, ...shots.flatMap((s) => [s.start, Math.min(s.end - 1, s.start + 35), Math.min(s.end - 1, s.start + Math.round((s.end - s.start) * 0.75)), s.end - 7]), 1559,
+  0, ...shots.flatMap((s) => [s.start, Math.min(s.end - 1, s.start + 35), Math.min(s.end - 1, s.start + Math.round((s.end - s.start) * 0.75)), Math.max(s.start, s.end - 7)]), shots.at(-1).end - 1,
 ])].sort((a, b) => a - b);
 fs.mkdirSync("out/launch-qa", { recursive: true });
 fs.writeFileSync("out/launch-qa/shots.json", JSON.stringify(shots, null, 2));
 const serveUrl = await bundle({ entryPoint: "src/index.ts" });
-const browser = await openBrowser("chrome", { browserExecutable: process.env.DEMOTION_BROWSER || "/usr/bin/chromium" });
+const browser = await openBrowser("chrome", { browserExecutable: process.env.DEMOTION_BROWSER || undefined });
 try {
-  const composition = await selectComposition({ serveUrl, id: "Launch", puppeteerInstance: browser });
+  const inputProps = { muted: true };
+  const composition = await selectComposition({ serveUrl, id: "Launch", puppeteerInstance: browser, inputProps });
   // Two workers keep software GL and temporal blur within the cloud CPU budget.
   let next = 0;
   await Promise.all(Array.from({ length: 2 }, async () => {
     while (next < frames.length) {
       const frame = frames[next++];
-      await renderStill({ serveUrl, composition, puppeteerInstance: browser, frame, scale: 0.5, imageFormat: "png", output: `out/launch-qa/${String(frame).padStart(4, "0")}.png` });
+      await renderStill({ serveUrl, composition, puppeteerInstance: browser, inputProps, frame, scale: 0.5, imageFormat: "png", output: `out/launch-qa/${String(frame).padStart(4, "0")}.png` });
       console.log(`Rendered QA frame ${frame}`);
     }
   }));

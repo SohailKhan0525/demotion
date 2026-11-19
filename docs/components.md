@@ -1,7 +1,8 @@
 # Data, captions and identity components
 
-These five APIs require **`@demotion/cli@0.2.0` or later**. They are absent from
-0.1.0. In an existing project, upgrade with `npm install @demotion/cli@latest`.
+These five components first shipped in `@demotion/cli@0.2.0`. To use the MIT
+source in a video project, build the tarball from this checkout and install it
+in the generated starter. [Create a video project from this checkout](../README.md#create-a-video-project-from-this-checkout)
 
 All five components mount inside a `MotionProject` `Shot`, use its theme, and
 take **local shot beats**, not seconds or global frame numbers. Load bundled
@@ -19,16 +20,14 @@ Values are demonstration data.
 composition. It demonstrates every component in two shots, each eight beats.
 At 128 BPM and 60 fps it is 450 frames / 7.5 seconds.
 
-Create a project with the release that includes these components:
+In the generated `my-video` directory, copy the example from the installed
+tarball.
 
 ```bash
-npx --yes @demotion/cli@latest init my-story
-cd my-story
-npm install
+cp node_modules/@demotion/cli/examples/data-story.tsx src/DataStory.tsx
 ```
 
-Copy `node_modules/@demotion/cli/examples/data-story.tsx` to `src/DataStory.tsx`.
-The example is included in the npm package. Replace `src/Root.tsx` with:
+Replace `src/Root.tsx` with the following registration.
 
 ```tsx
 import { Composition } from "remotion";

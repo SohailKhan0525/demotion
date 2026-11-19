@@ -97,6 +97,6 @@ a completed release.
 Download `SHA256SUMS` with the MP4 and poster, then run
 `sha256sum --check SHA256SUMS` in that download directory. On-screen copy and the
 storyboard above convey the film without audio. Viewers can pause the film to
-read the code. Demotion's [license](../../LICENSE) and
-[commercial-license information](../../COMMERCIAL-LICENSE.md) remain applicable;
-Remotion has separate terms.
+read the code. For the license that shipped with this film on 1 November 2026,
+consult its tagged source. Remotion has separate terms.
+[Film-era license](https://github.com/SohailKhan0525/demotion/blob/update-030/LICENSE) · [Current repository license](../../LICENSE)

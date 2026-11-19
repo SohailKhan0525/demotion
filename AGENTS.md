@@ -1,14 +1,15 @@
 # Instructions for coding agents (Codex, Claude Code, …)
 
 You are continuing **demotion**: a React toolkit + CLI for making polished, beat-synced motion-graphics videos locally with Remotion.
-**Read `docs/HANDOFF.md` first** — it has the current state, the task list in order, the launch-video storyboard, and the pitfalls already hit.
+**Read `docs/HANDOFF.md` first** for package and film release history. See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for the local checks and pull request workflow.
 
 ## Rules (non-negotiable)
 - `npm install && npm run lint && npm run build && npm test` must pass before every commit.
 - Commit with **Conventional Commits**: `feat:` (minor) `fix:` (patch) `docs:`/`chore:`/`test:` (no release). **Never** use `!` or a `BREAKING CHANGE` footer — the package is on 0.x and an unintended breaking marker could trigger a major release.
-- Work on **`main` only**. No other branches.
+- Use **`main`** for maintainer work in this repository. Contributors can use branches in their forks and open pull requests targeting `main`.
 - **Never** commit tokens or secrets. The owner authorized publishing `@demotion/cli` publicly in their npm organization `demotion`, using GitHub Actions secret `NPM_SECRET`. The authenticating npm user is `qofeno-labs`. Keep provenance disabled. Later releases use the Release workflow, invoked manually or by an owner-authorized change to `.github/npm-release-request.json`. That file requests publication; do not edit it during ordinary development. Never publish to another name or scope without explicit owner authorization.
-- **Do not change `LICENSE`, `COMMERCIAL-LICENSE.md` or licence wording** without the owner's explicit decision (see HANDOFF §7).
+- Demotion-owned code in this revision uses the MIT License. Preserve third-party notices and the license records shipped in earlier releases. Future changes to the project's license terms require the owner's explicit decision.
 - **Honesty:** every command, number, component name or code listing shown in a video or README must be true of this repo. Add or extend a test that proves it (see `test/launch.test.mjs`).
 - **Quality bar (the owner's top priority — quality over duration):** all motion on the beat clock (`src/core/clock.ts`); no linear easing (use `outExpo`/`spring`/`bezier`); no pure `#000`/`#fff`; only the 5 theme colours in `src/engine/theme.ts`; only fonts from `src/font.ts`; every entrance staggered with overshoot; camera rig + real motion blur + grain on; look at **stills and a whole-timeline contact sheet** before calling anything done.
 - Keep answers/PRs short. Prefer small commits.

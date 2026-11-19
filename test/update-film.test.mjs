@@ -1,6 +1,5 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import fs from "node:fs";
 import { build } from "esbuild";
 import { loadTs } from "./helpers.mjs";
 
@@ -32,5 +31,4 @@ export const Scene = () => (${film.UPDATE_CODE.join("\n")});`;
   for (const name of ["DrawPath", "FollowPath", "WorkflowIllustration", "usePathMotion"]) assert.equal(typeof api[name], "function", name);
   const three = await import("../dist/three.js");
   for (const name of ["Scene3D", "ExtrudedSvg"]) assert.equal(typeof three[name], "function", name);
-  assert.equal(film.UPDATE_INSTALL, `npx --yes ${JSON.parse(fs.readFileSync("package.json")).name}@latest init my-video`);
 });

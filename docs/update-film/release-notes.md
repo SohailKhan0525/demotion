@@ -1,5 +1,7 @@
 # Draw it. Give it depth.
 
+Film release notes, 1 November 2026.
+
 The Demotion illustration-update film: **40 seconds · 1920×1080 · 60 fps**.
 
 An original SVG mark draws itself, objects follow its curves, and real extruded
@@ -22,5 +24,5 @@ Check the downloaded assets with `sha256sum --check SHA256SUMS`.
 
 The film contains original artwork and music; reference footage and other
 products' interfaces, branding and soundtracks are not embedded. Film assets
-and npm publication use separate workflows. Demotion's existing license terms
-apply; Remotion has separate terms.
+and npm publication use separate workflows. Remotion has separate terms.
+[Film-era license](https://github.com/SohailKhan0525/demotion/blob/update-030/LICENSE) · [Current repository license](../../LICENSE)

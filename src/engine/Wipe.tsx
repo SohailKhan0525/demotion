@@ -27,9 +27,12 @@ export const Wipe: React.FC<{ spec: WipeSpec; frame: number; at: number; width: 
       return <div key={key} style={{ position: "absolute", left: x, top: 0, width, height, background: color }} />;
     }
     if (spec.kind === "diagonal") {
-      const sk = 18;
-      const x = frame <= at ? (-1 + c) * (width + 400) : u * (width + 400);
-      return <div key={key} style={{ position: "absolute", left: x - 200, top: 0, width: width + 400, height, background: color, transform: `skewX(-${sk}deg)` }} />;
+      const skew = 18;
+      // Each corner shifts horizontally around the layer's vertical midpoint.
+      const margin = Math.max(200, Math.ceil(height / 2 * Math.tan(skew * Math.PI / 180)));
+      const layerWidth = width + 2 * margin;
+      const x = (frame <= at ? c - 1 : u) * layerWidth;
+      return <div key={key} style={{ position: "absolute", left: x - margin, top: 0, width: layerWidth, height, background: color, transform: `skewX(-${skew}deg)` }} />;
     }
     if (spec.kind === "slats") {
       const N = 8;

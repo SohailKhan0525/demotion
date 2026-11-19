@@ -3,18 +3,19 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 
 test("demotion init scaffolds a complete project (fonts, licenses, sources)", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-"));
   const out = execFileSync("node", [path.resolve("bin/demotion.js"), "init", "my-video"], { cwd: dir }).toString();
   assert.match(out, /Created my-video\//);
-  assert.match(out, /ko-fi\.com\/qofenoai/);
+  assert.match(out, /Starter code: MIT License/);
   const p = path.join(dir, "my-video");
   for (const f of ["package.json", "remotion.config.ts", "tsconfig.json", "src/index.ts", "src/Root.tsx", "src/MyVideo.tsx", "README.md", ".gitignore",
     "public/fonts/ArchivoVariable.woff2", "public/fonts/AbrilFatface.woff2", "public/fonts/JetBrainsMonoVariable.woff2", "public/fonts/licenses/OFL-archivo.txt"]) {
     assert.ok(fs.existsSync(path.join(p, f)), `${f} missing`);
   }
+  assert.equal(fs.readFileSync(path.join(p, "DEMOTION-LICENSE.txt"), "utf8"), fs.readFileSync("LICENSE", "utf8"));
   const pj = JSON.parse(fs.readFileSync(path.join(p, "package.json"), "utf8"));
   assert.equal(pj.name, "my-video");
   const rootPkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
@@ -75,4 +76,27 @@ test("init rejects an existing file without modifying it or printing a stack tra
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("init shows help and rejects extra folder arguments before creating files", (t) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demotion-init-args-"));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const init = (...args) => spawnSync(process.execPath, [path.resolve("bin/demotion.js"), "init", ...args], {
+    cwd: dir,
+    encoding: "utf8",
+  });
+
+  for (const flag of ["--help", "-h"]) {
+    const help = init(flag);
+    assert.equal(help.status, 0);
+    assert.match(help.stdout, /init <folder>/);
+  }
+  const extra = init("My", "Video");
+  assert.equal(extra.status, 1);
+  assert.match(extra.stderr, /init "My Video"/);
+  assert.deepEqual(fs.readdirSync(dir), []);
+
+  const literal = init("--", "--help");
+  assert.equal(literal.status, 0);
+  assert.ok(fs.existsSync(path.join(dir, "--help", "package.json")));
 });

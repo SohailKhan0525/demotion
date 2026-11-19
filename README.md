@@ -1,45 +1,57 @@
 # demotion
 
-**Motion graphics, written in code.** Create videos with React and render them on your own computer using [Remotion](https://www.remotion.dev).
+Make product launch videos in code. Demotion is an MIT-licensed toolkit for timing React scenes to a beat, animating SVGs, and rendering motion graphics on your computer with Remotion.
 
 [![CI](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SohailKhan0525/demotion/actions/workflows/ci.yml)
-[Package](https://www.npmjs.com/package/@demotion/cli) · [Illustration guide](docs/illustration.md) · [Examples](#edit-your-video) · [UI reference](docs/ui.md) · [Issues](https://github.com/SohailKhan0525/demotion/issues)
 
-`@demotion/cli` includes the `demotion` command, React components, beat-based timing,
-animated SVG paths, procedural audio, bundled fonts, and optional 3D scenes.
-Videos render locally; there is no hosted rendering service to configure.
+[Product launch guide](docs/product-launch.md) · [Canvas example](examples/canvas-launch.html) · [Component guides](docs/components.md) · [Contribute](CONTRIBUTING.md)
 
-[![Watch Draw it. Give it depth., the Demotion 0.3 film](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/update-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
+[![Poster for Draw it. Give it depth., the version 0.3 illustration film](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/docs/assets/update-poster.webp)](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
 
-[Watch / download the 0.3 film](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4)
-· [Film source](src/update-film/UpdateFilm.tsx)
-
-40 seconds of animated paths, original illustrations and real extruded SVG geometry,
-with a procedural soundtrack. Made with the APIs in `@demotion/cli@0.3.0`.
+Watch a path become a 3D illustration in the [40-second launch film](https://github.com/SohailKhan0525/demotion/releases/download/update-030/demotion-update-030.mp4). Its [tagged source](https://github.com/SohailKhan0525/demotion/tree/update-030/src/update-film) matches the recording. That edition predates the MIT release of the source.
 
 ## Quick start
 
-Use **Node.js 22.14+** and npm. Node 22 and 24 are tested in CI. Rendering needs a
-Chromium browser; Remotion can download a supported browser on first use. Package
-installation and that browser download require Internet access. Fonts are bundled.
+**In a browser, without installing anything:** Download [canvas-launch.html](https://raw.githubusercontent.com/SohailKhan0525/demotion/main/examples/canvas-launch.html) and open the saved file. The example uses plain JavaScript and Canvas 2D and runs offline. Use it to try the timing of a launch sequence.
+
+**To edit and render the full films:** Use Node.js 22.14+ and npm. From a terminal:
 
 ```bash
-npx --yes @demotion/cli@latest init my-video
-cd my-video
-npm install
+git clone https://github.com/SohailKhan0525/demotion.git
+cd demotion
+npm ci
+npm run dev
+```
+
+Select **UpdateFilm** in Remotion Studio and drag the playhead to inspect a frame.
+Edit `src/update-film/UpdateFilm.tsx` for the artwork and `src/update-film/timeline.ts`
+for the timing. Node 22 and 24 are tested in CI. Setup requires network access for
+dependencies and a Chromium download on first use. Fonts are bundled.
+
+## Create a video project from this checkout
+
+From the cloned `demotion` directory, build and pack the current source. Install
+that tarball into the generated starter so your project uses this MIT revision.
+The previously published npm package `@demotion/cli@0.3.0` carries its original license.
+
+```bash
+npm run build
+TARBALL=$(npm pack --silent)
+node bin/demotion.js init ../my-video
+cd ../my-video
+npm install "../demotion/$TARBALL"
 npm start
 ```
 
-Remotion Studio opens a preview. Edit `src/MyVideo.tsx`. Open a second terminal
-in `my-video` (or stop Studio with Ctrl+C), then render:
+The commands above use a POSIX shell. In PowerShell use `$TARBALL = npm pack --silent` for the pack step.
+
+With Studio open, edit `src/MyVideo.tsx`. In a second terminal in `my-video`,
+render the two-scene starter (150 frames at 30 fps, five seconds):
 
 ```bash
 npm run render       # out/video.mp4 — 1920×1080
 npm run render:4k    # out/video-4k.mp4 — 3840×2160
 ```
-
-The starter contains two scenes totaling **150 frames at 30 fps: five seconds**.
-These are starter settings, not a limit on your own video's duration.
 
 ## Edit your video
 
@@ -88,8 +100,7 @@ install the [optional 3D dependencies](#optional-3d) before using them.
 [Build a complete 2D illustration](docs/illustration.md) ·
 [Build a complete 3D illustration](docs/three-illustration.md)
 
-Upgrade an existing project with `npm install @demotion/cli@latest`, or use the
-quick start above for a new project.
+The [starter instructions](#create-a-video-project-from-this-checkout) install these APIs from your checkout.
 
 ## Since 0.2.0: data stories and captions
 
@@ -113,11 +124,7 @@ that works with the published package.
 
 ## Components and timing
 
-For an existing Remotion project:
-
-```bash
-npm install @demotion/cli
-```
+For an existing Remotion project, install the tarball you built above from its local path.
 
 Import from `@demotion/cli`:
 
@@ -141,7 +148,7 @@ The starter pins all Remotion packages to `4.0.528`. Keep Remotion and its
 
 ## Generate a soundtrack
 
-Save this as `cues.json`:
+From the generated video project, save this as `cues.json`:
 
 ```json
 {
@@ -158,7 +165,7 @@ Save this as `cues.json`:
 ```
 
 ```bash
-npx @demotion/cli audio cues.json out/soundtrack.wav
+npx --no-install demotion audio cues.json out/soundtrack.wav
 ```
 
 Times and durations in the cue file are beats. The generated WAV includes a
@@ -201,37 +208,22 @@ rendering a long scene.
 - **Blank text or missing fonts:** keep `public/fonts` and the starter's font-loading
   call. The CLI copies the font license files with the fonts.
 
-## License — free for personal use, paid for business
+## License and contributions
 
-Demotion uses the [PolyForm Noncommercial License 1.0.0](./LICENSE). It is **source-available**, not OSI "open source".
+Demotion-owned code and examples in this checkout use the [MIT License](LICENSE).
+You can use them in personal projects, client work, and commercial products.
+Include the copyright and license notice when distributing the software.
+The bundled fonts use the SIL Open Font License. The React renderer uses
+[Remotion 4 under its own terms](https://www.remotion.dev/docs/terms-4-0).
+See [third-party notices](THIRD_PARTY_NOTICES.md) for details.
 
-| You are… | License |
-|---|---|
-| An individual: personal projects, hobby, research, study | **Free** |
-| A school, charity, public-research or government body | **Free** |
-| A freelancer, a team, or a company — any paid, client or product-promoting work | **[Commercial license](./COMMERCIAL-LICENSE.md)** — Solo / Team / Company |
-
-Get a commercial license or support the project on Ko-fi: **https://ko-fi.com/qofenoai**
-
-Demotion is built on Remotion, which has its **own** license (it may require a company license for larger teams): https://www.remotion.dev/docs/terms
-
-## Support the project
-
-Demotion is built and maintained by one person. If it saves you time, please support it: **https://ko-fi.com/qofenoai** ☕
-
-## Contributing
-
-Bug reports and ideas are very welcome in [Issues](https://github.com/SohailKhan0525/demotion/issues). I'm not accepting code pull requests yet, because contributions to a dual-licensed project need a contributor agreement that isn't set up.
+Pull requests, examples, and bug reports are welcome. If a preview differs from
+your render, include the composition, frame number, and what you expected to see.
+[Contributing guide](CONTRIBUTING.md) · [Report a problem](https://github.com/SohailKhan0525/demotion/issues/new/choose) · [Optional project donations](https://ko-fi.com/qofenoai)
 
 ## Development
 
-```bash
-git clone https://github.com/SohailKhan0525/demotion.git
-cd demotion
-npm ci
-npm run dev
-```
-
+Follow the [quick start](#quick-start) to open the repository in Studio.
 Select **UpdateFilm**, **PromoLaunch**, **LaunchV2**, **Launch**, **Lab**, or **UI**
 in Studio. Generated media stays in ignored `out/`; the source remains available
 to regenerate each film.
@@ -242,7 +234,7 @@ npm run build
 npm test
 ```
 
-Generate the 0.3 update film and its visual checks:
+Render the current illustration film and check the output (requires FFmpeg and ffprobe):
 
 ```bash
 npm run qa:update      # out/update-film/contact-sheet.jpg + stills

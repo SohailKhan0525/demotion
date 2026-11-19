@@ -1,3 +1,7 @@
+# Second Take
+
+Film release notes, 27 October 2026.
+
 The second demotion launch film: **30 seconds, 1920×1080, 60 fps**, with a
 procedural 128 BPM soundtrack. Download `demotion-v2-launch.mp4` below and upload
 the file directly to your chosen platform. `poster.png` is the opening frame;
@@ -14,5 +18,5 @@ toolkit. See the current README and registry for later package-release status.
 
 The film uses example progress data and actual timeline beat counts, not usage or
 performance claims. It has music and effects, with essential information written
-on screen. Free for personal/non-commercial use; business, client or product work
-needs a commercial license. Remotion has its own terms. See repository licenses.
+on screen. Licensing details for that edition are recorded with the tagged source.
+[Film-era license](https://github.com/SohailKhan0525/demotion/blob/launch-v2/LICENSE) · [Current repository license](../../LICENSE)
